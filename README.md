@@ -2,7 +2,7 @@
 
 ## Build Status
 
-![Verify workflow]https://github.com/EventideSystems/obsekio/actions/workflows/verify.yml/badge.svg
+![Verify workflow](https://github.com/EventideSystems/obsekio/actions/workflows/verify.yml/badge.svg)
 
 This README would normally document whatever steps are necessary to get the
 application up and running.
