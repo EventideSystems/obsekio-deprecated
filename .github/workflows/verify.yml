@@ -25,7 +25,8 @@ jobs:
       - name: Run security checks
         run: |
           bundle exec bundler-audit --update
-          bundle exec rubocop brakeman --quiet
+          bundle exec rubocop
+          bundle exec brakeman --quiet
 
   # tests:
   #   name: Tests
