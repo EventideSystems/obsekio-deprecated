@@ -12,7 +12,8 @@ jobs:
       - name: Setup Ruby and install gems
         uses: ruby/setup-ruby@v1
         with:
-          bundler-cache: false
+          bundler-cache: true
+
       - name: Install dependencies
         run: |
           bundle install
@@ -24,7 +25,7 @@ jobs:
       - name: Run security checks
         run: |
           bundle exec bundler-audit --update
-          bundle exec rubocop brakeman -q -w2
+          bundle exec rubocop brakeman --quiet
 
   tests:
     name: Tests
@@ -56,4 +57,4 @@ jobs:
           bin/rails db:setup
 
       - name: Run tests
-        run: bin/rspec
+        run: bundle exec rspec
