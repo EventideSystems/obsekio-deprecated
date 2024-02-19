@@ -1,10 +1,8 @@
-# README
+# Obsekio
 
 ![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Verify workflow](https://github.com/EventideSystems/obsekio/actions/workflows/verify.yml/badge.svg)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
 
 Things you may want to cover:
 
