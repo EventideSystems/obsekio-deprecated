@@ -2,7 +2,7 @@ require:
   - rubocop-rails
   - rubocop-rspec
 AllCops:
-  NewCops: enable
+  NewCops: disable
   TargetRubyVersion: 3.3
   Exclude:
     - 'db/**/*'
