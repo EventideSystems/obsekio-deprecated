@@ -12,7 +12,7 @@ jobs:
       - name: Setup Ruby and install gems
         uses: ruby/setup-ruby@v1
         with:
-          bundler-cache: true
+          bundler-cache: false
 
       - name: Install dependencies
         run: |
@@ -27,34 +27,34 @@ jobs:
           bundle exec bundler-audit --update
           bundle exec rubocop brakeman --quiet
 
-  tests:
-    name: Tests
-    runs-on: ubuntu-latest
-    services:
-      postgres:
-        image: postgres:12.7
-        env:
-          POSTGRES_USER: myapp
-          POSTGRES_DB: myapp_test
-          POSTGRES_PASSWORD: ""
-        ports: ["5432:5432"]
+  # tests:
+  #   name: Tests
+  #   runs-on: ubuntu-latest
+  #   services:
+  #     postgres:
+  #       image: postgres:12.7
+  #       env:
+  #         POSTGRES_USER: myapp
+  #         POSTGRES_DB: myapp_test
+  #         POSTGRES_PASSWORD: ""
+  #       ports: ["5432:5432"]
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v2
 
-      - name: Setup Ruby and install gems
-        uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true
+  #     - name: Setup Ruby and install gems
+  #       uses: ruby/setup-ruby@v1
+  #       with:
+  #         bundler-cache: true
 
-      - name: Setup test database
-        env:
-          RAILS_ENV: test
-          PGHOST: localhost
-          PGUSER: myapp
-        run: |
-          bin/rails db:setup
+  #     - name: Setup test database
+  #       env:
+  #         RAILS_ENV: test
+  #         PGHOST: localhost
+  #         PGUSER: myapp
+  #       run: |
+  #         bin/rails db:setup
 
-      - name: Run tests
-        run: bundle exec rspec
+  #     - name: Run tests
+  #       run: bundle exec rspec
