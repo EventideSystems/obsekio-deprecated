@@ -23,7 +23,7 @@ jobs:
 
       - name: Run security checks
         run: |
-          bundle exec rubocopbundler-audit --update
+          bundle exec bundler-audit --update
           bundle exec rubocop brakeman -q -w2
 
   tests:
