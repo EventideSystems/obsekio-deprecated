@@ -16,12 +16,12 @@ jobs:
 
       - name: Run linters
         run: |
-          bin/rubocop --parallel
+          bundle exec rubocop
 
       - name: Run security checks
         run: |
-          bin/bundler-audit --update
-          bin/brakeman -q -w2
+          bundle exec rubocopbundler-audit --update
+          bundle exec rubocop brakeman -q -w2
 
   tests:
     name: Tests
