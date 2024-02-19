@@ -28,4 +28,6 @@
 #       enabled: "ON"
 
 en:
-  hello: "Hello world"
+  alerts:
+    access_denied: "Access denied."
+    session_expired: "Your session has expired. Please sign in again to continue."

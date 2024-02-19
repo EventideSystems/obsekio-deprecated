@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
   end
 
   def deny_access
-    redirect_back fallback_location: root_path, alert: 'Access denied.'
+    redirect_back fallback_location: root_path, alert: I18n.t('alerts.access_denied')
   end
 
   def record_not_found
@@ -32,6 +32,6 @@ class ApplicationController < ActionController::Base
 
   def reset_session_and_redirect
     reset_session
-    redirect_to root_path, alert: 'Your session has expired. Please sign in again.'
+    redirect_to root_path, alert: I18n.t('alerts.session_expired')
   end
 end
