@@ -4,6 +4,8 @@
 class ApplicationController < ActionController::Base
   include Pundit::Authorization
 
+  layout :layout_by_resource
+
   protect_from_forgery with: :exception, prepend: true
 
   before_action :configure_permitted_parameters, if: :devise_controller?
@@ -25,6 +27,8 @@ class ApplicationController < ActionController::Base
   def deny_access
     redirect_back fallback_location: root_path, alert: I18n.t('alerts.access_denied')
   end
+
+  def layout_by_resource = devise_controller? ? 'devise' : 'application'
 
   def record_not_found
     render file: Rails.public_path.join('404.html'), status: :not_found, layout: false
