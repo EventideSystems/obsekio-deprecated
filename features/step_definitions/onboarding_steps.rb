@@ -76,5 +76,5 @@ Then('I should see an error message') do
 end
 
 Then('I should still be on the sign up page') do
-  expect(page).to have_current_path("/users", ignore_query: true)
+  expect(page).to have_current_path('/users', ignore_query: true)
 end
