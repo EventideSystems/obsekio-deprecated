@@ -1,5 +1,7 @@
 Feature: Onboarding > Sign Up
-  As a new user, I want to be able to set up an account so that I can use the app.
+  As a new user
+  I want to be able to set up an account
+  So that I can use the app
 
 Background:
   Given I am logged out
@@ -24,19 +26,7 @@ Scenario: User signs up with invalid information
   Then I should see an error message
   And I should still be on the sign up page
 
-# Scenario: User is shown around the app's features
-#   Given I am on the home page
-#   When I click the "Take a tour" button
-#   Then I should see a tour of the app
-#   And I should be able to skip the tour
 
-
-# - [] Look at engagement scenarios
-# - [] Look at retention scenarios
-# - [] Look at monetization scenarios
-# - [] Look at virality scenarios
-# - [] Look at growth scenarios
-# - [] Look at user stories, setting up collections, and configuration scenarios
 
 
 
