@@ -4,7 +4,7 @@ namespace :users do
   desc 'Create an admin user'
   task create_admin: :environment do
     email = ENV.fetch('EMAIL', nil)
-    password = ENV.fetch('PASSWORD', nil)
+    password = password_confirmation = ENV.fetch('PASSWORD', nil)
 
     if email.blank? || password.blank?
       puts 'You must provide an email and password, e.g. rake users:create_admin EMAIL=[email] PASSWORD=[password]'
