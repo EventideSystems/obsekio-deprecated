@@ -1,20 +1,22 @@
 # Obsekio
 
 ![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)
-![Check](https://github.com/EventideSystems/obsekio/actions/workflows/check.yml/badge.svg)
+![check](https://github.com/EventideSystems/obsekio/actions/workflows/check.yml/badge.svg)
 
+## System Requirements
 
-Things you may want to cover:
+- Ruby 3.3+. The application _should_ work on older Ruby versions, but we are targetting modern Ruby and may introduce backwardly-incompatible code by taking advantage of Ruby 3.3+ specific features in the future.
 
-* Ruby version
+- PostgresSQL 12.9+.
 
-* System dependencies
+- Any Linux-based OS. We test using Ubuntu 20.04 LTS
+
 
 ## Code Style Conventions
 
 [![Ruby Style Guide](https://img.shields.io/badge/code_style-rubocop-brightgreen.svg)](https://github.com/rubocop/rubocop)
-
 [![Ruby Style Guide](https://img.shields.io/badge/code_style-community-brightgreen.svg)](https://rubystyle.guide)
+
 
 ## Configuration
 
