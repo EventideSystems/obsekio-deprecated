@@ -1,7 +1,7 @@
 # Obsekio
 
 ![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)
-![Verify workflow](https://github.com/EventideSystems/obsekio/actions/workflows/verify.yml/badge.svg)
+![Check](https://github.com/EventideSystems/obsekio/actions/workflows/check.yml/badge.svg)
 
 
 Things you may want to cover:
