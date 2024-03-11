@@ -55,6 +55,8 @@ gem 'pretender'
 gem 'pundit'
 gem 'recaptcha'
 
+gem 'commonmarker'
+gem 'html-pipeline'
 gem 'view_component'
 
 group :development, :test do
@@ -66,6 +68,7 @@ end
 group :development do
   gem 'brakeman'
   gem 'bundler-audit'
+  gem 'lookbook'
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem 'web-console'
 

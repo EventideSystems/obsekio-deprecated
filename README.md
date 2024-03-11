@@ -7,10 +7,9 @@
 
 - Ruby 3.3+. The application _should_ work on older Ruby versions, but we are targetting modern Ruby and may introduce backwardly-incompatible code by taking advantage of Ruby 3.3+ specific features in the future.
 
-- PostgresSQL 12.9+.
+- PostgreSQL 12.9+.
 
-- Any Linux-based OS. We test using Ubuntu 20.04 LTS
-
+- Any Linux-based OS. Tested using Ubuntu 20.04 LTS
 
 ## Code Style Conventions
 
