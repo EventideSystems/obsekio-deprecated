@@ -3,7 +3,9 @@
 require 'html_pipeline'
 require 'html_pipeline/convert_filter/markdown_filter'
 
+# Converts markdown to HTML
 class Pipeline
+  # Private class to convert Obsekio-flavored radio button markdown to HTML
   class RadioButtonFilter < HTMLPipeline::NodeFilter
     def call
       doc.search('.//text()').each do |node|
@@ -26,8 +28,8 @@ class Pipeline
   def call(markdown)
     pipeline = HTMLPipeline.new(
       convert_filter: HTMLPipeline::ConvertFilter::MarkdownFilter.new,
-      sanitization_config: sanitize_config,
-      node_filters: [RadioButtonFilter.new]
+      sanitization_config: sanitize_config
+      # node_filters: [RadioButtonFilter.new]
     )
 
     pipeline.call(markdown)

@@ -48,14 +48,10 @@ We are trying to make the application as easy to set up as possible for develope
 
 We will look at using Rails credentials in the future. For now, we are using environment variables.
 
-* Database creation
+## Component Library
 
-* Database initialization
+The Obsekio component library is a collection of reusable components that can be used to build the Obsekio application. The component library is based on Github's [View Components](https://github.com/ViewComponent) and makes heavy use of [Tailwind CSS](https://tailwindcss.com/).
 
-* How to run the test suite
+We are using [Lookbook](https://github.com/ViewComponent/lookbook) to document and develop the component library. To access the component library, start the application in `development` mode and navigate to the following URL:
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+http://localhost:3000/lookbook
