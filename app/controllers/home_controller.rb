@@ -5,11 +5,15 @@
 class HomeController < ApplicationController
   skip_before_action :authenticate_user!, raise: false
 
-  def index = render(template)
+  def index = render(template, layout:)
 
   private
 
   def template
     user_signed_in? ? 'dashboard' : 'landing_page'
+  end
+
+  def layout
+    user_signed_in? ? 'application' : 'landing_page'
   end
 end
