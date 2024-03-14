@@ -1,0 +1,16 @@
+<div class="divide-y divide-white/5">
+  <%= form_with model: [:library, checklist], class: "md:col-span-2" do |form| %>
+    <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:max-w-xl sm:grid-cols-6">
+      <div class="col-span-full">
+        <%= form.label :name %>
+        <div class="mt-2">
+          <%= form.text_field :name %>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-8 flex">
+      <%= form.submit 'Save' %>
+    </div>
+  <% end %>
+</div>
