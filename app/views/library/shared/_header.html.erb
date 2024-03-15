@@ -1,13 +1,22 @@
 <header class="border-b border-white/5">
   <!-- Secondary navigation -->
   <nav class="flex overflow-x-auto py-4">
-    <ul role="list" class="flex min-w-full flex-none gap-x-6 px-4 text-sm font-semibold leading-6 text-gray-400 sm:px-6 lg:px-8">
-      <li>
-        <a href="#" class="text-indigo-400">Checklists</a>
-      </li>
-      <li>
-        <a href="#" class="">Tools</a>
-      </li>
+    <ul role="list" class="flex min-w-full flex-none gap-x-6 px-4 text-sm font-semibold leading-6 text-gray-400 sm:px-6 lg:px-8 justify-between">
+      <div class="flex mt-2">
+        <li>
+          <%= link_to 'Checklists', library_checklists_path, class: "mr-5 text-indigo-400" %>
+        </li>
+        <li>
+          <a href="#" class="">Tools</a>
+        </li>
+      </div>
+      <div>
+        <li>
+          <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
+            <%= link_to 'Add checklist', new_library_checklist_path, class: "block rounded-md bg-indigo-500 px-3 py-2 text-center text-sm font-semibold text-white hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500" %>
+          </div>
+        </li>
+      </div>
     </ul>
   </nav>
 </header>

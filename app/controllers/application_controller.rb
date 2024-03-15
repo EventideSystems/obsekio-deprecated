@@ -3,6 +3,7 @@
 # Base controller
 class ApplicationController < ActionController::Base
   include Pundit::Authorization
+  include ControllerGroups
 
   layout :layout_by_resource
 
@@ -16,6 +17,8 @@ class ApplicationController < ActionController::Base
   rescue_from ActionController::InvalidAuthenticityToken, with: :reset_session_and_redirect
 
   impersonates :user
+
+  group :root
 
   private
 

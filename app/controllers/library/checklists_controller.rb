@@ -3,6 +3,8 @@
 module Library
   # ChecklistsController
   class ChecklistsController < ApplicationController
+    group :library
+
     def index
       @checklists = Checklist.all
     end

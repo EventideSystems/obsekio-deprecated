@@ -5,6 +5,8 @@
 class HomeController < ApplicationController
   skip_before_action :authenticate_user!, raise: false
 
+  group :home
+
   def index = render(template, layout:)
 
   private
