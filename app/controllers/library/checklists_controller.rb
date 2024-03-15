@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Library
+  # ChecklistsController
   class ChecklistsController < ApplicationController
     def index
       @checklists = Checklist.all
