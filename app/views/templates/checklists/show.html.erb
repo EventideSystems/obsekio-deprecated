@@ -1,1 +1,10 @@
-<%= render_checklist(@checklist) %>
+<div class="flex px-4 py-16 sm:px-6 ">
+  <div class="w-1/3">
+    <h2 class="text-base font-semibold leading-7 text-white"><%= @checklist.title %></h2>
+    <p class="mt-1 text-sm leading-6 text-gray-400">Use a permanent address where you can receive mail.</p>
+  </div>
+
+  <div class="w-2/3">
+    <%= render_checklist(@checklist) %>
+  </div>
+</div>
