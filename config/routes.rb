@@ -14,6 +14,10 @@ Rails.application.routes.draw do
     resources :checklists
   end
 
+  namespace :templates do
+    resources :checklists
+  end
+
   namespace :settings do
     resource :account, only: %i[show update]
   end

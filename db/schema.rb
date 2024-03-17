@@ -16,10 +16,17 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_27_075544) do
   enable_extension "plpgsql"
 
   create_table "checklists", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "type", null: false
     t.string "title"
-    t.string "body"
+    t.string "content"
+    t.string "status"
+    t.uuid "created_by_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["created_by_id"], name: "index_checklists_on_created_by_id"
+    t.index ["status"], name: "index_checklists_on_status"
+    t.index ["title"], name: "index_checklists_on_title"
+    t.index ["type"], name: "index_checklists_on_type"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -49,4 +56,5 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_27_075544) do
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
+  add_foreign_key "checklists", "users", column: "created_by_id"
 end

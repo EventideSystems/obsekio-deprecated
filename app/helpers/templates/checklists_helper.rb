@@ -1,0 +1,2 @@
+module Templates::ChecklistsHelper
+end
