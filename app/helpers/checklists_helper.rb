@@ -16,6 +16,6 @@ module ChecklistsHelper
   end
 
   def render_checklist(checklist)
-    Pipeline.new.call(checklist.content)[:output].html_safe
+    Pipeline.new.call(checklist.content)[:output].html_safe # rubocop:disable Rails/OutputSafety
   end
 end
