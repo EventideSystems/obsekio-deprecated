@@ -12,5 +12,9 @@ module Templates
     def show
       @checklist = Templates::Checklist.find(params[:id])
     end
+
+    def edit
+      @checklist = Templates::Checklist.find(params[:id])
+    end
   end
 end
