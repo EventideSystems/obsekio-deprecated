@@ -6,7 +6,6 @@ class CreateChecklists < ActiveRecord::Migration[7.1]
     create_table :checklists, id: :uuid do |t|
       t.string :type, null: false
       t.string :title
-      t.string :content
       t.string :status
       t.references :created_by, type: :uuid, foreign_key: { to_table: :users }, null: true
       t.timestamps

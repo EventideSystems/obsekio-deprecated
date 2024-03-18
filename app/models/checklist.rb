@@ -8,4 +8,5 @@
 # @see Templates::Checklist
 class Checklist < ApplicationRecord
   include StringEnum
+  has_markdown :content
 end

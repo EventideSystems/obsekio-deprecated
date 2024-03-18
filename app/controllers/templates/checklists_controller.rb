@@ -16,5 +16,17 @@ module Templates
     def edit
       @checklist = Templates::Checklist.find(params[:id])
     end
+
+    def update
+      @checklist = Templates::Checklist.find(params[:id])
+      @checklist.update(checklist_params)
+
+      console
+      redirect_to templates_checklist_path(@checklist)
+    end
+
+    def checklist_params
+      params.require(:templates_checklist).permit(:title, :content, :status)
+    end
   end
 end

@@ -2,8 +2,9 @@
 <%= render partial: 'templates/shared/header' %>
 <%= render partial: 'templates/shared/tabs' %>
 
-<div class="flex px-4 py-8 sm:px-6 ">
-  <div class="checklist-preview">
-    <%= render_checklist(@checklist) %>
-  </div>
+<div class="">
+  <%= form_with model: @checklist do |f| %>
+  <%= f.markdown_field :content %>
+  <%= f.submit "Save" %>
+<% end %>
 </div>
