@@ -11,3 +11,25 @@
 }
 
 */
+
+.checklist-preview {
+  h1 {
+    @apply text-2xl font-bold text-white mb-2;
+  }
+
+  h2 {
+    @apply text-xl font-bold text-white mb-2 mt-2;
+  }
+
+  li {
+    @apply text-white mb-2 ml-5;
+  }
+
+  ul {
+    @apply mt-3 mb-5;
+  }
+
+  input[type=checkbox] {
+    @apply h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600 mr-2;
+  }
+}
