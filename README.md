@@ -1,6 +1,6 @@
 # Obsekio
 
-![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 ![check](https://github.com/EventideSystems/obsekio/actions/workflows/check.yml/badge.svg)
 
 ## System Requirements
