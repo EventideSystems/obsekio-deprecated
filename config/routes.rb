@@ -22,6 +22,9 @@ Rails.application.routes.draw do
     resource :account, only: %i[show update]
   end
 
+  namespace :workspace do
+    resources :checklists
+  end
 
   root to: "home#index"
 end

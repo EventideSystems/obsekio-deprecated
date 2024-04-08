@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_18_114952) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_07_031236) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -32,6 +32,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_18_114952) do
     t.uuid "created_by_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "assignee_type"
+    t.bigint "assignee_id"
+    t.index ["assignee_type", "assignee_id"], name: "index_checklists_on_assignee"
     t.index ["created_by_id"], name: "index_checklists_on_created_by_id"
     t.index ["status"], name: "index_checklists_on_status"
     t.index ["title"], name: "index_checklists_on_title"

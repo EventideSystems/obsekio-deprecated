@@ -21,6 +21,14 @@
     @apply text-xl font-bold text-white mb-2 mt-2;
   }
 
+  p {
+    @apply text-white mb-2;
+  }
+
+  a {
+    @apply text-indigo-600;
+  }
+
   li {
     @apply text-white mb-2 ml-5;
   }

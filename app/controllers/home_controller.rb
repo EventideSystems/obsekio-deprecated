@@ -4,6 +4,7 @@
 # and the dashboard (when a user is signed in).
 class HomeController < ApplicationController
   skip_before_action :authenticate_user!, raise: false
+  before_action :load_workspace, only: :index
 
   group :home
 
@@ -17,5 +18,11 @@ class HomeController < ApplicationController
 
   def layout
     user_signed_in? ? 'application' : 'landing_page'
+  end
+
+  def load_workspace
+    return unless user_signed_in?
+
+    @checklists = current_user.workspace_checklists
   end
 end

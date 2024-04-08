@@ -1,7 +1,28 @@
 Feature: Onboarding > Orientation
-  As a new user,
-  I want to acquaint myself with the features of the app
-  So that I can effectively make use of its capabilities and features
+As a new user,
+I want to acquaint myself with the features of the app
+So that I can effectively make use of its capabilities and features
+
+Scenario: First login
+Given I am a new user in the system
+When I log in for the first time
+And I visit my workspace page
+Then a checklist named "Introduction to Obsekio" will be present in my workspace
+
+Scenario: Opening up the "Introduction to Obsekio" checklist
+Given I am logged in
+And a checklist named "Introduction to Obsekio" exists in my workspace
+When I open the checklist named "Introduction to Obsekio"
+And I click on the "Account Settings" link in the checklist
+Then will be redirected to the account settings page
+
+Scenario: Checking off the "Introduction to Obsekio" checklist
+Given I am logged in
+And a checklist named "Introduction to Obsekio" exists in my workspace
+When I open the checklist named "Introduction to Obsekio"
+And I click on the "Review your Account Settings" checklist item
+Then the "Review your Account Settings" checklist item will be marked as checked
+
 
 # Background:
 #   Given I have logged on for the first time

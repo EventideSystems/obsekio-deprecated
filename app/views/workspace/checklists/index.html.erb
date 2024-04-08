@@ -1,0 +1,13 @@
+<% content_for :header do %>
+  <div class="xmt-4 xsm:ml-16 xsm:mt-0 xsm:flex-none">
+    <%= link_to '+', new_library_checklist_path, class: "block rounded-md bg-indigo-500 px-3 py-2 text-center text-sm font-semibold text-white hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500" %>
+  </div>
+<% end %>
+
+<h1 class="sr-only">Checklists</h1>
+<%= render partial: 'workspace/shared/header' %>
+<% if @checklists.empty? %>
+  <%= render partial: 'workspace/checklists/empty_page' %>
+<% else %>
+  <%= render partial: 'workspace/checklists/table', locals: { checklists: @checklists } %>
+<% end %>
