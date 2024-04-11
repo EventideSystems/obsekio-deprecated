@@ -17,7 +17,7 @@
     <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
   </div>
 
-  <%= recaptcha_v3(action: 'change_my_password', nonce: SecureRandom.base64(32)) %>
+  <%= recaptcha_with_nonce(action: 'change_my_password') %>
 
   <div class="actions">
     <%= f.submit "Change my password" %>
