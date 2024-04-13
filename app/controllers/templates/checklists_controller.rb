@@ -21,7 +21,6 @@ module Templates
       @checklist = Templates::Checklist.find(params[:id])
       @checklist.update(checklist_params)
 
-      console
       redirect_to templates_checklist_path(@checklist)
     end
 

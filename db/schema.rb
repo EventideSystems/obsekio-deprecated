@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_07_031236) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_13_020204) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -25,6 +25,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_07_031236) do
     t.index ["record_type", "record_id", "name"], name: "index_action_markdown_markdown_texts_uniqueness", unique: true
   end
 
+  create_table "checklist_instances", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "checklist_id", null: false
+    t.string "assignee_type"
+    t.uuid "assignee_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["assignee_type", "assignee_id"], name: "index_checklist_instances_on_assignee"
+    t.index ["checklist_id"], name: "index_checklist_instances_on_checklist_id"
+  end
+
   create_table "checklists", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "type", null: false
     t.string "title"
@@ -33,7 +43,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_07_031236) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "assignee_type"
-    t.bigint "assignee_id"
+    t.uuid "assignee_id"
+    t.string "instance_model", default: "single", null: false
     t.index ["assignee_type", "assignee_id"], name: "index_checklists_on_assignee"
     t.index ["created_by_id"], name: "index_checklists_on_created_by_id"
     t.index ["status"], name: "index_checklists_on_status"
@@ -68,5 +79,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_07_031236) do
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
+  add_foreign_key "checklist_instances", "checklists"
   add_foreign_key "checklists", "users", column: "created_by_id"
 end

@@ -21,7 +21,7 @@ module Workspace
       @checklist = Workspace::Checklist.find(params[:id])
       @checklist.update(checklist_params)
 
-      redirect_to Workspace_checklist_path(@checklist)
+      redirect_to workspace_checklist_path(@checklist)
     end
 
     def checklist_params

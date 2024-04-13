@@ -26,5 +26,9 @@ Rails.application.routes.draw do
     resources :checklists
   end
 
+  resources :checklist_instances do
+    resources :checklist_items, only: %i[update]
+  end
+
   root to: "home#index"
 end
