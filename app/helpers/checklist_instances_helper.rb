@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Helper methods for ChecklistInstances
 module ChecklistInstancesHelper
   # SMELL: This method is identical to the one in ChecklistsHelper
   def render_checklist_instance(checklist_instance)
