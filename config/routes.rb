@@ -15,7 +15,12 @@ Rails.application.routes.draw do
   end
 
   namespace :templates do
-    resources :checklists
+    resources :checklists do
+      member do
+        post :copy_to_library
+        post :publish
+      end
+    end
   end
 
   namespace :settings do

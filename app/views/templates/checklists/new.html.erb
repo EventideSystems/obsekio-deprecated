@@ -1,3 +1,13 @@
 <h1 class="sr-only">New checklist</h1>
-<%= render partial: 'library/shared/header' %>
-<%= render partial: 'form', locals: { checklist: @checklist } %>
+<%= render partial: 'templates/shared/header' %>
+<%= render partial: 'templates/shared/tabs' %>
+
+<div class="mx-8">
+  <%= form_with model: @checklist, data: { turbo: false } do |f| %>
+    <div class="mb-3">
+      <%= f.text_field :title, placeholder: 'Title' %>
+    </div>
+    <%= f.markdown_field :content %>
+    <%= f.submit "Save" %>
+  <% end %>
+</div>

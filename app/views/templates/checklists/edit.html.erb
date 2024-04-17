@@ -2,9 +2,9 @@
 <%= render partial: 'templates/shared/header' %>
 <%= render partial: 'templates/shared/tabs' %>
 
-<div class="">
-  <%= form_with model: @checklist do |f| %>
-  <%= f.markdown_field :content %>
-  <%= f.submit "Save" %>
-<% end %>
+<div class="mx-8">
+  <%= form_with model: @checklist, data: { turbo: false } do |f| %>
+    <%= f.markdown_field :content %>
+    <%= f.submit "Save" %>
+  <% end %>
 </div>

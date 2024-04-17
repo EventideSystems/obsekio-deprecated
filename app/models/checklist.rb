@@ -7,7 +7,6 @@
 # @see Library::Checklist
 # @see Templates::Checklist
 class Checklist < ApplicationRecord
-  include StringEnum
   has_markdown :content
 
   string_enum :instance_model, %i[single longitudinal concurrent], default: :single
