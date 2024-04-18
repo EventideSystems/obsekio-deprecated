@@ -21,17 +21,13 @@ class ApplicationPolicy
     false
   end
 
-  def new?
-    create?
-  end
+  def new? = create?
 
   def update?
     false
   end
 
-  def edit?
-    update?
-  end
+  def edit? = update?
 
   def destroy?
     false

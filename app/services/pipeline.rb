@@ -26,6 +26,8 @@ class Pipeline
   end
 
   def call(markdown)
+    return { output: '' } if markdown.blank?
+
     pipeline = HTMLPipeline.new(
       convert_filter: HTMLPipeline::ConvertFilter::MarkdownFilter.new,
       sanitization_config: sanitize_config

@@ -1,3 +1,17 @@
+<% content_for :header do %>
+  <%- if policy(@checklist).copy_to_library? || policy(@checklist).publish? %>
+    <div class="flex xmt-4 xsm:ml-16 xsm:mt-0 xsm:flex-none">
+      <%- if policy(@checklist).publish?  %>
+        <%= button_to 'Publish', publish_templates_checklist_path(@checklist), class: "block rounded-md bg-indigo-500 px-3 py-2 text-center text-sm font-semibold text-white hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 mr-2" %>
+      <%- end %>
+      <%- if policy(@checklist).copy_to_library? %>
+        <%= button_to 'Copy to Library', copy_to_library_templates_checklist_path(@checklist), class: "block rounded-md bg-indigo-500 px-3 py-2 text-center text-sm font-semibold text-white hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500" %>
+      <%- end %>
+    </div>
+  <%- end %>
+<% end %>
+
+
 <h1 class="sr-only"><%= @checklist.title %></h1>
 <%= render partial: 'templates/shared/header' %>
 <%= render partial: 'templates/shared/tabs' %>

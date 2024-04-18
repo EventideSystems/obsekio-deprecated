@@ -2,15 +2,25 @@
   <!-- Tertiary navigation -->
   <nav class="flex overflow-x-auto py-4">
     <ul role="list" class="flex min-w-full flex-none gap-x-6 px-4 text-sm font-semibold leading-6 text-gray-400 sm:px-6 lg:px-8">
-      <li>
-        <%= link_to 'Preview', templates_checklist_path(@checklist), class: "text-indigo-400" %>
-      </li>
-      <li>
-        <%= link_to 'Edit', edit_templates_checklist_path(@checklist) %>
-      </li>
-      <li>
-        <a href="#" class="">Notes</a>
-      </li>
+      <% if @checklist.new_record? %>
+        <li>
+          <%= link_to_tab_item 'Write', '', :new %>
+        </li>
+      <%- else %>
+        <%- if policy(@checklist).show? %>
+          <li>
+            <%= link_to_tab_item 'Preview', templates_checklist_path(@checklist), :show %>
+          </li>
+        <%- end %>
+        <%- if policy(@checklist).edit? %>
+          <li>
+            <%= link_to_tab_item 'Write', edit_templates_checklist_path(@checklist), :edit %>
+          </li>
+        <%- end %>
+        <li>
+          <a href="#" class="">Details</a>
+        </li>
+      <%- end %>
     </ul>
   </nav>
 </div>

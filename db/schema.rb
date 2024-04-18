@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_13_020204) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_14_042148) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -52,6 +52,18 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_13_020204) do
     t.index ["type"], name: "index_checklists_on_type"
   end
 
+  create_table "templates_checklists", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "title"
+    t.string "status", default: "draft"
+    t.jsonb "metadata", default: {}
+    t.uuid "created_by_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["created_by_id"], name: "index_templates_checklists_on_created_by_id"
+    t.index ["status"], name: "index_templates_checklists_on_status"
+    t.index ["title"], name: "index_templates_checklists_on_title"
+  end
+
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -81,4 +93,5 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_13_020204) do
 
   add_foreign_key "checklist_instances", "checklists"
   add_foreign_key "checklists", "users", column: "created_by_id"
+  add_foreign_key "templates_checklists", "users", column: "created_by_id"
 end
