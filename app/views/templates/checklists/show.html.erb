@@ -1,23 +1,74 @@
-<% content_for :header do %>
-  <%- if policy(@checklist).copy_to_library? || policy(@checklist).publish? %>
-    <div class="flex xmt-4 xsm:ml-16 xsm:mt-0 xsm:flex-none">
-      <%- if policy(@checklist).publish?  %>
-        <%= button_to 'Publish', publish_templates_checklist_path(@checklist), class: "block rounded-md bg-indigo-500 px-3 py-2 text-center text-sm font-semibold text-white hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 mr-2" %>
-      <%- end %>
-      <%- if policy(@checklist).copy_to_library? %>
-        <%= button_to 'Copy to Library', copy_to_library_templates_checklist_path(@checklist), class: "block rounded-md bg-indigo-500 px-3 py-2 text-center text-sm font-semibold text-white hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500" %>
-      <%- end %>
-    </div>
-  <%- end %>
-<% end %>
-
-
 <h1 class="sr-only"><%= @checklist.title %></h1>
-<%= render partial: 'templates/shared/header' %>
-<%= render partial: 'templates/shared/tabs' %>
 
-<div class="flex px-4 py-8 sm:px-6 ">
-  <div class="checklist-preview">
-    <%= render_checklist(@checklist) %>
+<div data-controller="templates-checklists--show">
+
+  <header class="border-b border-white/5">
+    <!-- Secondary navigation -->
+    <nav class="flex overflow-x-auto py-4">
+      <ul role="list" class="flex min-w-full flex-none gap-x-6 px-4 text-sm font-semibold leading-6 text-gray-400 sm:px-6 lg:px-8 justify-between">
+        <div class="flex mt-2">
+          <li>
+            <%= link_to 'Templates', templates_checklists_path, class: "mr-3 text-indigo-400" %>
+          </li>
+          <% if @checklist.present? %>
+          <li>
+            <div class="flex items-center">
+              <%= render_icon :breadcrumb_separator %>
+              <span class="ml-3 text-white">
+                <%= @checklist.new_record? ? 'New Record' : @checklist.title %>
+              </span>
+            </div>
+          </li>
+          <% end %>
+        </div>
+        <div>
+          <li>
+            <%- if policy(@checklist).copy_to_library? || policy(@checklist).publish? %>
+              <div class="flex xmt-4 xsm:ml-16 xsm:mt-0 xsm:flex-none">
+                <%- if policy(@checklist).edit?  %>
+                  <%= link_to 'Edit', edit_templates_checklist_path(@checklist), class: "block rounded-md bg-indigo-500 px-3 py-2 text-center text-sm font-semibold text-white hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 mr-2" %>
+                <%- end %>
+
+                <%- if policy(@checklist).publish?  %>
+                  <%= button_to 'Publish', publish_templates_checklist_path(@checklist), class: "block rounded-md bg-indigo-500 px-3 py-2 text-center text-sm font-semibold text-white hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 mr-2" %>
+                <%- end %>
+                <%- if policy(@checklist).copy_to_library? %>
+                  <%= button_to 'Copy to Library', copy_to_library_templates_checklist_path(@checklist), class: "block rounded-md bg-indigo-500 px-3 py-2 text-center text-sm font-semibold text-white hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500" %>
+                <%- end %>
+              </div>
+            <%- end %>
+          </li>
+        </div>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="border-b border-white/5">
+    <!-- Tertiary navigation -->
+    <nav class="flex overflow-x-auto py-4">
+      <ul role="list" class="flex min-w-full flex-none gap-x-6 px-4 text-sm font-semibold leading-6 text-gray-400 sm:px-6 lg:px-8">
+        <li>
+          <%= link_to 'Preview', nil, data: { action: "click->templates-checklists--show#showPreviewPanel" }, class: 'text-indigo-400' %>
+        </li>
+        <li>
+          <%= link_to 'Details', nil, data: { action: "click->templates-checklists--show#showDetailsPanel" } %>
+        </li>
+
+      </ul>
+    </nav>
+  </div>
+
+  <div data-templates-checklists--show-target="previewPanel" class="mx-8 mt-8">
+    <div class="checklist-preview">
+      <%= render_checklist(@checklist) %>
+    </div>
+  </div>
+
+  <div data-templates-checklists--show-target="detailsPanel" class="mx-8 mt-8 hidden">
+    <%= render partial: 'show_details', locals: { checklist: @checklist } %>>
+  </div>
+
+  <div class="flex px-4 py-8 sm:px-6 ">
+
   </div>
 </div>

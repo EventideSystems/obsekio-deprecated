@@ -62,7 +62,9 @@ module Templates
     end
 
     def checklist_params
-      params.require(:templates_checklist).permit(:title, :content, :status)
+      params
+        .require(:templates_checklist)
+        .permit(policy(Templates::Checklist).permitted_attributes)
     end
 
     private

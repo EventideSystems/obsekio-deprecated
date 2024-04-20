@@ -31,3 +31,7 @@ en:
   alerts:
     access_denied: "Access denied."
     session_expired: "Your session has expired. Please sign in again to continue."
+  activerecord:
+    attributes:
+      templates/checklist:
+        title_alternative: "Alternative Title"

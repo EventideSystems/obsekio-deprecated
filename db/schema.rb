@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_14_042148) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_20_004225) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -55,10 +55,18 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_14_042148) do
   create_table "templates_checklists", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title"
     t.string "status", default: "draft"
-    t.jsonb "metadata", default: {}
     t.uuid "created_by_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "contributor"
+    t.string "creator"
+    t.string "description"
+    t.string "format", default: "text/markdown"
+    t.string "language", default: "en"
+    t.string "publisher"
+    t.string "rights"
+    t.string "source"
+    t.string "title_alternative"
     t.index ["created_by_id"], name: "index_templates_checklists_on_created_by_id"
     t.index ["status"], name: "index_templates_checklists_on_status"
     t.index ["title"], name: "index_templates_checklists_on_title"

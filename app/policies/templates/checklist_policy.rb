@@ -10,6 +10,27 @@ module Templates
       end
     end
 
+    ADMIN_PERMITTED_ATTRIBUTES = %i[
+      content
+      contributor
+      creator
+      description
+      format
+      language
+      publisher
+      rights
+      source
+      status
+      title_alternative
+      title
+    ].freeze
+
+    def permitted_attributes
+      [] unless user.admin?
+
+      ADMIN_PERMITTED_ATTRIBUTES
+    end
+
     def index?
       user.present?
     end

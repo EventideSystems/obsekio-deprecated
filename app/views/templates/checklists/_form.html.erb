@@ -1,0 +1,66 @@
+<h1 class="sr-only"><%= checklist.title %></h1>
+
+<div data-controller="templates-checklists--form">
+  <%= form_with model: checklist, data: { turbo: false } do |f| %>
+    <header class="border-b border-white/5">
+      <!-- Secondary navigation -->
+      <nav class="flex overflow-x-auto py-4">
+        <ul role="list" class="flex min-w-full flex-none gap-x-6 px-4 text-sm font-semibold leading-6 text-gray-400 sm:px-6 lg:px-8 justify-between">
+          <div class="flex mt-2">
+            <li>
+              <%= link_to 'Templates', templates_checklists_path, class: "mr-3 text-indigo-400" %>
+            </li>
+            <li>
+              <div class="flex items-center">
+                <%= render_icon :breadcrumb_separator %>
+                <span class="ml-1 text-white">
+                  <%# TODO: Set a placeholder with text like "Enter a title"; Make this mandatory %>
+                  <%= f.text_field :title, placeholder: Templates::Checklist.human_attribute_name(:title), class: 'block w-full rounded-md border-0 bg-white/5 py-1.5 -my-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6' %>
+                </span>
+              </div>
+            </li>
+          </div>
+          <div>
+            <div class="flex xmt-4 xsm:ml-16 xsm:mt-0 xsm:flex-none">
+              <li>
+                <%= link_to "Cancel", checklist, class: "block rounded-md bg-grey-500 px-3 py-2 text-center text-sm font-semibold text-white hover:bg-grey-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grey-500 mr-2" %>
+              </li>
+              <li>
+                <%= f.submit "Save", class: "block rounded-md bg-indigo-500 px-3 py-2 text-center text-sm font-semibold text-white hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 mr-2" %>
+              </li>
+            </div>
+          </div>
+        </ul>
+      </nav>
+    </header>
+
+    <div class="border-b border-white/5">
+      <!-- Tertiary navigation -->
+      <nav class="flex overflow-x-auto py-4">
+        <ul role="list" class="flex min-w-full flex-none gap-x-6 px-4 text-sm font-semibold leading-6 text-gray-400 sm:px-6 lg:px-8">
+          <li>
+            <%= link_to 'Write', nil, data: { action: "click->templates-checklists--form#showWritePanel"}, class: 'text-indigo-400' %>
+          </li>
+          <li>
+            <%= link_to 'Details', nil, data: { action: "click->templates-checklists--form#showDetailsPanel"} %>
+          </li>
+          <li>
+            <%= link_to 'Preview', nil, data: { action: "click->templates-checklists--form#showPreviewPanel"} %>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <div data-templates-checklists--form-target="writePanel" class="mx-8 mt-8">
+      <%= f.markdown_field :content %>
+    </div>
+
+    <div data-templates-checklists--form-target="detailsPanel" class="mx-8 mt-8 hidden">
+      <%= render partial: 'edit_details', locals: { form: f } %>
+    </div>
+
+    <div data-templates-checklists--form-target="previewPanel" class="mx-8 mt-8 hidden">
+      <div class="markdown checklist-preview"></div>
+    </div>
+  <% end %>
+</div>
