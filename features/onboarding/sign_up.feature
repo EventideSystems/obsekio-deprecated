@@ -25,9 +25,3 @@ Scenario: User signs up with invalid information
   And I click the sign up button
   Then I should see an error message
   And I should still be on the sign up page
-
-
-
-
-
-

@@ -35,6 +35,10 @@ When('I click the sign up button') do
 end
 
 When('I click the link in the confirmation email') do
+  Timeout.timeout(10) do
+    sleep(1) until ActionMailer::Base.deliveries.present?
+  end
+
   deliveries = ActionMailer::Base.deliveries
   confirmation_instructions = deliveries.detect { |mail| mail['subject'].value == 'Confirmation instructions' }
   expect(confirmation_instructions).to be_present

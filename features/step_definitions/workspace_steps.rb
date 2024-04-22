@@ -9,13 +9,20 @@ Given('a checklist named {string} exists in my workspace') do |checklist_name|
 end
 
 When('I open the checklist named {string}') do |string|
-  click_on(string)
+  Capybara.page.current_window.resize_to(1980, 1000) # SMELL: move this to a step definition
+  find('a', text: string).click
 end
 
 When('I click on the {string} checklist item') do |string|
-  find('input[type="checkbox"]') do |checkbox|
-    checkbox.sibling('p').text == string
+  element = find('input[type="checkbox"]') do |checkbox|
+    parent_element = checkbox.find(:xpath, '..')
+    text_nodes = parent_element.text.split("\n")
+    text_nodes.include?(string)
   end
+
+  expect(element).to be_present
+  element.click
+  sleep(1) # TODO: Remove this and wait for the page to load properly
 end
 
 When('I click on the {string} link in the checklist') do |string|
@@ -27,7 +34,11 @@ Then('a checklist named {string} will be present in my workspace') do |checklist
 end
 
 Then('the {string} checklist item will be marked as checked') do |string|
-  find('input[type="checkbox"]') do |checkbox|
-    checkbox.sibling('p').text == string
+  element = find('input[type="checkbox"]') do |checkbox|
+    parent_element = checkbox.find(:xpath, '..')
+    text_nodes = parent_element.text.split("\n")
+    text_nodes.include?(string)
   end
+
+  expect(element.checked?).to be_truthy
 end
