@@ -10,7 +10,7 @@
 
 
 # Source: https://github.com/soleo/front-end-building-checklist/blob/master/README.md
-Templates::Checklist.create(
+Library::Checklist.create(
   title: 'Startup Checklist',
   content: <<~CONTENT,
     # Front End Feature Building Checklist

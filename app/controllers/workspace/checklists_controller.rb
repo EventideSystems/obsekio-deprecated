@@ -14,7 +14,7 @@ module Workspace
     end
 
     def edit
-      @checklist = Templates::Checklist.find(params[:id])
+      @checklist = Library::Checklist.find(params[:id])
     end
 
     def update
