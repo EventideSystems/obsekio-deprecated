@@ -9,6 +9,7 @@ When I log in for the first time
 And I visit my workspace page
 Then a checklist named "Introduction to Obsekio" will be present in my workspace
 
+@javascript
 Scenario: Opening up the "Introduction to Obsekio" checklist
 Given I am logged in
 And a checklist named "Introduction to Obsekio" exists in my workspace
@@ -16,6 +17,7 @@ When I open the checklist named "Introduction to Obsekio"
 And I click on the "Account Settings" link in the checklist
 Then will be redirected to the account settings page
 
+@javascript
 Scenario: Checking off the "Introduction to Obsekio" checklist
 Given I am logged in
 And a checklist named "Introduction to Obsekio" exists in my workspace

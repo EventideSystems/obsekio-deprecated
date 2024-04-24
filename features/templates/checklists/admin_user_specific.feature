@@ -15,8 +15,17 @@ Then the template called "New Template" should be saved in the library
 Then I should be taken to the template checklist view page
 
 Scenario: Admin user edits a template checklist
+Given I am a logged in as an admin user
+And a draft template checklist called "New Template" exists
+When I click on "Edit" for the "New Template" template checklist
+And I fill in the form with the following information:
+| templates_checklist_title    | Updated Template    |
+And I click on "Save"
+Then the template called "Updated Template" should be saved in the library
+Then I should be taken to the template checklist view page
 
-Scenario: Admin user deletes a template checklist
+
+Scenario: Admin user archives a template checklist
 
 Scenario: Admin user publishes a template checklist
 Given I am a logged in as an admin user
