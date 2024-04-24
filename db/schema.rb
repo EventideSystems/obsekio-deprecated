@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_20_004225) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_24_063842) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -52,7 +52,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_20_004225) do
     t.index ["type"], name: "index_checklists_on_type"
   end
 
-  create_table "templates_checklists", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "library_checklists", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title"
     t.string "status", default: "draft"
     t.uuid "created_by_id"
@@ -67,9 +67,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_20_004225) do
     t.string "rights"
     t.string "source"
     t.string "title_alternative"
-    t.index ["created_by_id"], name: "index_templates_checklists_on_created_by_id"
-    t.index ["status"], name: "index_templates_checklists_on_status"
-    t.index ["title"], name: "index_templates_checklists_on_title"
+    t.boolean "public", default: false
+    t.index ["created_by_id"], name: "index_library_checklists_on_created_by_id"
+    t.index ["public"], name: "index_library_checklists_on_public"
+    t.index ["status"], name: "index_library_checklists_on_status"
+    t.index ["title"], name: "index_library_checklists_on_title"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -101,5 +103,5 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_20_004225) do
 
   add_foreign_key "checklist_instances", "checklists"
   add_foreign_key "checklists", "users", column: "created_by_id"
-  add_foreign_key "templates_checklists", "users", column: "created_by_id"
+  add_foreign_key "library_checklists", "users", column: "created_by_id"
 end

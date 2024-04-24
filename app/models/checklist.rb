@@ -5,11 +5,14 @@
 #
 # @abstract
 # @see Library::Checklist
-# @see Templates::Checklist
+# @see Library::Checklist
 class Checklist < ApplicationRecord
   has_markdown :content
 
   string_enum :instance_model, %i[single longitudinal concurrent], default: :single
+
+  belongs_to :created_by, class_name: 'User', optional: true
+  belongs_to :assignee, polymorphic: true, optional: false
 
   has_many :checklist_instances, dependent: :destroy
 

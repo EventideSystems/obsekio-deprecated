@@ -4,8 +4,8 @@ Given('I am on the dashboard') do
   visit(root_path)
 end
 
-Given('I am on the template checklist library') do
-  visit templates_checklists_path
+Given('I am on the library checklist page') do
+  visit library_checklists_path
 end
 
 When('I click on {string}') do |string|
@@ -24,6 +24,6 @@ Then('will be redirected to the account settings page') do
   expect(page).to have_current_path(settings_account_path, ignore_query: true)
 end
 
-Then('I should be taken to the template checklist library') do
-  expect(page).to have_current_path(templates_checklists_path, ignore_query: true)
+Then('I should be taken to the library checklist') do
+  expect(page).to have_current_path(library_checklists_path, ignore_query: true)
 end

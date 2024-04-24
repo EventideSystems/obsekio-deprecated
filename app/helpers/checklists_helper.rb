@@ -3,12 +3,12 @@
 # Helper methods for checklists
 module ChecklistsHelper
   STATUS_DOT_CLASSES = {
-    Templates::Checklist => {
+    Library::Checklist => {
       draft: 'text-yellow-500 bg-yellow-100/10',
       published: 'text-green-400 bg-green-400/10',
       archived: 'text-red-400 bg-red-400/10'
     },
-    Library::Checklist => {}
+    Workspace::Checklist => {}
   }.freeze
 
   def render_checklist_status_dot(checklist)

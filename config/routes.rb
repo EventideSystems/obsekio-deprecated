@@ -11,13 +11,9 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   namespace :library do
-    resources :checklists
-  end
-
-  namespace :templates do
     resources :checklists do
       member do
-        post :copy_to_library
+        post :copy_to_workspace
         post :publish
       end
     end

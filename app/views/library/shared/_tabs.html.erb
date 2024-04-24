@@ -9,12 +9,12 @@
       <%- else %>
         <%- if policy(@checklist).show? %>
           <li>
-            <%= link_to_tab_item 'Preview', templates_checklist_path(@checklist), :show %>
+            <%= link_to_tab_item 'Preview', library_checklist_path(@checklist), :show %>
           </li>
         <%- end %>
         <%- if policy(@checklist).edit? %>
           <li>
-            <%= link_to_tab_item 'Write', edit_templates_checklist_path(@checklist), :edit %>
+            <%= link_to_tab_item 'Write', edit_library_checklist_path(@checklist), :edit %>
           </li>
         <%- end %>
         <li>

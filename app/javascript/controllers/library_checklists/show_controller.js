@@ -17,7 +17,7 @@ export default class extends Controller {
   }
 
   showPreviewPanel(event) {
-    this.showPanel(event, this.previewPanelTarget, [tthis.detailsPanelTarget]);
+    this.showPanel(event, this.previewPanelTarget, [this.detailsPanelTarget]);
   }
 
   showDetailsPanel(event) {

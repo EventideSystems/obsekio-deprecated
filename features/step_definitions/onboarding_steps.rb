@@ -16,6 +16,7 @@ Given('I have signed up') do
   fill_in('Password', with: 'password1234')
   fill_in('Password confirmation', with: 'password1234')
   click_button('Sign up')
+  sleep(3) # Wait for the confirmation email to send
 end
 
 When('I fill in the form with valid information') do
