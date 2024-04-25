@@ -60,8 +60,10 @@
   </div>
 
   <div data-library-checklists--show-target="previewPanel" class="mx-8 my-8">
+    <pre class="markdown hidden"><%= @checklist.content %></pre>
     <div class="checklist-preview">
-      <%= render_checklist(@checklist) %>
+      <%#= render_checklist(@checklist) %>
+      <div id="viewer"></div>
     </div>
   </div>
 

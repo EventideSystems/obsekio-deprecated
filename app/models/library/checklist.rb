@@ -3,8 +3,6 @@
 module Library
   # Checklist belonging to the library
   class Checklist < ApplicationRecord
-    has_markdown :content
-
     string_enum :status, %i[draft published archived], default: :draft
 
     validates :title, presence: true

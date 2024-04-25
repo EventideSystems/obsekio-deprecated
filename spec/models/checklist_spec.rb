@@ -16,7 +16,7 @@ RSpec.describe Checklist, type: :model do
       let(:instance_model) { 'single' }
 
       it { expect(single_instance).to be_a(ChecklistInstance) }
-      it { expect(single_instance.content.body.to_markdown).to eq(checklist.content.body.to_markdown) }
+      it { expect(single_instance.content).to eq(checklist.content) }
 
       it 'creates a new instance automatically' do
         expect { single_instance }.to change(ChecklistInstance, :count).by(1)

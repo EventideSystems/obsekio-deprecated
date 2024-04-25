@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe ChecklistInstance, type: :model do
+  let(:assignee) { create(:user) }
+  let(:checklist) { create(:workspace_checklist, assignee:) }
   let(:content) do
     <<~CONTENT
       # Welcome to Obsekio!
@@ -19,7 +21,7 @@ RSpec.describe ChecklistInstance, type: :model do
   end
 
   describe 'checklist items' do
-    let(:checklist_instance) { build(:checklist_instance, content:) }
+    let(:checklist_instance) { build(:checklist_instance, checklist:, content:) }
 
     it { expect(checklist_instance.checklist_items.count).to eq(5) }
     it { expect(checklist_instance.checklist_items[0].checked).to be_falsey }
@@ -30,7 +32,7 @@ RSpec.describe ChecklistInstance, type: :model do
   end
 
   describe 'updating a checklist item' do
-    let(:checklist_instance) { build(:checklist_instance, content:) }
+    let(:checklist_instance) { build(:checklist_instance, checklist:, content:) }
 
     it 'updates the checklist item' do
       checklist_item = checklist_instance.checklist_items.first

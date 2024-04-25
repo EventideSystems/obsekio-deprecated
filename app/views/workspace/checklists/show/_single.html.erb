@@ -1,8 +1,9 @@
 <%= render partial: 'workspace/checklists/show/single_tabs' %>
 <div class="flex px-4 py-8 sm:px-6 ">
   <div class="checklist-preview">
-    <div data-controller="checklist" data-checklist-instance-id-value="<%= checklist.single_instance.id %>">
-      <%= render_checklist_instance(checklist.single_instance) %>
+    <div data-controller="checklist" data-checklist-target="previewPanel" data-checklist-instance-id-value="<%= checklist.single_instance.id %>">
+      <pre class="markdown hidden"><%= @checklist.single_instance.content %></pre>
+      <div id="viewer"></div>
     </div>
   </div>
 </div>

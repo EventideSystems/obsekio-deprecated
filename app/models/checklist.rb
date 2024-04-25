@@ -7,8 +7,6 @@
 # @see Library::Checklist
 # @see Library::Checklist
 class Checklist < ApplicationRecord
-  has_markdown :content
-
   string_enum :instance_model, %i[single longitudinal concurrent], default: :single
 
   belongs_to :created_by, class_name: 'User', optional: true

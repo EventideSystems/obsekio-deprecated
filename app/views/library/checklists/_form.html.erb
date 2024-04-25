@@ -51,8 +51,11 @@
       </nav>
     </div>
 
-    <div data-library-checklists--form-target="writePanel" class="mx-8 mt-8">
-      <%= f.markdown_field :content %>
+    <div data-library-checklists--form-target="writePanel" class="mx-8 mt-8 checklist-preview">
+      <div id="editor"></div>
+      <div data-library-checklists--form-target="markdownContent" class="hidden">
+        <%= f.text_area :content %>
+      </div>
     </div>
 
     <div data-library-checklists--form-target="detailsPanel" class="mx-8 mt-8 hidden">

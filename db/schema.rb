@@ -10,20 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_24_063842) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_25_110219) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
-
-  create_table "action_markdown_markdown_texts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "name", null: false
-    t.text "body"
-    t.string "record_type", null: false
-    t.uuid "record_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["record_type", "record_id", "name"], name: "index_action_markdown_markdown_texts_uniqueness", unique: true
-  end
 
   create_table "checklist_instances", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "checklist_id", null: false
@@ -31,6 +21,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_24_063842) do
     t.uuid "assignee_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "content"
     t.index ["assignee_type", "assignee_id"], name: "index_checklist_instances_on_assignee"
     t.index ["checklist_id"], name: "index_checklist_instances_on_checklist_id"
   end
@@ -45,6 +36,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_24_063842) do
     t.string "assignee_type"
     t.uuid "assignee_id"
     t.string "instance_model", default: "single", null: false
+    t.text "content"
     t.index ["assignee_type", "assignee_id"], name: "index_checklists_on_assignee"
     t.index ["created_by_id"], name: "index_checklists_on_created_by_id"
     t.index ["status"], name: "index_checklists_on_status"
@@ -68,6 +60,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_24_063842) do
     t.string "source"
     t.string "title_alternative"
     t.boolean "public", default: false
+    t.text "content"
     t.index ["created_by_id"], name: "index_library_checklists_on_created_by_id"
     t.index ["public"], name: "index_library_checklists_on_public"
     t.index ["status"], name: "index_library_checklists_on_status"
