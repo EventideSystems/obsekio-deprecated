@@ -55,7 +55,6 @@ gem 'pretender'
 gem 'pundit'
 gem 'recaptcha'
 
-gem 'action_markdown'
 gem 'commonmarker'
 gem 'html-pipeline'
 gem 'view_component'

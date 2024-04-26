@@ -46,10 +46,89 @@
   }
 }
 
-.action-markdown-toolbar {
-  @apply block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6;
-}
+.checklist-editor {
 
-.action-markdown-input {
-  @apply h-[80vh];
+  .ProseMirror {
+    @apply text-white;
+  }
+
+  .toastui-editor-popup-body h1,
+  .toastui-editor-popup-body h2,
+  .toastui-editor-popup-body h3,
+  .toastui-editor-popup-body li {
+    @apply text-gray-600;
+  }
+
+  .toastui-editor-md-heading, .toastui-editor-md-list-item .toastui-editor-md-meta, .toastui-editor-md-list-item-style, .toastui-editor-md-strong {
+    @apply font-bold text-white mb-2;
+  }
+
+  .toastui-editor-md-marked-text
+  {
+    @apply text-white;
+  }
+
+  .toastui-editor-md-preview .toastui-editor-contents h1 {
+    @apply text-white;
+  }
+
+  .toastui-editor-md-preview .toastui-editor-contents h2 {
+    @apply text-white;
+  }
+
+  .toastui-editor-contents ol p, .toastui-editor-contents ul p {
+    @apply text-white;
+  }
+
+  .toastui-editor-contents {
+    @apply bg-gray-900;
+  }
+
+  .toastui-editor-contents p {
+    @apply text-white;
+  }
+
+  .toastui-editor-contents>div>div:first-of-type h1, .toastui-editor-contents>h1:first-of-type  {
+    @apply text-white;
+  }
+
+  .toastui-editor-contents>div>div h2, .toastui-editor-contents>h2  {
+    @apply text-white;
+  }
+
+  .toastui-editor-contents .task-list-item.checked:before {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCI+PHBhdGggZD0iTTE2IDBhMiAyIDAgMCAxIDIgMnYxNGEyIDIgMCAwIDEtMiAySDJhMiAyIDAgMCAxLTItMlYyYTIgMiAwIDAgMSAyLTJoMTR6bS0xLjc5MyA1LjI5M2ExIDEgMCAwIDAtMS40MTQgMEw3LjUgMTAuNTg1IDUuMjA3IDguMjkzbC0uMDk0LS4wODNhMSAxIDAgMCAwLTEuMzIgMS40OTdsMyAzIC4wOTQuMDgzYTEgMSAwIDAgMCAxLjMyLS4wODNsNi02IC4wODMtLjA5NGExIDEgMCAwIDAtLjA4My0xLjMyeiIgZmlsbD0iIzRGNDZFNSIgZmlsbC1ydWxlPSJldmVub2RkIi8+PC9zdmc+DQo=) !important;
+  }
+
+  h1 {
+    @apply text-2xl font-bold text-white mb-2;
+  }
+
+  h2 {
+    @apply text-xl font-bold text-white mb-2 mt-2;
+  }
+
+  h3 {
+    @apply text-lg font-bold text-white mb-2 mt-2;
+  }
+
+  li {
+    @apply text-white mb-2 ml-5;
+  }
+
+  p {
+    @apply text-white mb-2;
+  }
+
+  a {
+    @apply text-indigo-600;
+  }
+
+  ul {
+    @apply mt-3 mb-5;
+  }
+
+  /* input[type=checkbox] {
+    @apply h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600 mr-2;
+  } */
 }

@@ -74,8 +74,9 @@ module Library
     def build_workspace_checklist(checklist)
       Workspace::Checklist.new(
         title: checklist.title,
-        content: checklist.content.body,
+        content: checklist.content,
         assignee: current_user,
+        instance_model: :single,
         created_by: checklist.created_by
       )
     end

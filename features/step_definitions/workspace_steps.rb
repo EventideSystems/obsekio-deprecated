@@ -14,10 +14,8 @@ When('I open the checklist named {string}') do |string|
 end
 
 When('I click on the {string} checklist item') do |string|
-  element = find('input[type="checkbox"]') do |checkbox|
-    parent_element = checkbox.find(:xpath, '..')
-    text_nodes = parent_element.text.split("\n")
-    text_nodes.include?(string)
+  element = find('.task-list-item') do |checkbox|
+    checkbox.text&.include?(string)
   end
 
   expect(element).to be_present
@@ -34,11 +32,9 @@ Then('a checklist named {string} will be present in my workspace') do |checklist
 end
 
 Then('the {string} checklist item will be marked as checked') do |string|
-  element = find('input[type="checkbox"]') do |checkbox|
-    parent_element = checkbox.find(:xpath, '..')
-    text_nodes = parent_element.text.split("\n")
-    text_nodes.include?(string)
+  element = find_all('.task-list-item').find('.checked') do |checkbox|
+    checkbox.text&.include?(string)
   end
 
-  expect(element.checked?).to be_truthy
+  expect(element).to be_present
 end

@@ -8,5 +8,7 @@ class ChecklistItemsController < ApplicationController
     checklist_item.checked = params[:checklist_item][:checked]
     checklist_instance.update_checklist_item(checklist_item)
     checklist_instance.save
+
+    head :no_content
   end
 end
