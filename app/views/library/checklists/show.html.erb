@@ -52,7 +52,7 @@
           <%= link_to 'Preview', nil, data: { action: "click->library-checklists--show#showPreviewPanel" }, class: 'text-indigo-400' %>
         </li>
         <li>
-          <%= link_to 'Details', nil, data: { action: "click->library-checklists--show#showDetailsPanel" } %>
+          <%= link_to 'Settings', nil, data: { action: "click->library-checklists--show#showSettingsPanel" } %>
         </li>
 
       </ul>
@@ -62,12 +62,11 @@
   <div data-library-checklists--show-target="previewPanel" class="mx-8 my-8">
     <pre class="markdown hidden"><%= @checklist.content %></pre>
     <div class="checklist-preview">
-      <%#= render_checklist(@checklist) %>
-      <div id="viewer"></div>
+      <%= render_checklist(@checklist) %>
     </div>
   </div>
 
-  <div data-library-checklists--show-target="detailsPanel" class="mx-8 my-8 hidden">
-    <%= render partial: 'show_details', locals: { checklist: @checklist } %>
+  <div data-library-checklists--show-target="settingsPanel" class="mx-8 my-8 hidden">
+    <%= render partial: 'show_settings', locals: { checklist: @checklist } %>
   </div>
 </div>

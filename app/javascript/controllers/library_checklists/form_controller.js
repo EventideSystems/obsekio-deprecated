@@ -3,7 +3,7 @@ import { Editor } from '@toast-ui/editor'
 
 export default class extends Controller {
 
-  static targets = ["writePanel", "detailsPanel", "previewPanel", "markdownContent"]
+  static targets = ["writePanel", "settingsPanel", "markdownContent"]
 
 
   connect() {
@@ -39,18 +39,11 @@ export default class extends Controller {
   }
 
   showWritePanel(event) {
-    this.showPanel(event, this.writePanelTarget, [this.detailsPanelTarget, this.previewPanelTarget]);
+    this.showPanel(event, this.writePanelTarget, [this.settingsPanelTarget]);
   }
 
-  showDetailsPanel(event) {
-    this.showPanel(event, this.detailsPanelTarget, [this.writePanelTarget, this.previewPanelTarget]);
-  }
-
-  showPreviewPanel(event) {
-    this.showPanel(event, this.previewPanelTarget, [this.writePanelTarget, this.detailsPanelTarget]);
-
-    const markdown = this.writePanelTarget.querySelector('textarea').value;
-    this.previewPanelTarget.querySelector('.markdown').innerHTML = marked(markdown);
+  showSettingsPanel(event) {
+    this.showPanel(event, this.settingsPanelTarget, [this.writePanelTarget]);
   }
 
   removeActiveMarkerFromLinks(event) {

@@ -3,7 +3,7 @@ import { Editor } from '@toast-ui/editor'
 
 export default class extends Controller {
 
-  static targets = ["previewPanel", "detailsPanel"]
+  static targets = ["previewPanel", "settingsPanel"]
 
   connect() {
     const content = this.previewPanelTarget.querySelector('.markdown').innerHTML;
@@ -29,11 +29,11 @@ export default class extends Controller {
   }
 
   showPreviewPanel(event) {
-    this.showPanel(event, this.previewPanelTarget, [this.detailsPanelTarget]);
+    this.showPanel(event, this.previewPanelTarget, [this.settingsPanelTarget]);
   }
 
-  showDetailsPanel(event) {
-    this.showPanel(event, this.detailsPanelTarget, [this.previewPanelTarget]);
+  showSettingsPanel(event) {
+    this.showPanel(event, this.settingsPanelTarget, [this.previewPanelTarget]);
   }
 
   removeIndigoFromLinks(event) {
