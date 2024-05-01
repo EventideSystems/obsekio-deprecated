@@ -45,7 +45,7 @@ Please follow these steps when submitting a bug report:
 - Describe the environment where the bug occurred, including the operating system, browser, and any other relevant information.
 - Include any additional information that may be helpful in understanding the problem.
 
-Bug reports can be filed in the project's [issue tracker](https://github.com/EventideSystems/obsekio/issues) on Github. Create a new issue and use the `Bug` template to provide the necessary information.
+Bug reports can be filed in the project's [issue tracker](https://github.com/EventideSystems/obsekio/issues) on Github. Create a new issue and use the `Bug Report` template to provide the necessary information.
 
 ### Suggesting Enhancements
 
