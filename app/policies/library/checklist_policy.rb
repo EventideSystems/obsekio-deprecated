@@ -18,18 +18,12 @@ module Library
 
     PERMITTED_ATTRIBUTES = %i[
       content
-      contributor
-      creator
-      description
-      format
-      public
-      language
-      publisher
-      rights
-      source
-      status
       title
-      title_alternative
+      metadata
+      name
+      description
+      author_name
+      license
     ].freeze
 
     def permitted_attributes
