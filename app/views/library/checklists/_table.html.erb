@@ -23,7 +23,7 @@
                       <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">
                         <%= link_to checklist.title, library_checklist_path(checklist) %>
                       </td>
-                      <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-300"><%= checklist.description %></td>
+                      <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-300"><%#= checklist.description %></td>
                       <%- if policy(checklist).edit? %>
                         <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                           <%= link_to class: "text-indigo-400 hover:text-indigo-300" do %>
