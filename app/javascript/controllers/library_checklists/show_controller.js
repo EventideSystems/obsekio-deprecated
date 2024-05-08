@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
 
-  static targets = ["previewPanel", "settingsPanel"]
+  static targets = ["previewPanel", "settingsPanel", "historyPanel"]
 
   showPanel(event, panelToShow, panelsToHide) {
     event.preventDefault();
@@ -17,11 +17,15 @@ export default class extends Controller {
   }
 
   showPreviewPanel(event) {
-    this.showPanel(event, this.previewPanelTarget, [this.settingsPanelTarget]);
+    this.showPanel(event, this.previewPanelTarget, [this.settingsPanelTarget, this.historyPanelTarget]);
   }
 
   showSettingsPanel(event) {
-    this.showPanel(event, this.settingsPanelTarget, [this.previewPanelTarget]);
+    this.showPanel(event, this.settingsPanelTarget, [this.previewPanelTarget, this.historyPanelTarget]);
+  }
+
+  showHistoryPanel(event) {
+    this.showPanel(event, this.historyPanelTarget, [this.previewPanelTarget, this.settingsPanelTarget]);
   }
 
   removeIndigoFromLinks(event) {

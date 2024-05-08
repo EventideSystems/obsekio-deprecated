@@ -19,6 +19,7 @@
 # include additional properties as needed. It's only here as an example of using custom types.
 #
 # We will provide a more complete implementation of the CreativeWork or other schema.org schemas later.
+# to use, call ActiveRecord::Type.register(:creative_work, CreativeWorkType) and then attribute :colname, :creative_work
 class CreativeWorkType < ActiveRecord::Type::Value
   def type
     :creative_work

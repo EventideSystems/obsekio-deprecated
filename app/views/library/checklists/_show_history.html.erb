@@ -1,0 +1,12 @@
+<div>
+  <div class="mt-6 xborder-t xborder-white/10">
+    <dl class="divide-y divide-white/10">
+      <% checklist.log_data.versions.each do |version| %>
+      <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+        <dt class="text-sm font-medium leading-6 text-white"><%= Time.at(version.time / 1000).to_s %></dt>
+        <dd class="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0"><%= version.changes %></dd>
+      </div>
+      <% end %>
+    </dl>
+  </div>
+</div>

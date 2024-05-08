@@ -5,6 +5,7 @@ module Library
   class ChecklistsController < ApplicationController
     group :library
 
+    around_action :use_logidze_responsible, only: %i[create update]
     before_action :load_checklist, only: %i[show edit update copy_to_workspace publish]
 
     def index

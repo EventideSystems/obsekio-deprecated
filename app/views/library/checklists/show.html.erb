@@ -55,6 +55,10 @@
           <%= link_to 'Settings', nil, data: { action: "click->library-checklists--show#showSettingsPanel" } %>
         </li>
 
+        <li>
+          <%= link_to 'History', nil, data: { action: "click->library-checklists--show#showHistoryPanel" } %>
+        </li>
+
       </ul>
     </nav>
   </div>
@@ -68,5 +72,9 @@
 
   <div data-library-checklists--show-target="settingsPanel" class="mx-8 my-8 hidden">
     <%= render partial: 'show_settings', locals: { checklist: @checklist } %>
+  </div>
+
+  <div data-library-checklists--show-target="historyPanel" class="mx-8 my-8 hidden">
+    <%= render partial: 'show_history', locals: { checklist: @checklist } %>
   </div>
 </div>
