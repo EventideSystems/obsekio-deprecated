@@ -41,4 +41,8 @@ class ApplicationController < ActionController::Base
     reset_session
     redirect_to root_path, alert: I18n.t('alerts.session_expired')
   end
+
+  def use_logidze_responsible(&block)
+    Logidze.with_responsible(current_user&.id, &block)
+  end
 end

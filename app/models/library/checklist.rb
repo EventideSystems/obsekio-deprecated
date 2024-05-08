@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
-ActiveRecord::Type.register(:creative_work, CreativeWorkType)
 module Library
   # Checklist belonging to the library
   class Checklist < ApplicationRecord
+    has_logidze
+
     belongs_to :created_by, class_name: 'User', optional: true
 
     string_enum :status, %i[draft published archived], default: :draft

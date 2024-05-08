@@ -59,6 +59,11 @@ gem 'commonmarker'
 gem 'html-pipeline'
 gem 'view_component'
 
+# Database management
+gem 'fx'
+gem 'logidze'
+gem 'scenic'
+
 group :development, :test do
   gem 'dotenv'
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
