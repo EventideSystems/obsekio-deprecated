@@ -70,10 +70,10 @@ module Library
 
     private
 
-    # TODO: Refactor this into an event object? In any case, change this use the new Workspace::Checklist model
+    # TODO: Refactor this into an event object? In any case, change this use the new Checklist model
     # when it becomes available
     def build_workspace_checklist(checklist)
-      Workspace::Checklist.new(
+      ::Checklist.new(
         title: checklist.title,
         content: checklist.content,
         assignee: current_user,

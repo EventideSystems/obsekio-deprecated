@@ -3,38 +3,26 @@
 require 'rails_helper'
 
 RSpec.describe Checklist, type: :model do
-  describe 'single_instance' do
-    let(:assignee) { create(:user) }
-    let(:content) { '# test' }
+  let(:assignee) { create(:user) }
 
-    let(:checklist) { create(:workspace_checklist, instance_model:, assignee:, content:) }
-    let(:single_instance) { checklist.single_instance }
-
-    let(:instance_model) { 'single' }
-
-    context 'when no instance record exists' do
-      let(:instance_model) { 'single' }
-
-      it { expect(single_instance).to be_a(ChecklistInstance) }
-      it { expect(single_instance.content).to eq(checklist.content) }
-
-      it 'creates a new instance automatically' do
-        expect { single_instance }.to change(ChecklistInstance, :count).by(1)
-      end
+  describe 'items' do
+    let(:content) do
+      <<~CONTENT
+        # test
+        ## Group 1
+        - [ ] item 1
+        - [ ] item 2
+        ## Group 2
+        - [ ] item 3
+        - [x] item 4
+      CONTENT
     end
 
-    context 'when an instance record exists' do
-      before { create(:checklist_instance, checklist:) }
+    let(:checklist) { create(:checklist, assignee:, content:) }
+    let(:items) { checklist.items }
 
-      it 'does not creates a new instance' do
-        expect { single_instance }.not_to change(ChecklistInstance, :count)
-      end
-    end
-
-    context 'when the checklist is not single' do
-      let(:instance_model) { 'longitudinal' }
-
-      it { expect(single_instance).to be_nil }
-    end
+    it { expect(items).to all(be_a(ChecklistItem)) }
+    it { expect(items.map(&:text)).to eq(['item 1', 'item 2', 'item 3', 'item 4']) }
+    it { expect(items.map(&:checked)).to eq([false, false, false, true]) }
   end
 end

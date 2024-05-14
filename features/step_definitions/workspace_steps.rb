@@ -2,7 +2,7 @@
 
 Given('a checklist named {string} exists in my workspace') do |checklist_name|
   sleep(1) # TODO: Remove this and wait for the page to load properly
-  expect(@user.workspace_checklists.exists?(title: checklist_name)).to be true
+  expect(@user.checklists.exists?(title: checklist_name)).to be true
 
   visit(root_path)
   expect(page).to have_content(checklist_name)

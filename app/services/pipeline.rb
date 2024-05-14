@@ -6,32 +6,35 @@ require 'html_pipeline/convert_filter/markdown_filter'
 # Converts markdown to HTML
 class Pipeline
   # Private class to convert Obsekio-flavored radio button markdown to HTML
-  class RadioButtonFilter < HTMLPipeline::NodeFilter
-    def call
-      doc.search('.//text()').each do |node|
-        content = node.to_html
-        next unless content.include?('- ( )')
+  class CheckedStateFilter < HTMLPipeline::NodeFilter
+    SELECTOR = Selma::Selector.new(match_element: '[type="checkbox"]')
 
-        html = convert_to_radio_button(content)
-        node.replace(html)
+    def initialize(checklist_instance: nil)
+      if checklist_instance.present? && checklist_instance.is_a?(ChecklistInstance)
+        @checklist_instance = checklist_instance
+        @checklist_item_states = checklist_instance&.item_states&.dup || []
       end
-      doc
+
+      super()
     end
 
-    private
+    def selector
+      SELECTOR
+    end
 
-    def convert_to_radio_button(content)
-      content.gsub!(/-\s\(\s\)\s(.*)/, '<input type="radio"> \1')
+    def handle_element(element)
+      state = @checklist_item_states&.shift
+      element['checked'] = 'checked' if state.present? && state['checked']
     end
   end
 
-  def call(markdown)
+  def call(markdown, checklist_instance = nil)
     return { output: '' } if markdown.blank?
 
     pipeline = HTMLPipeline.new(
       convert_filter: HTMLPipeline::ConvertFilter::MarkdownFilter.new,
-      sanitization_config: sanitize_config
-      # node_filters: [RadioButtonFilter.new]
+      sanitization_config: sanitize_config,
+      node_filters: [CheckedStateFilter.new(checklist_instance:)]
     )
 
     pipeline.call(markdown)

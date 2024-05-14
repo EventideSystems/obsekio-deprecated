@@ -8,14 +8,14 @@ module ChecklistsHelper
       published: 'text-green-400 bg-green-400/10',
       archived: 'text-red-400 bg-red-400/10'
     },
-    Workspace::Checklist => {}
+    Checklist => {}
   }.freeze
 
   def render_checklist_status_dot(checklist)
-    render 'checklists/shared/status_dot', classes: STATUS_DOT_CLASSES.dig(checklist.class, checklist.status.to_sym)
+    render 'checklists/shared/status_dot', classes: STATUS_DOT_CLASSES.dig(checklist.class, checklist.status&.to_sym)
   end
 
   def render_checklist(checklist)
-    Pipeline.new.call(checklist.content)[:output].html_safe # rubocop:disable Rails/OutputSafety
+    Pipeline.new.call(checklist.content, checklist)[:output].html_safe # rubocop:disable Rails/OutputSafety
   end
 end

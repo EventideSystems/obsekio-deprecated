@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-# Non-ActiveRecord model to represent a checklist item
+# Non-ActiveRecord model to represent a checklist item and its state
 class ChecklistItem
   include ActiveModel::Model
 
-  attr_accessor :checked, :index, :text
+  attr_accessor :checked, :text
 end

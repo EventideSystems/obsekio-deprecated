@@ -6,11 +6,11 @@ module Workspace
     group :root
 
     def index
-      @checklists = Workspace::Checklist.all
+      @checklists = Checklist.all
     end
 
     def show
-      @checklist = Workspace::Checklist.find(params[:id])
+      @checklist = Checklist.find(params[:id])
     end
 
     def edit
@@ -18,7 +18,7 @@ module Workspace
     end
 
     def update
-      @checklist = Workspace::Checklist.find(params[:id])
+      @checklist = Checklist.find(params[:id])
       @checklist.update(checklist_params)
 
       redirect_to workspace_checklist_path(@checklist)
