@@ -36,13 +36,13 @@ module Workspace
     CONTENT
 
     def remove_introduction_checklist
-      user.workspace_checklists.find_by(title: INTRODUCTION_CHECKLIST_TITLE)&.destroy
+      user.checklists.find_by(title: INTRODUCTION_CHECKLIST_TITLE)&.destroy
     end
 
     def setup_introduction_checklist
-      return if user.workspace_checklists.exists?(title: INTRODUCTION_CHECKLIST_TITLE)
+      return if user.checklists.exists?(title: INTRODUCTION_CHECKLIST_TITLE)
 
-      Workspace::Checklist.create!(
+      Checklist.create!(
         title: INTRODUCTION_CHECKLIST_TITLE,
         content: INTRODUCTION_CHECKLIST_CONTENT,
         assignee: user

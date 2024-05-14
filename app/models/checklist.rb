@@ -7,12 +7,25 @@
 # @see Library::Checklist
 # @see Library::Checklist
 class Checklist < ApplicationRecord
+  include ActionView::Helpers::SanitizeHelper
+
   string_enum :instance_model, %i[single longitudinal concurrent], default: :single
 
   belongs_to :created_by, class_name: 'User', optional: true
   belongs_to :assignee, polymorphic: true, optional: false
 
   has_many :checklist_instances, dependent: :destroy
+
+  # Returns the items in the checklist.
+  # @return [Array<ChecklistItem>]
+  def items
+    content.scan(/^[-|*] \[(.)\] (.*)/).map do |checked, text|
+      ChecklistItem.new(
+        checked: checked.present?,
+        text: strip_tags(text)
+      )
+    end
+  end
 
   # Returns the single instance of the checklist.
   #
@@ -32,6 +45,10 @@ class Checklist < ApplicationRecord
   # SMELL: Not entirely sure having a method that creates new records as a side effect is a good idea. We should
   # consider refactoring this and moving the setup for instances outside of the checklist model.
   def create_single_instance
-    checklist_instances.create(content:)
+    checklist_instance = checklist_instances.create(assignee:)
+    checklist_instance.prepare_items
+    checklist_instance.save!
+
+    checklist_instance
   end
 end

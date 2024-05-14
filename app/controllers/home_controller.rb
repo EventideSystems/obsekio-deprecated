@@ -23,6 +23,6 @@ class HomeController < ApplicationController
   def load_workspace
     return unless user_signed_in?
 
-    @checklists = current_user.workspace_checklists
+    @checklists = current_user.checklists
   end
 end

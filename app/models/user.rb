@@ -10,7 +10,7 @@ class User < ApplicationRecord
 
   encrypts :email, deterministic: true, downcase: true
 
-  has_many :workspace_checklists, as: :assignee, class_name: 'Workspace::Checklist', dependent: :destroy
+  has_many :checklists, as: :assignee, class_name: 'Checklist', dependent: :destroy
 
   after_create :setup_workspace
 

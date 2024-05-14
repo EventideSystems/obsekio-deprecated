@@ -4,7 +4,6 @@ require 'rails_helper'
 
 RSpec.describe ChecklistInstance, type: :model do
   let(:assignee) { create(:user) }
-  let(:checklist) { create(:workspace_checklist, assignee:) }
   let(:content) do
     <<~CONTENT
       # Welcome to Obsekio!
@@ -20,26 +19,18 @@ RSpec.describe ChecklistInstance, type: :model do
     CONTENT
   end
 
-  describe 'checklist items' do
-    let(:checklist_instance) { build(:checklist_instance, checklist:, content:) }
+  let(:checklist) { create(:checklist, assignee:, content:) }
 
-    it { expect(checklist_instance.checklist_items.count).to eq(5) }
-    it { expect(checklist_instance.checklist_items[0].checked).to be_falsey }
-    it { expect(checklist_instance.checklist_items[1].checked).to be_truthy }
-    it { expect(checklist_instance.checklist_items[2].checked).to be_falsey }
-    it { expect(checklist_instance.checklist_items[3].checked).to be_truthy }
-    it { expect(checklist_instance.checklist_items[4].checked).to be_truthy }
-  end
+  describe 'prepare_items' do
+    let(:checklist_instance) { build(:checklist_instance, checklist:) }
 
-  describe 'updating a checklist item' do
-    let(:checklist_instance) { build(:checklist_instance, checklist:, content:) }
+    before { checklist_instance.prepare_items }
 
-    it 'updates the checklist item' do
-      checklist_item = checklist_instance.checklist_items.first
-      checklist_item.checked = true
-      checklist_instance.update_checklist_item(checklist_item)
-
-      expect(checklist_instance.checklist_items.first.checked).to be_truthy
-    end
+    it { expect(checklist_instance.items.count).to eq(5) }
+    it { expect(checklist_instance.items[0].checked).to be_falsey }
+    it { expect(checklist_instance.items[1].checked).to be_truthy }
+    it { expect(checklist_instance.items[2].checked).to be_falsey }
+    it { expect(checklist_instance.items[3].checked).to be_truthy }
+    it { expect(checklist_instance.items[4].checked).to be_truthy }
   end
 end

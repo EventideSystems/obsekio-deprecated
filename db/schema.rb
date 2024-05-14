@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_08_063433) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_14_144251) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
   enable_extension "pgcrypto"
@@ -22,13 +22,22 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_08_063433) do
     t.uuid "assignee_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "content"
+    t.jsonb "item_states", default: [], array: true
+    t.jsonb "log_data"
     t.index ["assignee_type", "assignee_id"], name: "index_checklist_instances_on_assignee"
     t.index ["checklist_id"], name: "index_checklist_instances_on_checklist_id"
   end
 
+  create_table "checklist_item_events", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "checklist_instance_id", null: false
+    t.integer "index", null: false
+    t.jsonb "item_state", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["checklist_instance_id"], name: "index_checklist_item_events_on_checklist_instance_id"
+  end
+
   create_table "checklists", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "type", null: false
     t.string "title"
     t.string "status"
     t.uuid "created_by_id"
@@ -38,11 +47,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_08_063433) do
     t.uuid "assignee_id"
     t.string "instance_model", default: "single", null: false
     t.text "content"
+    t.jsonb "log_data"
     t.index ["assignee_type", "assignee_id"], name: "index_checklists_on_assignee"
     t.index ["created_by_id"], name: "index_checklists_on_created_by_id"
     t.index ["status"], name: "index_checklists_on_status"
     t.index ["title"], name: "index_checklists_on_title"
-    t.index ["type"], name: "index_checklists_on_type"
   end
 
   create_table "library_checklists", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -90,6 +99,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_08_063433) do
   end
 
   add_foreign_key "checklist_instances", "checklists"
+  add_foreign_key "checklist_item_events", "checklist_instances"
   add_foreign_key "checklists", "users", column: "created_by_id"
   add_foreign_key "library_checklists", "users", column: "created_by_id"
   create_function :logidze_capture_exception, sql_definition: <<-'SQL'
@@ -673,6 +683,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_08_063433) do
   SQL
 
 
+  create_trigger :logidze_on_checklists, sql_definition: <<-SQL
+      CREATE TRIGGER logidze_on_checklists BEFORE INSERT OR UPDATE ON public.checklists FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
+  SQL
+  create_trigger :logidze_on_checklist_instances, sql_definition: <<-SQL
+      CREATE TRIGGER logidze_on_checklist_instances BEFORE INSERT OR UPDATE ON public.checklist_instances FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
+  SQL
   create_trigger :logidze_on_library_checklists, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_library_checklists BEFORE INSERT OR UPDATE ON public.library_checklists FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
   SQL
