@@ -7,6 +7,7 @@
 # @see Library::Checklist
 # @see Library::Checklist
 class Checklist < ApplicationRecord
+  has_logidze
   include ActionView::Helpers::SanitizeHelper
 
   string_enum :instance_model, %i[single longitudinal concurrent], default: :single

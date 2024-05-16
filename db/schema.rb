@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_14_144251) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_16_093033) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
   enable_extension "pgcrypto"
@@ -48,6 +48,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_14_144251) do
     t.string "instance_model", default: "single", null: false
     t.text "content"
     t.jsonb "log_data"
+    t.jsonb "metadata", default: {}
     t.index ["assignee_type", "assignee_id"], name: "index_checklists_on_assignee"
     t.index ["created_by_id"], name: "index_checklists_on_created_by_id"
     t.index ["status"], name: "index_checklists_on_status"
@@ -643,7 +644,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_14_144251) do
           FOR k IN (SELECT key FROM jsonb_each(item))
           LOOP
             IF jsonb_typeof(item->k) = 'object' THEN
-               item := jsonb_set(item, ARRAY[k], to_jsonb(item->>k));
+              item := jsonb_set(item, ARRAY[k], to_jsonb(item->>k));
             END IF;
           END LOOP;
 
@@ -683,11 +684,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_14_144251) do
   SQL
 
 
-  create_trigger :logidze_on_checklists, sql_definition: <<-SQL
-      CREATE TRIGGER logidze_on_checklists BEFORE INSERT OR UPDATE ON public.checklists FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
-  SQL
   create_trigger :logidze_on_checklist_instances, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_checklist_instances BEFORE INSERT OR UPDATE ON public.checklist_instances FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
+  SQL
+  create_trigger :logidze_on_checklists, sql_definition: <<-SQL
+      CREATE TRIGGER logidze_on_checklists BEFORE INSERT OR UPDATE ON public.checklists FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
   SQL
   create_trigger :logidze_on_library_checklists, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_library_checklists BEFORE INSERT OR UPDATE ON public.library_checklists FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
