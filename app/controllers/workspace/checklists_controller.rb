@@ -3,7 +3,7 @@
 module Workspace
   # Controller for Workspace checklists
   class ChecklistsController < ApplicationController
-    group :root
+    group :workspace
 
     def index
       @checklists = Checklist.all
