@@ -7,6 +7,13 @@
 
 Obsekio allows users to define and manage compliance with configurable standards. It is based on ideas from Atul Gawande's book ["The Checklist Manifesto"](https://atulgawande.com/book/the-checklist-manifesto/) and is designed to help users create and manage checklists for complex tasks.
 
+> "Checklists seem lowly and simplistic, but they help fill in for the gaps in our brains and between our brains. They emphasize group precision in a way individual memories cannot." - Atul Gawande
+
+
+> "The volume and complexity of what we know has exceeded our individual ability to deliver its benefits correctly, safely, or reliably. Knowledge has both saved us and burdened us." - Atul Gawande
+
+NB This is a work in progress. The application is not yet ready for production use.
+
 The application is built using Ruby on Rails / PostgreSQL and is designed to be self-hosted. It is licensed under the [AGPL v3](https://www.gnu.org/licenses/agpl-3.0).
 
 ## Core Concepts
@@ -107,14 +114,6 @@ We are trying to make the application as easy to set up as possible for develope
 
 The plan is to start using Rails credentials in the future. For now, we are using environment variables.
 
-## Component Library
-
-The Obsekio component library aims to be a collection of reusable components that can be used to build the Obsekio application. The component library will be based on Github's [View Components](https://github.com/ViewComponent) and make heavy use of [Tailwind CSS](https://tailwindcss.com/).
-
-We are using [Lookbook](https://github.com/ViewComponent/lookbook) to document and develop the component library as we build it out. To access the component library, start the application in `development` mode and navigate to the following URL:
-
-http://localhost:3000/lookbook
-
 ## Contributing
 
 We welcome contributions from the community. Please see the [CONTRIBUTING.md](CONTRIBUTING.md) file for more information.
@@ -123,5 +122,8 @@ We welcome contributions from the community. Please see the [CONTRIBUTING.md](CO
 
 If you have any questions or need help, please open an issue on the [Github repository](https://github.com/EventideSystems/obsekio) or contact the maintainers directly.
 
+## Security
+
+If you discover a security vulnerability, please contact the maintainers directly via security [at] obsek [dot] io.
 
 
