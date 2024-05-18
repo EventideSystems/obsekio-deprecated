@@ -6,7 +6,7 @@ class HomeController < ApplicationController
   skip_before_action :authenticate_user!, raise: false
   before_action :load_workspace, only: :index
 
-  group :home
+  group :workspace
 
   def index = render(template, layout:)
 

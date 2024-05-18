@@ -16,17 +16,11 @@
 
   <body class="h-full">
     <%= render 'layouts/shared/flash_messages' %>
-    <div>
-      <%= render partial: 'layouts/shared/sidebar_mobile' %>
-      <%= render partial: 'layouts/shared/sidebar_desktop' %>
-
-      <div class="xl:pl-72">
-        <%= render partial: 'layouts/shared/search_header' %>
-        <main>
-          <%= yield %>
-        </main>
+    <%= render 'layouts/shared/navbar' %>
+    <main class='bg-white dark:bg-gray-900'>
+      <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+        <%= yield %>
       </div>
-    </div>
-
+    </main>
   </body>
 </html>

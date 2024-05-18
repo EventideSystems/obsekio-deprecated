@@ -21,6 +21,12 @@ module ApplicationHelper
     render 'layouts/shared/sidebar_item', title:, path:, icon:, active:, classes:
   end
 
+  def render_navbar_item(title:, path:, icon:, active_group:, classes: '')
+    active = active_group == controller.active_group
+
+    render 'layouts/shared/navbar_item', title:, path:, icon:, active:, classes:
+  end
+
   def link_to_tab_item(title, path, active_action_name)
     klass = controller.action_name == active_action_name.to_s ? 'text-indigo-400' : ''
 
