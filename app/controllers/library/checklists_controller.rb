@@ -73,11 +73,10 @@ module Library
     # TODO: Refactor this into an event object? In any case, change this use the new Checklist model
     # when it becomes available
     def build_workspace_checklist(checklist)
-      ::Checklist.new(
+      checklist.checklist_type.constantize.new(
         title: checklist.title,
         content: checklist.content,
         assignee: current_user,
-        instance_model: :single,
         created_by: checklist.created_by
       )
     end

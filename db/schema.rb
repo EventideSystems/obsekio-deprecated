@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_16_093033) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_20_124334) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
   enable_extension "pgcrypto"
@@ -45,14 +45,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_16_093033) do
     t.datetime "updated_at", null: false
     t.string "assignee_type"
     t.uuid "assignee_id"
-    t.string "instance_model", default: "single", null: false
     t.text "content"
     t.jsonb "log_data"
     t.jsonb "metadata", default: {}
+    t.string "type"
     t.index ["assignee_type", "assignee_id"], name: "index_checklists_on_assignee"
     t.index ["created_by_id"], name: "index_checklists_on_created_by_id"
     t.index ["status"], name: "index_checklists_on_status"
     t.index ["title"], name: "index_checklists_on_title"
+    t.index ["type"], name: "index_checklists_on_type"
   end
 
   create_table "library_checklists", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -65,6 +66,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_16_093033) do
     t.text "content"
     t.jsonb "metadata", default: {"@type"=>"CreativeWork", "author"=>{"name"=>"", "@type"=>"Person"}, "license"=>"", "@context"=>"https://schema.org", "description"=>""}
     t.jsonb "log_data"
+    t.string "checklist_type", default: "Checklists::Single", null: false
     t.index ["created_by_id"], name: "index_library_checklists_on_created_by_id"
     t.index ["metadata"], name: "index_library_checklists_on_metadata", using: :gin
     t.index ["public"], name: "index_library_checklists_on_public"
