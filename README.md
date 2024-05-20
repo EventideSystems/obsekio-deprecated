@@ -1,18 +1,31 @@
 # Obsekio
 
+
+**NOTE: OBSEKIO IS A WORK IN PROGRESS**
+
+THE APPLICATION IS NOT YET READY FOR PRODUCTION USE.
+
+---
+
+
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 ![check](https://github.com/EventideSystems/obsekio/actions/workflows/check.yml/badge.svg)
 [![Ruby Style Guide](https://img.shields.io/badge/code_style-rubocop-brightgreen.svg)](https://github.com/rubocop/rubocop)
 [![Ruby Style Guide](https://img.shields.io/badge/code_style-community-brightgreen.svg)](https://rubystyle.guide)
 
-Obsekio allows users to define and manage compliance with configurable standards. It is based on ideas from Atul Gawande's book ["The Checklist Manifesto"](https://atulgawande.com/book/the-checklist-manifesto/) and is designed to help users create and manage checklists for complex tasks.
+Obsekio strives to serve two different problem domains:
+
+1. **Compliance**: Establishing and overseeing conformance to customizable organizational standards.
+2. **Complexity**: Assessing progress in intricate projects with numerous interconnected activities and stakeholders.
+
+It is based on ideas from Atul Gawande's book ["The Checklist Manifesto"](https://atulgawande.com/book/the-checklist-manifesto/) and is designed to help users create and manage checklists for complex tasks.
+
 
 > "Checklists seem lowly and simplistic, but they help fill in for the gaps in our brains and between our brains. They emphasize group precision in a way individual memories cannot." - Atul Gawande
 
 
 > "The volume and complexity of what we know has exceeded our individual ability to deliver its benefits correctly, safely, or reliably. Knowledge has both saved us and burdened us." - Atul Gawande
 
-NB This is a work in progress. The application is not yet ready for production use.
 
 The application is built using Ruby on Rails / PostgreSQL and is designed to be self-hosted. It is licensed under the [AGPL v3](https://www.gnu.org/licenses/agpl-3.0).
 
@@ -125,5 +138,8 @@ If you have any questions or need help, please open an issue on the [Github repo
 ## Security
 
 If you discover a security vulnerability, please contact the maintainers directly via security [at] obsek [dot] io.
+
+
+
 
 
