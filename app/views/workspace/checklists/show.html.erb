@@ -1,8 +1,8 @@
 <h1 class="sr-only"><%= @checklist.title %></h1>
 <%= render partial: 'workspace/shared/header' %>
 
-<%- case @checklist.instance_model %>
-<%- when 'single' %>
+<%- case @checklist %>
+<%- when Checklists::Single %>
   <%= render partial: 'workspace/checklists/show/single', locals: { checklist: @checklist } %>
 <%- when 'longitudinal' %>
   <%= render partial: 'workspace/checklists/show/longitudinal', locals: { checklist: @checklist } %>
