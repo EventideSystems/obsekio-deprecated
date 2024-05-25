@@ -4,14 +4,12 @@ namespace :deploy do
   HEROKU_STAGING_DEPLOY = <<~BASH
     git push -f obsekio-staging staging:main && \
     heroku run rake db:migrate -a obsekio-staging && \
-    heroku run rake data:migrate -a obsekio-staging && \
     heroku restart -a obsekio-staging
   BASH
 
   HEROKU_PRODUCTION_DEPLOY = <<~BASH
     git push -f obsekio-production main:main && \
     heroku run rake db:migrate -a obsekio-production && \
-    heroku run rake data:migrate -a obsekio-production && \
     heroku restart -a obsekio-production
   BASH
 
