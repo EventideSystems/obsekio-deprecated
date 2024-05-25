@@ -3,7 +3,7 @@
     <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">Sign in to Brocade</h2>
     <p class="mt-2 text-center text-sm text-gray-600">
       Or
-      <%= link_to "register a new account", new_user_registration_path, class: "font-medium text-indigo-600 hover:text-indigo-500" %>
+      <%= link_to "register a new account", new_user_registration_path, class: "font-medium text-yellow-600 hover:text-yellow-500" %>
     </p>
   </div>
 
@@ -13,28 +13,28 @@
         <div>
           <%= f.label :email, class: 'block text-sm font-medium text-gray-700' %>
           <div class="mt-1">
-            <%= f.email_field :email, autofocus: true, autocomplete: "email", type: 'email', required: true, class: "block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" %>
+            <%= f.email_field :email, autofocus: true, autocomplete: "email", type: 'email', required: true, class: "block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-yellow-500 focus:outline-none focus:ring-yellow-500 sm:text-sm" %>
           </div>
         </div>
 
         <div>
           <%= f.label :password, class: 'block text-sm font-medium text-gray-700' %>
           <div class="mt-1">
-            <%= f.password_field :password, autocomplete: "current-password", required: true, class: "block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" %>
+            <%= f.password_field :password, autocomplete: "current-password", required: true, class: "block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-yellow-500 focus:outline-none focus:ring-yellow-500 sm:text-sm" %>
           </div>
         </div>
 
         <div class="flex items-center justify-between">
           <% if devise_mapping.rememberable? %>
             <div class="flex items-center">
-              <%= f.check_box :remember_me, class: "h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" %>
+              <%= f.check_box :remember_me, class: "h-4 w-4 rounded border-gray-300 text-yellow-600 focus:ring-yellow-500" %>
               <%= f.label :remember_me, class: "ml-2 block text-sm text-gray-900" %>
             </div>
           <% end %>
 
           <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
             <div class="text-sm">
-              <%= link_to "Forgot your password?", new_password_path(resource_name), class: "font-medium text-indigo-600 hover:text-indigo-500" %>
+              <%= link_to "Forgot your password?", new_password_path(resource_name), class: "font-medium text-yellow-600 hover:text-yellow-500" %>
             </div>
           <% end %>
         </div>
@@ -42,7 +42,7 @@
         <%= recaptcha_with_nonce(action: 'log_in') %>
 
         <div>
-          <%= f.submit "Sign in", class: "flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" %>
+          <%= f.submit "Sign in", class: "flex w-full justify-center rounded-md border border-transparent bg-yellow-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2" %>
         </div>
       <% end %>
 

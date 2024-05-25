@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Given('a draft library checklist called {string} exists') do |title|
-  @library_checklist = Library::Checklist.create!(
+  @library_checklist = OldLibrary::Checklist.create!(
     title:,
     status: :draft,
     content: '## Test library checklist Content'
@@ -9,7 +9,7 @@ Given('a draft library checklist called {string} exists') do |title|
 end
 
 Given('a published library checklist called {string} exists') do |title|
-  @library_checklist = Library::Checklist.create!(
+  @library_checklist = OldLibrary::Checklist.create!(
     title:,
     status: :published,
     public: true,
@@ -26,14 +26,14 @@ When('I click on a library checklist called {string}') do |name|
 end
 
 When('I click on {string} for the {string} template checklist') do |button, title|
-  @library_checklist = Library::Checklist.find_by(title:)
+  @library_checklist = OldLibrary::Checklist.find_by(title:)
 
   visit library_checklist_path(@library_checklist)
   click_on(button)
 end
 
 Then('the template called {string} should be saved in the library') do |title|
-  @library_checklist = Library::Checklist.find_by(title:)
+  @library_checklist = OldLibrary::Checklist.find_by(title:)
   expect(@library_checklist).to be_present
 end
 

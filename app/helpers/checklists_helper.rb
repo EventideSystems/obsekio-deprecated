@@ -2,20 +2,28 @@
 
 # Helper methods for checklists
 module ChecklistsHelper
-  STATUS_DOT_CLASSES = {
-    Library::Checklist => {
-      draft: 'text-yellow-500 bg-yellow-100/10',
-      published: 'text-green-400 bg-green-400/10',
-      archived: 'text-red-400 bg-red-400/10'
-    },
-    Checklist => {}
-  }.freeze
-
-  def render_checklist_status_dot(checklist)
-    render 'checklists/shared/status_dot', classes: STATUS_DOT_CLASSES.dig(checklist.class, checklist.status&.to_sym)
-  end
-
   def render_checklist(checklist)
     Pipeline.new.call(checklist.content, checklist)[:output].html_safe # rubocop:disable Rails/OutputSafety
+  end
+
+  # rubocop:disable Layout/LineLength
+  CHECKLIST_ACTION_CLASSES = 'relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900'
+  # rubocop:enable Layout/LineLength
+
+  def link_to_checklist_action(checklist)
+    case checklist.status.to_sym
+    when :draft then link_to('Edit', edit_checklist_path(checklist), class: CHECKLIST_ACTION_CLASSES)
+    when :ready then link_to('Start', checklist_path(checklist), class: CHECKLIST_ACTION_CLASSES)
+    when :in_progress then link_to('Continue', checklist_path(checklist), class: CHECKLIST_ACTION_CLASSES)
+    else
+      link_to 'View', edit_checklist_path(checklist)
+    end
+  end
+
+  def options_for_checklist_type_select
+    [
+      Checklists::Single,
+      Checklists::Concurrent
+    ].map { |type| [type.model_name.human, type.to_s] }
   end
 end

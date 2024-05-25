@@ -7,6 +7,7 @@ class ChecklistItemsController < ApplicationController
     index = params[:id].to_i
     item_state = params[:checklist_item].permit(:checked)
 
+    # TODO: Add current_user to the event
     ChecklistItemEvent.create(checklist_instance:, index:, item_state:)
 
     head :no_content

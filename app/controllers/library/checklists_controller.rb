@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Library
+module OldLibrary
   # Controller for library checklists
   class ChecklistsController < ApplicationController
     group :library
@@ -10,18 +10,18 @@ module Library
 
     def index
       @checklists = policy_scope(Library::Checklist).all
-      authorize Library::Checklist
+      authorize OldLibrary::Checklist
     end
 
     def show; end
 
     def new
-      @checklist = Library::Checklist.new
+      @checklist = OldLibrary::Checklist.new
       authorize @checklist
     end
 
     def create
-      @checklist = Library::Checklist.new(checklist_params)
+      @checklist = OldLibrary::Checklist.new(checklist_params)
       authorize @checklist
 
       if @checklist.save
@@ -82,7 +82,7 @@ module Library
     end
 
     def load_checklist
-      @checklist = Library::Checklist.find(params[:id])
+      @checklist = OldLibrary::Checklist.find(params[:id])
       authorize @checklist
     end
   end

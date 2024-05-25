@@ -8,7 +8,15 @@ class HomeController < ApplicationController
 
   group :workspace
 
-  def index = render(template, layout:)
+  # def index = render(template, layout:)
+
+  def index
+    if user_signed_in?
+      redirect_to personal_workspaces_path
+    else
+      render 'landing_page', layout: 'landing_page'
+    end
+  end
 
   private
 

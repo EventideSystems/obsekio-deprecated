@@ -1,0 +1,66 @@
+<div class="divide-y divide-white/5">
+  <div class="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">
+    <div>
+      <h2 class="text-base font-semibold leading-7 text-white">General Settings</h2>
+      <p class="mt-1 text-sm leading-6 text-gray-400">Metadata describing the checklist.</p>
+    </div>
+
+    <div class="md:col-span-2">
+      <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:max-w-xl sm:grid-cols-6">
+        <div class="col-span-full">
+          <%= form.label :description %>
+          <div class="mt-2">
+            <%= form.text_field :description %>
+          </div>
+        </div>
+
+        <div class="col-span-full">
+          <%= form.label :author_name %>
+          <div class="mt-2">
+            <%= form.text_field :author_name %>
+          </div>
+        </div>
+
+        <div class="col-span-full">
+          <%= form.label :license %>
+          <div class="mt-2">
+            <%= form.text_field :license %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <h3>*** Settings below do not work as yet ***</h3>
+  <div class="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">
+    <div>
+      <h2 class="text-base font-semibold leading-7 text-white">Vsibiblity</h2>
+      <p class="mt-1 text-sm leading-6 text-gray-400">Control who has access to this checklist.</p>
+    </div>
+
+    <form class="md:col-span-2">
+      <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:max-w-xl sm:grid-cols-6">
+        <div class="col-span-full">
+          <p class="mt-1 text-sm leading-6 text-gray-400">This checklist is currently <span class="font-semibold text-white"><%#= @checklist.public? ? 'public' : 'private' %></span>.</p>
+        </div>
+      </div>
+
+      <div class="mt-8 flex">
+        <button type="submit" class="rounded-md bg-yellow-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-yellow-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-500">Log out other sessions</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">
+    <div>
+      <h2 class="text-base font-semibold leading-7 text-white">Delete checklist</h2>
+      <p class="mt-1 text-sm leading-6 text-gray-400">No longer want to use our service? You can delete your account here. This action is not reversible. All information related to this account will be deleted permanently.</p>
+    </div>
+
+    <form class="flex items-start md:col-span-2">
+      <button type="submit" class="rounded-md bg-red-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-400">Yes, delete this checklist</button>
+    </form>
+  </div>
+</div>
+

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_20_124334) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_25_045649) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
   enable_extension "pgcrypto"
@@ -24,6 +24,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_20_124334) do
     t.datetime "updated_at", null: false
     t.jsonb "item_states", default: [], array: true
     t.jsonb "log_data"
+    t.string "title"
+    t.string "status", default: "ready", null: false
     t.index ["assignee_type", "assignee_id"], name: "index_checklist_instances_on_assignee"
     t.index ["checklist_id"], name: "index_checklist_instances_on_checklist_id"
   end
@@ -49,11 +51,24 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_20_124334) do
     t.jsonb "log_data"
     t.jsonb "metadata", default: {}
     t.string "type"
+    t.string "container_type"
+    t.uuid "container_id"
     t.index ["assignee_type", "assignee_id"], name: "index_checklists_on_assignee"
+    t.index ["container_type", "container_id"], name: "index_checklists_on_container"
     t.index ["created_by_id"], name: "index_checklists_on_created_by_id"
     t.index ["status"], name: "index_checklists_on_status"
     t.index ["title"], name: "index_checklists_on_title"
     t.index ["type"], name: "index_checklists_on_type"
+  end
+
+  create_table "libraries", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", null: false
+    t.string "owner_type"
+    t.uuid "owner_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["owner_id", "owner_type"], name: "index_libraries_on_owner_id_and_owner_type"
+    t.index ["owner_type", "owner_id"], name: "index_libraries_on_owner"
   end
 
   create_table "library_checklists", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -95,10 +110,22 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_20_124334) do
     t.boolean "admin", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "personal_library_id"
+    t.uuid "personal_workspace_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
+  end
+
+  create_table "workspaces", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.string "owner_type", null: false
+    t.uuid "owner_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["owner_id", "owner_type"], name: "index_workspaces_on_owner_id_and_owner_type"
+    t.index ["owner_type", "owner_id"], name: "index_workspaces_on_owner"
   end
 
   add_foreign_key "checklist_instances", "checklists"

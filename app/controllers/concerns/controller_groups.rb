@@ -13,4 +13,8 @@ module ControllerGroups
       @group = name
     end
   end
+
+  def group(name)
+    self.class.group(name)
+  end
 end
