@@ -28,7 +28,7 @@ module ApplicationHelper
   end
 
   def link_to_tab_item(title, path, active_action_name)
-    klass = controller.action_name == active_action_name.to_s ? 'text-indigo-400' : ''
+    klass = controller.action_name == active_action_name.to_s ? 'text-yellow-400' : ''
 
     return content_tag(:span, title, class: klass) if path.blank?
 

@@ -13,7 +13,7 @@ export default class extends Controller {
 
     panelToShow.classList.remove("hidden");
     this.removeIndigoFromLinks(event);
-    event.target.classList.add('text-indigo-400');
+    event.target.classList.add('text-yellow-400');
   }
 
   showPreviewPanel(event) {
@@ -30,7 +30,7 @@ export default class extends Controller {
 
   removeIndigoFromLinks(event) {
     event.target.parentNode.parentNode.querySelectorAll('a').forEach(function(link) {
-      link.classList.remove('text-indigo-400');
+      link.classList.remove('text-yellow-400');
     });
   }
 }

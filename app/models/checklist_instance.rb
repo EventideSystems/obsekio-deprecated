@@ -10,6 +10,8 @@ class ChecklistInstance < ApplicationRecord
 
   validates :checklist, presence: true
 
+  string_enum :status, %i[ready in_progress complete archived], default: :ready
+
   delegate :content, to: :checklist
 
   def prepare_items
@@ -25,6 +27,8 @@ class ChecklistInstance < ApplicationRecord
   end
 
   def update_checklist_item(event:)
+    prepare_items if item_states[event.index].blank?
+
     item_states[event.index] = item_states[event.index].merge(event.item_state)
 
     save!

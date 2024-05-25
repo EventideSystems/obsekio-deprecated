@@ -1,0 +1,37 @@
+<% content_for :breadcrumb_controls do %>
+  <%= link_to 'New instance', new_checklist_instance_path(checklist.becomes(Checklist)), class: ' "block rounded-md bg-yellow-500 px-3 py-2 text-center text-sm font-semibold text-white hover:bg-yellow-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-500 mr-2"' %>
+<% end %>
+
+<%= render partial: 'layouts/shared/breadcrumbs' %>
+
+<ul role="list" class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+  <% checklist.checklist_instances.each do |checklist_instance| %>
+    <li class="col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center shadow">
+      <div class="flex flex-1 flex-col p-8">
+        <div class="mx-auto h-32 w-32 flex-shrink-0 rounded-full bg-green-600 flex items-center justify-center">
+          <p class="text-4xl"><%= checklist_instance.title[0] %></p>
+        </div>
+        <h3 class="mt-6 text-sm font-medium text-gray-900"><%= checklist_instance.title %></h3>
+        <dl class="mt-1 flex flex-grow flex-col justify-between">
+          <dt class="sr-only">Title</dt>
+          <dd class="text-sm text-gray-500"><%= checklist_instance.model_name.human %></dd>
+          <dt class="sr-only">Status</dt>
+          <dd class="mt-3">
+            <span class="inline-flex items-center rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20"><%= checklist_instance.status.humanize %></span>
+          </dd>
+        </dl>
+      </div>
+      <div>
+        <div class="-mt-px flex divide-x divide-gray-200">
+          <div class="flex w-0 flex-1">
+            <%#= link_to_checklist_action(checklist) %>
+            <%= link_to 'Edit', checklist_instance_path(checklist, checklist_instance) %>
+          </div>
+          <div class="-ml-px flex w-0 flex-1">
+            <%#= link_to "Details", details_checklist_path(checklist), class: "relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-br-lg border border-transparent py-4 text-sm font-semibold text-gray-900"%>
+          </div>
+        </div>
+      </div>
+    </li>
+  <% end %>
+</ul>

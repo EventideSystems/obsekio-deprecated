@@ -18,11 +18,12 @@ RSpec.describe ChecklistItemEvent, type: :model do
       Feel free to check things off as you go. If you have any questions, don't hesitate to ask!
     CONTENT
   end
+  let(:title) { 'Getting Started Checklist' }
 
-  let(:checklist) { create(:checklist, assignee:, content:) }
+  let(:checklist) { create(:checklist, assignee:, content:, title:) }
   let(:checklist_instance) { create(:checklist_instance, checklist:) }
 
-  describe 'create event' do
+  describe 'create event' do # rubocop:disable RSpec/MultipleMemoizedHelpers
     before do
       checklist_instance.prepare_items
       checklist_instance.save!

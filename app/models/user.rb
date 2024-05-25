@@ -12,9 +12,27 @@ class User < ApplicationRecord
 
   has_many :checklists, as: :assignee, class_name: 'Checklist', dependent: :destroy
 
-  after_create :setup_workspace
+  belongs_to :personal_library, class_name: 'Library', dependent: :destroy, optional: true
+  belongs_to :personal_workspace, class_name: 'Workspace', dependent: :destroy, optional: true
+
+  after_create :setup_user
 
   private
 
-  def setup_workspace = Workspace::Setup.call(self)
+  def setup_personal_workspace
+    Workspace.create!(owner: self, name: 'Personal Workspace').tap do |workspace|
+      update!(personal_workspace: workspace)
+    end
+  end
+
+  def setup_personal_library
+    Library.create!(owner: self, name: 'Personal Library').tap do |library|
+      update!(personal_library: library)
+    end
+  end
+
+  def setup_user
+    setup_personal_workspace
+    setup_personal_library
+  end
 end

@@ -20,7 +20,17 @@ class ApplicationController < ActionController::Base
 
   group :root
 
+  helper_method :breadcrumbs
+
   private
+
+  def breadcrumbs
+    @breadcrumbs ||= []
+  end
+
+  def add_breadcrumb(name, path = nil)
+    breadcrumbs << Breadcrumb.new(name, path)
+  end
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:email])

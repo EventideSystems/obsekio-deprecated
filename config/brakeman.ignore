@@ -1,0 +1,29 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "Remote Code Execution",
+      "warning_code": 24,
+      "fingerprint": "d5cfdf1e323de53318460cd2b38d22cffd983841eb99db27c358a4e3e85c64b4",
+      "check_name": "UnsafeReflection",
+      "message": "Unsafe reflection method `constantize` called on parameter value",
+      "file": "app/controllers/checklists_controller.rb",
+      "line": 76,
+      "link": "https://brakemanscanner.org/docs/warning_types/remote_code_execution/",
+      "code": "sanitize_checklist_type(params[:checklist][:type]).constantize",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "ChecklistsController",
+        "method": "build_new_checklist"
+      },
+      "user_input": "params[:checklist][:type]",
+      "confidence": "Medium",
+      "cwe_id": [
+        470
+      ],
+      "note": ""
+    }
+  ],
+  "updated": "2024-05-25 16:52:22 +0930",
+  "brakeman_version": "6.1.2"
+}

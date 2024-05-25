@@ -19,8 +19,27 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :checklists do
+    resources :instances, controller: "checklist_instances"
+    member do
+      get :details
+    end
+  end
+
   namespace :settings do
     resource :account, only: %i[show update]
+  end
+
+  resources :libraries, only: %i[index show] do
+    collection do
+      get :personal
+    end
+  end
+
+  resources :workspaces, only: %i[index show] do
+    collection do
+      get :personal
+    end
   end
 
   namespace :workspace do

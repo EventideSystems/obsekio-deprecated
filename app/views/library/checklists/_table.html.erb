@@ -26,7 +26,7 @@
                       <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-300"><%#= checklist.description %></td>
                       <%- if policy(checklist).edit? %>
                         <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                          <%= link_to class: "text-indigo-400 hover:text-indigo-300" do %>
+                          <%= link_to class: "text-yellow-400 hover:text-yellow-300" do %>
                             <%= link_to 'Edit', edit_library_checklist_path(checklist) %>
                           <% end %>
                         </td>

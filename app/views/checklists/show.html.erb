@@ -1,0 +1,13 @@
+<h1 class="sr-only"><%= @checklist.title %></h1>
+<%#= render partial: 'workspace/shared/header' %>
+
+
+
+<%- case @checklist %>
+<%- when Checklists::Single %>
+  <%= render partial: 'checklists/show/single', locals: { checklist: @checklist } %>
+<%- when 'longitudinal' %>
+  <%= render partial: 'checklists/show/longitudinal', locals: { checklist: @checklist } %>
+<%- when Checklists::Concurrent %>
+  <%= render partial: 'checklists/show/concurrent', locals: { checklist: @checklist } %>
+<%- end %>

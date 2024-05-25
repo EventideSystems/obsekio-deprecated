@@ -1,0 +1,27 @@
+<header class="border-b border-white/5">
+  <nav class="flex justify-between  overflow-x-auto py-4 mt-1" aria-label="Breadcrumb">
+    <ol role="list" class="flex items-center space-x-4">
+
+      <% breadcrumbs.each do |breadcrumb| %>
+        <li>
+          <div class="flex items-center">
+            <% if breadcrumb.link? %>
+              <%= link_to breadcrumb.name, breadcrumb.path, class: "text-sm font-medium text-yellow-400 hover:text-gray-700" %>
+            <% else %>
+              <span class="text-sm font-medium text-gray-500 hover:text-gray-700">
+                <%= breadcrumb.name %>
+              </span>
+            <% end %>
+
+            <% unless breadcrumb == breadcrumbs.last %>
+              <%= render_icon :breadcrumb_separator, classes: 'ml-5' %>
+            <% end %>
+          </div>
+        </li>
+      <% end %>
+    </ol>
+    <div>
+      <%= content_for :breadcrumb_controls %>
+    </div>
+  </nav>
+</header>

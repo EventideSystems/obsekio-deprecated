@@ -18,8 +18,9 @@ RSpec.describe ChecklistInstance, type: :model do
       Feel free to check things off as you go. If you have any questions, don't hesitate to ask!
     CONTENT
   end
+  let(:title) { 'Getting Started Checklist' }
 
-  let(:checklist) { create(:checklist, assignee:, content:) }
+  let(:checklist) { create(:checklist, assignee:, content:, title:) }
 
   describe 'prepare_items' do
     let(:checklist_instance) { build(:checklist_instance, checklist:) }

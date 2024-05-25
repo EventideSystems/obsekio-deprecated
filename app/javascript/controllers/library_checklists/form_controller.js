@@ -35,7 +35,7 @@ export default class extends Controller {
 
     panelToShow.classList.remove("hidden");
     this.removeActiveMarkerFromLinks(event);
-    event.target.classList.add('text-indigo-400');
+    event.target.classList.add('text-yellow-400');
   }
 
   showWritePanel(event) {
@@ -48,7 +48,7 @@ export default class extends Controller {
 
   removeActiveMarkerFromLinks(event) {
     event.target.parentNode.parentNode.querySelectorAll('a').forEach(function(link) {
-      link.classList.remove('text-indigo-400');
+      link.classList.remove('text-yellow-400');
     });
   }
 }

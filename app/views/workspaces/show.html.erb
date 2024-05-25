@@ -1,0 +1,15 @@
+<h1 class="sr-only">Checklists</h1>
+
+<% content_for :breadcrumb_controls do %>
+  <%= link_to 'New checklist', new_checklist_path(container_id: @workspace.id, container_type: 'Workspace'), class: ' "block rounded-md bg-yellow-500 px-3 py-2 text-center text-sm font-semibold text-white hover:bg-yellow-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-500 mr-2"' %>
+<% end %>
+
+
+<%= render partial: 'layouts/shared/breadcrumbs' %>
+
+
+<% if @workspace.checklists.empty? %>
+  <%= render partial: 'workspaces/empty_page' %>
+<% else %>
+  <%= render partial: 'checklists/cards', locals: { checklists: @workspace.checklists } %>
+<% end %>
