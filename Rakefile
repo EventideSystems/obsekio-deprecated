@@ -6,7 +6,7 @@
 require_relative 'config/application'
 Rails.application.load_tasks
 
-if Bundler::Audit::Task.is_a?(Class)
+if Rails.env.development?
   require 'bundler/audit/task'
   Bundler::Audit::Task.new
 end
