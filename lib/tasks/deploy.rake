@@ -1,18 +1,18 @@
 # frozen_string_literal: true
 
-namespace :deploy do
-  HEROKU_STAGING_DEPLOY = <<~BASH
-    git push -f obsekio-staging staging:main && \
-    heroku run rake db:migrate -a obsekio-staging && \
-    heroku restart -a obsekio-staging
-  BASH
+HEROKU_STAGING_DEPLOY = <<~BASH
+  git push -f obsekio-staging staging:main && \
+  heroku run rake db:migrate -a obsekio-staging && \
+  heroku restart -a obsekio-staging
+BASH
 
-  HEROKU_PRODUCTION_DEPLOY = <<~BASH
-    git push -f obsekio-production main:main && \
-    heroku run rake db:migrate -a obsekio-production && \
-    heroku restart -a obsekio-production
-  BASH
+HEROKU_PRODUCTION_DEPLOY = <<~BASH
+  git push -f obsekio-production main:main && \
+  heroku run rake db:migrate -a obsekio-production && \
+  heroku restart -a obsekio-production
+BASH
 
+namespace :deploy do # rubocop:disable Metrics/BlockLength
   def print_warning(deploy_environment)
     printf <<~TEXT
       \033[31m
@@ -26,11 +26,11 @@ namespace :deploy do
   end
 
   def confirmed?
-    STDIN.gets.strip.upcase == 'YES'
+    $stdin.gets.strip.upcase == 'YES'
   end
 
   desc 'deploy to staging environment'
-  task :staging do
+  task staging: :environment do
     print_warning('staging')
     print_confirmation('staging')
     if confirmed?
@@ -41,7 +41,7 @@ namespace :deploy do
   end
 
   desc 'deploy to production environment'
-  task :production do
+  task production: :environment do
     print_warning('PRODUCTION')
     print_confirmation('PRODUCTION')
     if confirmed?
