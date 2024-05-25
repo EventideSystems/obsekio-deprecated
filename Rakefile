@@ -6,5 +6,7 @@
 require_relative 'config/application'
 Rails.application.load_tasks
 
-require 'bundler/audit/task'
-Bundler::Audit::Task.new
+if Bundler::Audit::Task.is_a?(Class)
+  require 'bundler/audit/task'
+  Bundler::Audit::Task.new
+end
