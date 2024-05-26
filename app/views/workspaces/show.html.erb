@@ -9,7 +9,7 @@
 
 
 <% if @workspace.checklists.empty? %>
-  <%= render partial: 'workspaces/empty_page' %>
+  <%= render partial: 'checklists/empty_page', locals: { container: @workspace } %>
 <% else %>
   <%= render partial: 'checklists/cards', locals: { checklists: @workspace.checklists } %>
 <% end %>
