@@ -8,7 +8,7 @@
 
 
 <% if @library.checklists.empty? %>
-  <%= render partial: 'workspaces/empty_page' %>
+  <%= render partial: 'checklists/empty_page', locals: { container: @library } %>
 <% else %>
   <%= render partial: 'checklists/cards', locals: { checklists: @library.checklists } %>
 <% end %>

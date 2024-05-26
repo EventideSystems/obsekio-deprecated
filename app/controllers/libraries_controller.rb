@@ -23,6 +23,7 @@ class LibrariesController < ApplicationController
     redirect_to Library_path(@library)
   end
 
+  # TODO: Allow users to view both personal and system libraries
   def personal
     # @library = current_user.personal_library
 

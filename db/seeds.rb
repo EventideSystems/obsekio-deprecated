@@ -1,8 +1,9 @@
 # Source: https://github.com/soleo/front-end-building-checklist
 
-unless OldLibrary::Checklist.find_by(title: 'Startup Checklist')
-    OldLibrary::Checklist.create(
-    title: 'Startup Checklist',
+unless Library.system_library.checklists.find_by(title: 'Front End Feature Building Checklist')
+  Library.system_library.checklists.create(
+    type: 'Checklists::Single',
+    title: 'Front End Feature Building Checklist',
     content: <<~CONTENT,
       # Front End Feature Building Checklist
 
@@ -44,8 +45,9 @@ unless OldLibrary::Checklist.find_by(title: 'Startup Checklist')
   )
 end
 
-unless OldLibrary::Checklist.find_by(title: 'Sustainable Development Goals')
-    OldLibrary::Checklist.create(
+unless Library.system_library.checklists.find_by(title: 'Sustainable Development Goals')
+  Library.system_library.checklists.create(
+    type: 'Checklists::Single',
     title: 'Sustainable Development Goals',
     content: <<~CONTENT,
       # Sustainable Development Goals
