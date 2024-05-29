@@ -2,12 +2,12 @@
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="flex h-16 items-center justify-between">
         <div class="flex items-center">
-          <div class="flex-shrink-0">
+          <div class="max-sm:hidden flex-shrink-0">
             <img class="h-8 w-8" src="https://tailwindui.com/img/logos/mark.svg?color=yellow&shade=500" alt="Your Company">
           </div>
           <div class="md:block">
             <% cache(if: false) do %>
-              <div class="ml-10 flex items-baseline space-x-4">
+              <div class="md:ml-10 flex items-baseline space-x-4">
                 <%= render_navbar_item path: personal_workspaces_path, icon: :workspace, title: "Workspace", active_group: :workspace  %>
                 <%= render_navbar_item path: personal_libraries_path, icon: :library, title: "Library", active_group: :library %>
                 <%= render_navbar_item path: settings_account_path, icon: :settings, title: "Settings", active_group: :settings %>

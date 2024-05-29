@@ -1,6 +1,0 @@
-<%= render partial: 'workspace/shared/tabs' %> <%# TODO Replace with longitudinal-instance specific tabs %>
-<div class="flex px-4 py-8 sm:px-6 ">
-   <% checklist.checklist_instances.order(created_at: :desc).each do |checklist_instance| %>
-    <%# TODO List of instances, could be shared with concurrent-instance-method checklists %>
-   <%- end %>
-</div>
