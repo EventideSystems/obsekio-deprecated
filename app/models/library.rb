@@ -1,5 +1,21 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: libraries
+#
+#  id         :uuid             not null, primary key
+#  name       :string           not null
+#  owner_type :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  owner_id   :uuid
+#
+# Indexes
+#
+#  index_libraries_on_owner                    (owner_type,owner_id)
+#  index_libraries_on_owner_id_and_owner_type  (owner_id,owner_type)
+#
 # A library is a container for checklists. It can be owned by a user or by the system as a whole.
 # Libraries can be shared with other users, and template checklists can be created within them.
 class Library < ApplicationRecord
