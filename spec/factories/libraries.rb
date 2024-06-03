@@ -7,6 +7,7 @@
 #  id         :uuid             not null, primary key
 #  name       :string           not null
 #  owner_type :string
+#  public     :boolean          default(FALSE)
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  owner_id   :uuid

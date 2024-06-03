@@ -24,7 +24,6 @@
 #
 #  fk_rails_...  (checklist_id => checklists.id)
 #
-# Represents an instance, or run through, of a checklist
 class ChecklistInstance < ApplicationRecord
   has_logidze
 

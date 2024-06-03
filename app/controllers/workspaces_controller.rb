@@ -2,23 +2,24 @@
 
 # WorkspacesController
 class WorkspacesController < ApplicationController
+  before_action :set_workspace, only: %i[show edit update]
+
   group :workspace
 
   def index
-    @workspaces = Workspace.all
+    @workspaces = policy_scope(Workspace)
   end
 
   def show
-    @workspace = Workspace.find(params[:id])
     add_breadcrumb(@workspace.name, @workspace)
   end
 
   def edit
-    @workspace = Workspace.find(params[:id])
+    add_breadcrumb(@workspace.name, @workspace)
+    add_breadcrumb('Edit')
   end
 
   def update
-    @workspace = Workspace.find(params[:id])
     @workspace.update(workspace_params)
 
     redirect_to workspace_path(@workspace)
@@ -26,11 +27,18 @@ class WorkspacesController < ApplicationController
 
   def personal
     @workspace = current_user.personal_workspace
+    authorize @workspace
+
     add_breadcrumb(@workspace.name, personal_workspaces_path)
 
-    # add_breadcrumb(@workspace.name)
-
     render :show
+  end
+
+  private
+
+  def set_workspace
+    @workspace = Workspace.find(params[:id])
+    authorize @workspace
   end
 
   def workspace_params

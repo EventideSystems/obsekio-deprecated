@@ -32,11 +32,6 @@
 #
 #  fk_rails_...  (created_by_id => users.id)
 #
-# Base class for checklist models.
-# NOTE: This is an abstract class and should not be used directly.
-#
-# @abstract
-# @see Checklists::Single
 class Checklist < ApplicationRecord
   include ActionView::Helpers::SanitizeHelper
 

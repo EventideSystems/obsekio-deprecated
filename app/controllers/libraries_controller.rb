@@ -2,36 +2,42 @@
 
 # LibrariesController
 class LibrariesController < ApplicationController
+  before_action :set_library, only: %i[show edit update]
   group :library
 
   def index
-    @libraries = Library.all
+    @libraries = policy_scope(Workspace)
   end
 
   def show
-    @library = Library.find(params[:id])
+    add_breadcrumb(@library.name, @library)
   end
 
   def edit
-    @library = Library.find(params[:id])
+    add_breadcrumb(@library.name, @library)
+    add_breadcrumb('Edit')
   end
 
   def update
-    @library = Library.find(params[:id])
     @library.update(Library_params)
 
     redirect_to Library_path(@library)
   end
 
-  # TODO: Allow users to view both personal and system libraries
+  # TODO: Allow users to view both personal and public libraries
   def personal
     # @library = current_user.personal_library
 
-    @library = Library.system_library
+    @library = Library.find_by(public: true)
 
     add_breadcrumb(@library.name, personal_libraries_path)
 
     render :show
+  end
+
+  def set_library
+    @library = Library.find(params[:id])
+    authorize @library
   end
 
   def library_params

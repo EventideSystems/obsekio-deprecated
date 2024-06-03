@@ -6,27 +6,21 @@ class ChecklistInstancesController < ApplicationController
   before_action :set_checklist_instance, only: %i[show edit update destroy]
   after_action :set_group
 
-  # GET /checklist_instances or /checklist_instances.json
   def index
-    @checklist_instances = ChecklistInstance.all
+    @checklist_instances = policy_scope(ChecklistInstance)
   end
 
   # GET /checklist_instances/1 or /checklist_instances/1.json
   def show
-    add_breadcrumb(@checklist.container.name, @checklist.container) if @checklist.container
-    add_breadcrumb(@checklist.title, @checklist.becomes(Checklist))
-    add_breadcrumb('Instances', @checklist.becomes(Checklist))
+    add_base_breadcrumbs
     add_breadcrumb(@checklist_instance.title)
   end
 
   # GET /checklist_instances/new
   def new
-    @checklist = Checklist.find(params[:checklist_id])
     @checklist_instance = @checklist.checklist_instances.new
 
-    add_breadcrumb(@checklist.container.name, @checklist.container) if @checklist.container
-    add_breadcrumb(@checklist.title, @checklist.becomes(Checklist))
-    add_breadcrumb('Instances', @checklist.becomes(Checklist))
+    add_base_breadcrumbs
     add_breadcrumb('New Instance')
   end
 
@@ -35,7 +29,8 @@ class ChecklistInstancesController < ApplicationController
 
   # POST /checklist_instances or /checklist_instances.json
   def create
-    @checklist_instance = create_checklist_instance
+    @checklist_instance = build_checklist_instance
+    authorize @checklist_instance
 
     if @checklist_instance.save
       handle_successful_save
@@ -72,7 +67,13 @@ class ChecklistInstancesController < ApplicationController
 
   private
 
-  def create_checklist_instance
+  def add_base_breadcrumbs
+    add_breadcrumb(@checklist.container.name, @checklist.container) if @checklist.container
+    add_breadcrumb(@checklist.title, @checklist.becomes(Checklist))
+    add_breadcrumb('Instances', @checklist.becomes(Checklist)) # TODO: Use 'instance name', e.g. "activities"
+  end
+
+  def build_checklist_instance
     @checklist.checklist_instances.new(checklist_instance_params).tap(&:prepare_items)
   end
 
@@ -95,11 +96,13 @@ class ChecklistInstancesController < ApplicationController
 
   def set_checklist
     @checklist = Checklist.find(params[:checklist_id])
+    authorize @checklist, :show?
   end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_checklist_instance
     @checklist_instance = ChecklistInstance.find(params[:id])
+    authorize @checklist_instance
   end
 
   # Only allow a list of trusted parameters through.

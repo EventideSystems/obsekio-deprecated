@@ -34,6 +34,10 @@ module FlashMessage
       default: {
         panel: 'bg-gray-50 dark:bg-gray-800',
         button: 'bg-gray-50 text-gray-500 focus:ring-gray-400 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white'
+      },
+      alert: {
+        panel: 'text-red-800 bg-red-50 dark:bg-gray-800 dark:text-red-400',
+        button: 'bg-red-50 text-red-500 focus:ring-red-400 hover:bg-red-200 dark:bg-gray-800 dark:text-red-400 dark:hover:bg-gray-700'
       }
     }.freeze
     # rubocop:enable Layout/LineLength
