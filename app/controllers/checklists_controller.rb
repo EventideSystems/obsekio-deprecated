@@ -2,16 +2,16 @@
 
 # ChecklistsController
 class ChecklistsController < ApplicationController
+  before_action :set_checklist, only: %i[show edit update details]
+
   around_action :use_logidze_responsible, only: %i[create update]
   after_action :set_group
 
   def index
-    @checklists = Checklist.all # TODO: Restrict to what the user has access to.
+    @checklists = policy_scope(Checklist)
   end
 
   def show
-    @checklist = Checklist.find(params[:id])
-
     add_breadcrumb(@checklist.container.name, @checklist.container)
 
     if @checklist.is_a?(Checklists::Concurrent)
@@ -45,14 +45,11 @@ class ChecklistsController < ApplicationController
   end
 
   def edit
-    @checklist = Checklist.find(params[:id])
-
     add_breadcrumb(@checklist.container.name, @checklist.container)
     add_breadcrumb(@checklist.title)
   end
 
   def update
-    @checklist = Checklist.find(params[:id])
     # TODO: add support for other types of checklists, not just single checklists, either here or in the form
     case @checklist
     when Checklists::Single
@@ -65,7 +62,6 @@ class ChecklistsController < ApplicationController
   end
 
   def details
-    @checklist = Checklist.find(params[:id])
     render :show # render the show template for now
   end
 
@@ -109,6 +105,11 @@ class ChecklistsController < ApplicationController
     raise "Unknown checklist type: #{checklist_type}" unless checklist_type.in?(ALLOWED_CHECKLIST_TYPES)
 
     checklist_type
+  end
+
+  def set_checklist
+    @checklist = Checklist.find(params[:id])
+    authorize @checklist
   end
 
   def set_group

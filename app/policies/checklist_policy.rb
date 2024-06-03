@@ -11,7 +11,21 @@ class ChecklistPolicy < ApplicationPolicy
     # List of checklists that are published and public, or were created by the user
     # TODO: Move this into the model as a scope
     def restricted_scope
-      scope.where(status: 'published', public: true).or(scope.where(created_by: user))
+      # Restrict the scope to Checklists that belong to those Workspaces and Libraries,
+      # or are assigned to the user
+      scope.where(container_type: 'Workspace', container_id: accessible_workspace_ids)
+           .or(scope.where(container_type: 'Library', container_id: accessible_library_ids))
+           .or(scope.where(assignee_type: 'User', assignee_id: user.id))
+    end
+
+    private
+
+    def accessible_workspace_ids
+      WorkspacePolicy::Scope.new(user, Workspace).resolve.pluck(:id)
+    end
+
+    def accessible_library_ids
+      LibraryPolicy::Scope.new(user, Library).resolve.pluck(:id)
     end
   end
 
@@ -51,6 +65,10 @@ class ChecklistPolicy < ApplicationPolicy
 
   def personal?
     admin_or_created_by_user?
+  end
+
+  def details?
+    update?
   end
 
   def copy_to_workspace?

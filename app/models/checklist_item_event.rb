@@ -19,7 +19,6 @@
 #
 #  fk_rails_...  (checklist_instance_id => checklist_instances.id)
 #
-# Represents an event that occurred on a checklist item
 class ChecklistItemEvent < ApplicationRecord
   belongs_to :checklist_instance
 
