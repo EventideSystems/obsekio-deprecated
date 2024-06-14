@@ -1,21 +1,19 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require_relative 'shared_contexts'
 
-# rubocop:disable RSpec/MultipleMemoizedHelpers
 RSpec.describe ChecklistPolicy, type: :policy do
   subject { described_class }
 
-  let(:user) { create(:user) }
-  let(:admin) { create(:user, :admin) }
-  let(:other_user) { create(:user) }
-  let(:workspace) { create(:workspace, owner: user) }
-  let(:other_workspace) { create(:workspace, owner: other_user) }
-  let(:accessible_checklist) { create(:checklist, container: workspace, title: 'Accessible Checklist') }
+  include_context 'with user contexts'
+  include_context 'with workspaces'
+
+  let(:accessible_checklist) { create(:checklist, container: owned_workspace, title: 'Accessible Checklist') }
   let(:other_checklist) { create(:checklist, container: other_workspace, title: 'Other Checklist') }
 
   describe ChecklistPolicy::Scope do
-    let(:scope) { described_class.new(user, Checklist).resolve }
+    let(:scope) { described_class.new(user_context, Checklist).resolve }
 
     before do
       accessible_checklist
@@ -31,7 +29,7 @@ RSpec.describe ChecklistPolicy, type: :policy do
     end
 
     context 'when user is admin' do
-      subject { described_class.new(admin, Checklist).resolve }
+      let(:scope) { described_class.new(admin_user_context, Checklist).resolve }
 
       it 'includes all checklist instances' do
         expect(scope).to include(accessible_checklist, other_checklist)
@@ -55,4 +53,3 @@ RSpec.describe ChecklistPolicy, type: :policy do
     pending "add some examples to (or delete) #{__FILE__}"
   end
 end
-# rubocop:enable RSpec/MultipleMemoizedHelpers

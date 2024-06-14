@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_02_035804) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_22_071334) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
   enable_extension "pgcrypto"
@@ -36,7 +36,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_02_035804) do
     t.jsonb "item_state", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "user_id"
+    t.uuid "true_user_id"
     t.index ["checklist_instance_id"], name: "index_checklist_item_events_on_checklist_instance_id"
+    t.index ["true_user_id"], name: "index_checklist_item_events_on_true_user_id"
+    t.index ["user_id"], name: "index_checklist_item_events_on_user_id"
   end
 
   create_table "checklists", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -53,6 +57,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_02_035804) do
     t.string "type"
     t.string "container_type"
     t.uuid "container_id"
+    t.string "instance_model_name", default: "Instance", null: false
+    t.string "data_entry_input_type", default: "checkbox", null: false
+    t.string "data_entry_checkbox_checked_color", default: "green", null: false
+    t.string "data_entry_radio_primary_text"
+    t.string "data_entry_radio_primary_color", default: "green", null: false
+    t.string "data_entry_radio_secondary_text"
+    t.string "data_entry_radio_secondary_color", default: "amber", null: false
+    t.jsonb "data_entry_radio_additional_states", default: {}
+    t.string "data_entry_comments", default: "disabled", null: false
     t.index ["assignee_type", "assignee_id"], name: "index_checklists_on_assignee"
     t.index ["container_type", "container_id"], name: "index_checklists_on_container"
     t.index ["created_by_id"], name: "index_checklists_on_created_by_id"
@@ -131,6 +144,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_02_035804) do
 
   add_foreign_key "checklist_instances", "checklists"
   add_foreign_key "checklist_item_events", "checklist_instances"
+  add_foreign_key "checklist_item_events", "users"
+  add_foreign_key "checklist_item_events", "users", column: "true_user_id"
   add_foreign_key "checklists", "users", column: "created_by_id"
   add_foreign_key "library_checklists", "users", column: "created_by_id"
   create_function :logidze_capture_exception, sql_definition: <<-'SQL'

@@ -12,15 +12,23 @@ class WorkspacePolicy < ApplicationPolicy
   # NOTE: we will need to extend this once 'teams' are implemented.
   class Scope < ApplicationPolicy::Scope
     def resolve
-      scope.where(owner: user)
+      scope.where(owner: user_context.user)
     end
   end
 
   def show?
-    record.owner == user
+    record.owner == user_context.user
+  end
+
+  def update?
+    show?
   end
 
   def personal?
     show?
+  end
+
+  def create_checklist?
+    record.owner == user_context.user
   end
 end

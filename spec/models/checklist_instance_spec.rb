@@ -52,10 +52,10 @@ RSpec.describe ChecklistInstance, type: :model do
     before { checklist_instance.prepare_items }
 
     it { expect(checklist_instance.items.count).to eq(5) }
-    it { expect(checklist_instance.items[0].checked).to be_falsey }
-    it { expect(checklist_instance.items[1].checked).to be_truthy }
-    it { expect(checklist_instance.items[2].checked).to be_falsey }
-    it { expect(checklist_instance.items[3].checked).to be_truthy }
-    it { expect(checklist_instance.items[4].checked).to be_truthy }
+    it { expect(checklist_instance.items[0].state).to eq('unchecked') }
+    it { expect(checklist_instance.items[1].state).to eq('checked') }
+    it { expect(checklist_instance.items[2].state).to eq('unchecked') }
+    it { expect(checklist_instance.items[3].state).to eq('checked') }
+    it { expect(checklist_instance.items[4].state).to eq('checked') }
   end
 end

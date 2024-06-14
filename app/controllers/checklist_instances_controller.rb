@@ -10,24 +10,20 @@ class ChecklistInstancesController < ApplicationController
     @checklist_instances = policy_scope(ChecklistInstance)
   end
 
-  # GET /checklist_instances/1 or /checklist_instances/1.json
   def show
     add_base_breadcrumbs
     add_breadcrumb(@checklist_instance.title)
   end
 
-  # GET /checklist_instances/new
   def new
     @checklist_instance = @checklist.checklist_instances.new
 
     add_base_breadcrumbs
-    add_breadcrumb('New Instance')
+    add_breadcrumb("New #{@checklist_instance.instance_model_name.titleize.singularize}")
   end
 
-  # GET /checklist_instances/1/edit
   def edit; end
 
-  # POST /checklist_instances or /checklist_instances.json
   def create
     @checklist_instance = build_checklist_instance
     authorize @checklist_instance
@@ -39,13 +35,12 @@ class ChecklistInstancesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /checklist_instances/1 or /checklist_instances/1.json
   def update # rubocop:disable Metrics/MethodLength
     respond_to do |format|
       if @checklist_instance.update(checklist_instance_params)
         format.html do
           redirect_to checklist_instance_url(@checklist, @checklist_instance),
-                      notice: 'Checklist instance was successfully updated.'
+                      notice: "#{@checklist_instance.instance_model_name.titleize} was successfully updated."
         end
         format.json { render :show, status: :ok, location: @checklist_instance }
       else
@@ -55,12 +50,14 @@ class ChecklistInstancesController < ApplicationController
     end
   end
 
-  # DELETE /checklist_instances/1 or /checklist_instances/1.json
   def destroy
     @checklist_instance.destroy!
 
     respond_to do |format|
-      format.html { redirect_to checklist_instances_url, notice: 'Checklist instance was successfully destroyed.' }
+      format.html do
+        redirect_to checklist_instances_url,
+                    notice: "#{@checklist_instance.instance_model_name.titleize} was successfully destroyed."
+      end
       format.json { head :no_content }
     end
   end
@@ -70,7 +67,7 @@ class ChecklistInstancesController < ApplicationController
   def add_base_breadcrumbs
     add_breadcrumb(@checklist.container.name, @checklist.container) if @checklist.container
     add_breadcrumb(@checklist.title, @checklist.becomes(Checklist))
-    add_breadcrumb('Instances', @checklist.becomes(Checklist)) # TODO: Use 'instance name', e.g. "activities"
+    add_breadcrumb(@checklist.instance_model_name.titleize.pluralize, @checklist.becomes(Checklist))
   end
 
   def build_checklist_instance
@@ -81,7 +78,7 @@ class ChecklistInstancesController < ApplicationController
     respond_to do |format|
       format.html do
         redirect_to checklist_instance_url(@checklist, @checklist_instance),
-                    notice: 'Checklist instance was successfully created.'
+                    notice: "#{@checklist_instance.instance_model_name.titleize} was successfully created."
       end
       format.json { render :show, status: :created, location: @checklist_instance }
     end
@@ -99,7 +96,6 @@ class ChecklistInstancesController < ApplicationController
     authorize @checklist, :show?
   end
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_checklist_instance
     @checklist_instance = ChecklistInstance.find(params[:id])
     authorize @checklist_instance

@@ -2,10 +2,10 @@
 
 # Base class for all policies
 class ApplicationPolicy
-  attr_reader :user, :record
+  attr_reader :user_context, :record
 
-  def initialize(user, record)
-    @user = user
+  def initialize(user_context, record)
+    @user_context = user_context
     @record = record
   end
 
@@ -35,17 +35,15 @@ class ApplicationPolicy
 
   # Base class for all policy scopes
   class Scope
-    def initialize(user, scope)
-      @user = user
+    attr_reader :user_context, :scope
+
+    def initialize(user_context, scope)
+      @user_context = user_context
       @scope = scope
     end
 
     def resolve
       raise NotImplementedError, "You must define #resolve in #{self.class}"
     end
-
-    private
-
-    attr_reader :user, :scope
   end
 end

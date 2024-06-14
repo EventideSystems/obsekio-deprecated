@@ -4,20 +4,29 @@
 #
 # Table name: checklists
 #
-#  id             :uuid             not null, primary key
-#  assignee_type  :string
-#  container_type :string
-#  content        :text
-#  log_data       :jsonb
-#  metadata       :jsonb
-#  status         :string
-#  title          :string
-#  type           :string
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
-#  assignee_id    :uuid
-#  container_id   :uuid
-#  created_by_id  :uuid
+#  id                                 :uuid             not null, primary key
+#  assignee_type                      :string
+#  container_type                     :string
+#  content                            :text
+#  data_entry_checkbox_checked_color  :string           default("green"), not null
+#  data_entry_comments                :string           default("disabled"), not null
+#  data_entry_input_type              :string           default("checkbox"), not null
+#  data_entry_radio_additional_states :jsonb
+#  data_entry_radio_primary_color     :string           default("green"), not null
+#  data_entry_radio_primary_text      :string
+#  data_entry_radio_secondary_color   :string           default("amber"), not null
+#  data_entry_radio_secondary_text    :string
+#  instance_model_name                :string           default("Instance"), not null
+#  log_data                           :jsonb
+#  metadata                           :jsonb
+#  status                             :string
+#  title                              :string
+#  type                               :string
+#  created_at                         :datetime         not null
+#  updated_at                         :datetime         not null
+#  assignee_id                        :uuid
+#  container_id                       :uuid
+#  created_by_id                      :uuid
 #
 # Indexes
 #
@@ -38,6 +47,7 @@ class Checklist < ApplicationRecord
   has_logidze
 
   string_enum :status, %i[draft published ready in_progress complete archived], default: :draft
+  string_enum :data_entry_comments, %i[disallowed allowed prompt required], default: :disabled
 
   belongs_to :created_by, class_name: 'User', optional: true
   belongs_to :assignee, polymorphic: true, optional: true
@@ -46,6 +56,11 @@ class Checklist < ApplicationRecord
   has_many :checklist_instances, dependent: :destroy
 
   validates :title, presence: true
+  validates :instance_model_name, presence: true
+
+  attribute :data_entry_radio_additional_states, ActiveModelListType.new(DataEntryRadioAdditionalState)
+
+  # attribute :item_state_definitions, ActiveModelListType.new(ChecklistItemStateDefinition)
 
   # Mapping of basic metadata. The actual metadata is stored in the metadata column
   #
@@ -58,16 +73,43 @@ class Checklist < ApplicationRecord
   attribute :author, :jsonb, default: { '@type': 'Person', name: '' }
   store_accessor :author, :name, prefix: true
 
-  # Returns the items in the checklist.
+  # Returns the base color (red, blue, fuschia, etc) for the state of an item
+  # @param state [String]
+  # @return [String]
+  def base_color_for_state(state)
+    return 'gray' if state.blank?
+
+    case data_entry_input_type.to_sym
+    when :radio then base_color_for_radio_state(state)
+    when :radio_dialog_plus_comments then base_color_for_radio_state(state)
+    when :checkbox then base_color_for_checkbox_state(state)
+    else
+      'gray'
+    end
+  end
+
+  # Returns the items, and their base state, in the checklist. Used to prime checklist instances
   # @return [Array<ChecklistItem>]
   def items
     return [] if content.blank?
 
+    # default_item_state_definition = item_state_definitions.find(&:default)
+
     content.scan(/^[-|*] \[(.)\] (.*)/).map do |checked, text|
       ChecklistItem.new(
-        checked: checked.present?,
+        # TODO: Change this to support more than just checked and unchecked states
+        state: checked.present? ? 'checked' : 'unchecked',
         text: strip_tags(text)
       )
     end
+  end
+
+  private
+
+  def base_color_for_radio_state(state)
+    return data_entry_radio_primary_color if state == data_entry_radio_primary_text
+    return data_entry_radio_secondary_color if state == data_entry_radio_secondary_text
+
+    data_entry_radio_additional_states.find { |s| s.text == state }&.color || 'gray'
   end
 end

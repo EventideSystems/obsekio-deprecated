@@ -45,9 +45,9 @@
     @apply mt-3 mb-5;
   }
 
-  input[type=checkbox] {
+  /* input[type=checkbox] {
     @apply h-4 w-4 rounded border-gray-300 text-yellow-700 focus:ring-yellow-700 mr-2;
-  }
+  } */
 }
 
 .checklist-editor {

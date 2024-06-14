@@ -1,0 +1,13 @@
+<div class="sm:col-span-3" data-edit-checklist-target="radioControl">
+  <%= form.label "data_entry_radio_#{ordinal}_text" %>
+  <div class="mt-2">
+    <%= form.text_field "data_entry_radio_#{ordinal}_text" %>
+  </div>
+</div>
+
+<div class="sm:col-span-3" data-edit-checklist-target="radioControl">
+  <%= form.label "data_entry_radio_#{ordinal}_color" %>
+  <div class="mt-2">
+    <%= form.base_color_select "data_entry_radio_#{ordinal}_color", include_blank: true %>
+  </div>
+</div>
