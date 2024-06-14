@@ -35,13 +35,23 @@ class ChecklistInstance < ApplicationRecord
 
   string_enum :status, %i[ready in_progress complete archived], default: :ready
 
-  delegate :content, to: :checklist
+  delegate :content, :instance_model_name, to: :checklist
+  delegate :data_entry_input_type, :data_entry_checkbox_checked_color, :data_entry_comments, to: :checklist
+
+  delegate :data_entry_radio_primary_text, :data_entry_radio_primary_color, to: :checklist
+  delegate :data_entry_radio_secondary_text, :data_entry_radio_secondary_color, to: :checklist
+  delegate :data_entry_radio_additional_states, to: :checklist
+
+  after_save :prepare_items
 
   def prepare_items
     return if item_states.present?
 
-    self.item_states = checklist.items.map do |checklist_item|
-      { text: checklist_item.text, checked: checklist_item.checked }
+    case data_entry_input_type.to_sym
+    when :checkbox
+      prepare_items_for_checkbox
+    when :radio
+      prepare_items_for_radio
     end
   end
 
@@ -49,19 +59,43 @@ class ChecklistInstance < ApplicationRecord
     build_items
   end
 
+  # TODO: Add a guard condition to prevent updating the items if the checklist is not in progress / ready
   def update_checklist_item(event:)
-    prepare_items if item_states[event.index].blank?
+    if item_states[event.index].blank?
+      prepare_items
+      save!
+    end
 
-    item_states[event.index] = item_states[event.index].merge(event.item_state)
-
-    save!
+    ActiveRecord::Base.connection.execute(update_checklist_item_sql(event))
   end
 
   private
 
   def build_items
     item_states.map do |item_state|
-      ChecklistItem.new(item_state.slice(*%w[checked text]))
+      ChecklistItem.new(item_state.slice(*%w[state text]))
     end
+  end
+
+  def prepare_items_for_checkbox
+    self.item_states = checklist.items.map do |checklist_item|
+      { text: checklist_item.text, state: checklist_item.state }
+    end
+  end
+
+  def prepare_items_for_radio
+    self.item_states = checklist.items.map do |checklist_item|
+      state = checklist_item.state == 'checked' ? data_entry_radio_primary_text : checklist_item.state
+      { text: checklist_item.text, state: }
+    end
+  end
+
+  # NOTE: Postgres arrays are 1-indexed
+  def update_checklist_item_sql(event)
+    <<~SQL
+      update checklist_instances
+      set item_states[#{event.index + 1}] = '#{event.item_state.to_json}'
+      where id = '#{id}'
+    SQL
   end
 end

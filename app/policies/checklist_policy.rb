@@ -5,7 +5,7 @@ class ChecklistPolicy < ApplicationPolicy
   # Non-admins are restricted to published checklists
   class Scope < Scope
     def resolve
-      user.admin? ? scope.all : restricted_scope
+      user_context.admin? ? scope.all : restricted_scope
     end
 
     # List of checklists that are published and public, or were created by the user
@@ -15,17 +15,17 @@ class ChecklistPolicy < ApplicationPolicy
       # or are assigned to the user
       scope.where(container_type: 'Workspace', container_id: accessible_workspace_ids)
            .or(scope.where(container_type: 'Library', container_id: accessible_library_ids))
-           .or(scope.where(assignee_type: 'User', assignee_id: user.id))
+           .or(scope.where(assignee_type: 'User', assignee_id: user_context.id))
     end
 
     private
 
     def accessible_workspace_ids
-      WorkspacePolicy::Scope.new(user, Workspace).resolve.pluck(:id)
+      WorkspacePolicy::Scope.new(user_context, Workspace).resolve.pluck(:id)
     end
 
     def accessible_library_ids
-      LibraryPolicy::Scope.new(user, Library).resolve.pluck(:id)
+      LibraryPolicy::Scope.new(user_context, Library).resolve.pluck(:id)
     end
   end
 
@@ -44,7 +44,7 @@ class ChecklistPolicy < ApplicationPolicy
   end
 
   def index?
-    user.present?
+    user_context.present?
   end
 
   def show?
@@ -52,7 +52,7 @@ class ChecklistPolicy < ApplicationPolicy
   end
 
   def create?
-    user.present?
+    user_context.present?
   end
 
   def update?
@@ -82,7 +82,7 @@ class ChecklistPolicy < ApplicationPolicy
   private
 
   def admin_or_created_by_user?
-    user.admin? || record.created_by == user
+    user_context.admin? || record.created_by == user_context.user
   end
 
   def published_and_public?

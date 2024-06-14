@@ -12,8 +12,9 @@
 
   <div class="flex justify-center mt-3">
     <div class="m-auto w-1/2">
-       <p class="mt-1 text-sm leading-6 text-gray-600">Create a new checklist instance for '<%= @checklist_instance.checklist.title %>'.</p>
-
+       <p class="mt-1 text-sm leading-6 text-gray-600">
+          <%= "Create a new #{@checklist_instance.instance_model_name.titleize.downcase} for #{@checklist_instance.checklist.title}." %>
+        </p>
       <div class="md:col-span-2 mt-2">
         <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:max-w-xl sm:grid-cols-6">
           <div class="col-span-full">

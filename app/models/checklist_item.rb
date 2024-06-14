@@ -4,5 +4,5 @@
 class ChecklistItem
   include ActiveModel::Model
 
-  attr_accessor :checked, :text
+  attr_accessor :state, :text
 end

@@ -87,10 +87,12 @@ group :development do
   gem 'rails-mermaid_erd'
   gem 'rspec-rails'
   gem 'rubocop', require: false
+  gem 'rubocop-capybara'
   gem 'rubocop-factory_bot', require: false
   gem 'rubocop-performance'
   gem 'rubocop-rails'
   gem 'rubocop-rspec'
+  gem 'rubocop-rspec_rails'
 end
 
 group :test do

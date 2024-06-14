@@ -33,5 +33,16 @@ en:
     session_expired: "Your session has expired. Please sign in again to continue."
   activerecord:
     attributes:
+      checklist:
+        data_entry_input_type: "Input Type"
+        data_entry_checkbox_checked_color: "Checked Color"
+        data_entry_checkbox_checked_value: "Checked Value"
+        data_entry_checkbox_unchecked_value: "Unchecked Value"
+        data_entry_radio_primary_selected_by_default: "Always Select Primary"
+        data_entry_radio_primary_color: "Color"
+        data_entry_radio_primary_text: "Primary Value"
+        data_entry_radio_secondary_color: "Color"
+        data_entry_radio_secondary_text: "Secondary Value"
+        data_entry_comments: "Comments"
       templates/checklist:
         title_alternative: "Alternative Title"

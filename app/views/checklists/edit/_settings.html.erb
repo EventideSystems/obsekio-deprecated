@@ -1,66 +1,93 @@
 <div class="divide-y divide-white/5">
+
+  <%= render partial: 'checklists/edit/settings/general', locals: { form: } %>
+
+
   <div class="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">
     <div>
-      <h2 class="text-base font-semibold leading-7 text-white">General Settings</h2>
-      <p class="mt-1 text-sm leading-6 text-gray-400">Metadata describing the checklist.</p>
+      <h2 class="text-base font-semibold leading-7 text-white">Data Entry</h2>
+      <p class="mt-1 text-sm leading-6 text-gray-400">Configuration for how data is captured.</p>
     </div>
 
-    <div class="md:col-span-2">
+    <div class="md:col-span-2" data-controller="edit-checklist">
       <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:max-w-xl sm:grid-cols-6">
-        <div class="col-span-full">
-          <%= form.label :description %>
-          <div class="mt-2">
-            <%= form.text_field :description %>
+        <div class="sm:col-span-full">
+          <div class="sm:col-span-3">
+            <%= form.label :data_entry_comments %>
+            <div class="mt-2">
+              <%= form.select :data_entry_comments, options_for_data_entry_comments_select %>
+            </div>
           </div>
         </div>
 
-        <div class="col-span-full">
-          <%= form.label :author_name %>
-          <div class="mt-2">
-            <%= form.text_field :author_name %>
+        <div class="sm:col-span-3">
+          <%= form.label :data_entry_input_type %>
+          <div class="mt-2" >
+            <%=
+              form.select :data_entry_input_type,
+                options_for_data_entry_input_type_select,
+                {},
+                data: {
+                  action: 'edit-checklist#selectInputTypeChanged' ,
+                  edit_checklist_target: 'selectInputType'
+                }
+            %>
           </div>
         </div>
 
-        <div class="col-span-full">
-          <%= form.label :license %>
-          <div class="mt-2">
-            <%= form.text_field :license %>
-          </div>
+
+        <div class="sm:col-span-3" data-edit-checklist-target="radioControl">
+          <%= form.label :data_entry_radio_primary_selected_by_default %>
+          <%= form.check_box :data_entry_radio_primary_selected_by_default %>
         </div>
+
+        <div class="sm:col-span-3" data-edit-checklist-target="checkboxControl">
+          <%= form.label :data_entry_checkbox_checked_color %>
+          <%= form.base_color_select :data_entry_checkbox_checked_color %>
+        </div>
+
+        <%= render partial: 'checklists/edit/data_entry_radio_controls', locals: { ordinal: :primary, form: form } %>
+        <%= render partial: 'checklists/edit/data_entry_radio_controls', locals: { ordinal: :secondary, form: form } %>
       </div>
-    </div>
-  </div>
 
-
-  <h3>*** Settings below do not work as yet ***</h3>
-  <div class="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">
-    <div>
-      <h2 class="text-base font-semibold leading-7 text-white">Vsibiblity</h2>
-      <p class="mt-1 text-sm leading-6 text-gray-400">Control who has access to this checklist.</p>
-    </div>
-
-    <form class="md:col-span-2">
       <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:max-w-xl sm:grid-cols-6">
-        <div class="col-span-full">
-          <p class="mt-1 text-sm leading-6 text-gray-400">This checklist is currently <span class="font-semibold text-white"><%#= @checklist.public? ? 'public' : 'private' %></span>.</p>
+        <div data-controller='data-entry-radio-additional-states' class="field col-span-full">
+          <div data-data-entry-radio-additional-states-target="entries">
+            <% @checklist.data_entry_radio_additional_states.each_with_index do |state, index| %>
+              <div class="field grid grid-cols-2 gap-4 mt-2">
+                <div class="sm:col-span-1" data-edit-checklist-target="radioControl">
+                  <%= custom_label_tag 'Value' %>
+                  <%= custom_text_field_tag 'checklist[data_entry_radio_additional_states][][text]', state.text %>
+                </div>
+                <div class="sm:col-span-1" data-edit-checklist-target="radioControl">
+                  <%= custom_label_tag 'Color' %>
+                  <%= base_color_select_tag 'checklist[data_entry_radio_additional_states][][color]', state.color %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+
+          <div class="field mt-4 col-span-full" data-edit-checklist-target="radioControl">
+            <div class="text-right">
+              <%= link_to 'Add Another', '', data: { action: 'data-entry-radio-additional-states#addEntry' }, class: 'mt-2 bg-yellow-400 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded' %>
+            </div>
+          </div>
+
+          <template id="state-template">
+            <div class="field grid grid-cols-2 gap-4 mt-2">
+              <div class="sm:col-span-1" data-edit-checklist-target="radioControl">
+                <%= custom_label_tag 'Value' %>
+                <%= custom_text_field_tag 'checklist[data_entry_radio_additional_states][][text]' %>
+              </div>
+              <div class="sm:col-span-1" data-edit-checklist-target="radioControl">
+                <%= custom_label_tag 'Color' %>
+                <%= base_color_select_tag 'checklist[data_entry_radio_additional_states][][color]', 'red' %>
+              </div>
+            </div>
+          </template>
         </div>
       </div>
-
-      <div class="mt-8 flex">
-        <button type="submit" class="rounded-md bg-yellow-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-yellow-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-500">Log out other sessions</button>
-      </div>
-    </form>
-  </div>
-
-  <div class="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">
-    <div>
-      <h2 class="text-base font-semibold leading-7 text-white">Delete checklist</h2>
-      <p class="mt-1 text-sm leading-6 text-gray-400">No longer want to use our service? You can delete your account here. This action is not reversible. All information related to this account will be deleted permanently.</p>
     </div>
-
-    <form class="flex items-start md:col-span-2">
-      <button type="submit" class="rounded-md bg-red-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-400">Yes, delete this checklist</button>
-    </form>
   </div>
 </div>
 

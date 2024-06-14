@@ -29,17 +29,17 @@
 # end
 
 require 'rails_helper'
+require_relative 'shared_contexts'
 
-# rubocop:disable RSpec/MultipleMemoizedHelpers
 RSpec.describe LibraryPolicy do
-  let(:user) { create(:user) }
-  let(:other_user) { create(:user) }
+  include_context 'with user contexts'
+
   let(:public_library) { create(:library, public: true, name: 'Public Library') }
   let(:personal_library) { create(:library, owner: user, name: 'Personal Library') }
   let(:other_library) { create(:library, owner: other_user, name: 'Other Personal Library') }
 
   describe LibraryPolicy::Scope do
-    let(:scope) { described_class.new(user, Library).resolve }
+    let(:scope) { described_class.new(user_context, Library).resolve }
 
     it 'includes public libraries' do
       expect(scope).to include(public_library)
@@ -56,26 +56,25 @@ RSpec.describe LibraryPolicy do
 
   describe '#show?' do
     it 'allows viewing public libraries' do
-      expect(described_class.new(user, public_library).show?).to be true
+      expect(described_class.new(user_context, public_library).show?).to be true
     end
 
     it 'allows viewing personal libraries' do
-      expect(described_class.new(user, personal_library).show?).to be true
+      expect(described_class.new(user_context, personal_library).show?).to be true
     end
 
     it 'disallows viewing other libraries' do
-      expect(described_class.new(user, other_library).show?).to be false
+      expect(described_class.new(user_context, other_library).show?).to be false
     end
   end
 
   describe '#personal?' do
     it 'returns true for personal libraries' do
-      expect(described_class.new(user, personal_library).personal?).to be true
+      expect(described_class.new(user_context, personal_library).personal?).to be true
     end
 
     it 'returns false for other libraries' do
-      expect(described_class.new(user, other_library).personal?).to be false
+      expect(described_class.new(user_context, other_library).personal?).to be false
     end
   end
 end
-# rubocop:enable RSpec/MultipleMemoizedHelpers

@@ -1,21 +1,19 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require_relative 'shared_contexts'
 
-# rubocop:disable RSpec/MultipleMemoizedHelpers
 RSpec.describe ChecklistInstancePolicy, type: :policy do
-  let(:user) { create(:user) }
-  let(:admin) { create(:user, :admin) }
-  let(:other_user) { create(:user) }
-  let(:workspace) { create(:workspace, owner: user) }
-  let(:other_workspace) { create(:workspace, owner: other_user) }
-  let(:accessible_checklist) { create(:checklist, container: workspace, title: 'Accessible Checklist') }
+  include_context 'with user contexts'
+  include_context 'with workspaces'
+
+  let(:accessible_checklist) { create(:checklist, container: owned_workspace, title: 'Accessible Checklist') }
   let(:other_checklist) { create(:checklist, container: other_workspace, title: 'Other Checklist') }
   let(:accessible_checklist_instance) { create(:checklist_instance, checklist: accessible_checklist) }
   let(:other_checklist_instance) { create(:checklist_instance, checklist: other_checklist) }
 
   describe ChecklistInstancePolicy::Scope do
-    let(:scope) { described_class.new(user, ChecklistInstance).resolve }
+    let(:scope) { described_class.new(user_context, ChecklistInstance).resolve }
 
     before do
       accessible_checklist_instance
@@ -31,7 +29,7 @@ RSpec.describe ChecklistInstancePolicy, type: :policy do
     end
 
     context 'when user is admin' do
-      subject { described_class.new(admin, ChecklistInstance).resolve }
+      let(:scope)  { described_class.new(admin_user_context, ChecklistInstance).resolve }
 
       it 'includes all checklist instances' do
         expect(scope).to include(accessible_checklist_instance, other_checklist_instance)
@@ -41,11 +39,11 @@ RSpec.describe ChecklistInstancePolicy, type: :policy do
 
   describe '#show?' do
     it 'allows viewing instances of accessible checklists' do
-      expect(described_class.new(user, accessible_checklist_instance).show?).to be true
+      expect(described_class.new(user_context, accessible_checklist_instance).show?).to be true
     end
 
     it 'disallows viewing instances of other checklists' do
-      expect(described_class.new(user, other_checklist_instance).show?).to be false
+      expect(described_class.new(user_context, other_checklist_instance).show?).to be false
     end
   end
 
@@ -73,4 +71,3 @@ RSpec.describe ChecklistInstancePolicy, type: :policy do
   #   pending "add some examples to (or delete) #{__FILE__}"
   # end
 end
-# rubocop:enable RSpec/MultipleMemoizedHelpers

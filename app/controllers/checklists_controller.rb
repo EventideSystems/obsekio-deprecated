@@ -1,29 +1,30 @@
 # frozen_string_literal: true
 
 # ChecklistsController
-class ChecklistsController < ApplicationController
-  before_action :set_checklist, only: %i[show edit update details]
+class ChecklistsController < ApplicationController # rubocop:disable Metrics/ClassLength
+  before_action :load_checklist, only: %i[show edit update details]
+  before_action :load_container, only: %i[new create]
+  before_action :set_session_view
+  before_action :load_view, only: %i[show]
 
   around_action :use_logidze_responsible, only: %i[create update]
-  after_action :set_group
 
-  def index
-    @checklists = policy_scope(Checklist)
-  end
+  after_action :load_group
+
+  def index = @checklists = policy_scope(Checklist)
 
   def show
-    add_breadcrumb(@checklist.container.name, @checklist.container)
+    add_breadcrumb(@checklist.container.name, @checklist.container) if @checklist.container
 
     if @checklist.is_a?(Checklists::Concurrent)
       add_breadcrumb(@checklist.title, @checklist.becomes(Checklist))
-      add_breadcrumb('Instances')
+      add_breadcrumb(@checklist.instance_model_name.titleize.pluralize)
     else
       add_breadcrumb(@checklist.title)
     end
   end
 
   def new
-    @container = find_container(*params.values_at(:container_type, :container_id))
     @checklist = Checklist.new(container: @container)
 
     add_breadcrumb(@checklist.container.name, @checklist.container) if @checklist.container
@@ -31,7 +32,6 @@ class ChecklistsController < ApplicationController
   end
 
   def create
-    @container = find_container(*params[:checklist].values_at(:container_type, :container_id))
     @checklist = build_new_checklist(@container)
 
     if @checklist.save
@@ -50,18 +50,22 @@ class ChecklistsController < ApplicationController
   end
 
   def update
-    # TODO: add support for other types of checklists, not just single checklists, either here or in the form
-    case @checklist
-    when Checklists::Single
-      @checklist.update(checklists_single_params)
-    when Checklists::Concurrent
-      @checklist.update(checklists_concurrent_params)
-    end
+    @checklist.update(params_for_checklist.merge(params_for_checklist_data_entry_radio_additional_states))
 
     redirect_to checklist_path(@checklist)
   end
 
+  # Move to a new controller
   def details
+    add_breadcrumb(@checklist.container.name, @checklist.container) if @checklist.container
+
+    if @checklist.is_a?(Checklists::Concurrent)
+      add_breadcrumb(@checklist.title, @checklist.becomes(Checklist))
+      add_breadcrumb(@checklist.instance_model_name.titleize.pluralize)
+    else
+      add_breadcrumb(@checklist.title)
+    end
+
     render :show # render the show template for now
   end
 
@@ -72,31 +76,59 @@ class ChecklistsController < ApplicationController
     checklist_klass = checklist_type.constantize
 
     checklist_klass.new(container:).tap do |checklist|
-      checklist.update(create_checklist_params)
+      checklist.update(params_for_checklist)
     end
   end
 
-  def checklists_single_params
-    params.require(:checklists_single).permit(:title, :content, :status)
-  end
+  BASE_PARAMS = %i[
+    title
+    content
+    status
+    instance_model_name
+    description
+    author_name
+    license
+    data_entry_comments
+    data_entry_input_type
+    data_entry_checkbox_checked_color
+    data_entry_radio_primary_text
+    data_entry_radio_primary_color
+    data_entry_radio_secondary_text
+    data_entry_radio_secondary_color
+  ].freeze
 
-  def checklists_concurrent_params
-    params.require(:checklists_concurrent).permit(:title, :content, :status)
-  end
-
-  def create_checklist_params
-    params.require(:checklist).permit(:title, :content, :status)
-  end
+  CONTAINER_TYPES = {
+    library: Library,
+    workspace: Workspace
+  }.freeze
 
   def find_container(type, id)
-    case type.downcase.to_sym
-    when :library
-      Library.find(id)
-    when :workspace
-      Workspace.find(id)
+    klass = CONTAINER_TYPES[type.downcase.to_sym]
+    raise "Unknown container type: #{type}" unless klass
+
+    klass.find(id)
+  end
+
+  def params_for_checklist
+    params.require(required_param_key).permit(*BASE_PARAMS)
+  end
+
+  def params_for_checklist_data_entry_radio_additional_states
+    params
+      .fetch(:checklist)
+      .permit(data_entry_radio_additional_states: %i[text color])
+  end
+
+  def params_for_container
+    if params[:container_type].present? && params[:container_id].present?
+      params.fetch(:container_type, :container_id)
     else
-      raise "Unknown container type: #{type}"
+      params.fetch(:checklist).permit(:container_type, :container_id)
     end
+  end
+
+  def required_param_key
+    @checklist.present? ? @checklist.class.name.parameterize.gsub('-', '_').to_sym : :checklist
   end
 
   ALLOWED_CHECKLIST_TYPES = %w[Checklists::Single Checklists::Concurrent].freeze
@@ -107,17 +139,30 @@ class ChecklistsController < ApplicationController
     checklist_type
   end
 
-  def set_checklist
+  def load_checklist
     @checklist = Checklist.find(params[:id])
     authorize @checklist
   end
 
-  def set_group
+  def load_container
+    @container = find_container(*params_for_container.values_at(:container_type, :container_id))
+    authorize @container, :create_checklist?
+  end
+
+  def load_group
     case @container || @checklist&.container
     when Library
       group :library
     when Workspace
       group :workspace
     end
+  end
+
+  def load_view
+    @view = (params[:view] || session[:view] || 'grid').to_sym
+  end
+
+  def set_session_view
+    session[:view] = params[:view] if params[:view].in?(%w[grid list])
   end
 end
