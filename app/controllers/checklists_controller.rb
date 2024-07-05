@@ -121,7 +121,7 @@ class ChecklistsController < ApplicationController # rubocop:disable Metrics/Cla
 
   def params_for_container
     if params[:container_type].present? && params[:container_id].present?
-      params.fetch(:container_type, :container_id)
+      params.permit(:container_type, :container_id)
     else
       params.fetch(:checklist).permit(:container_type, :container_id)
     end

@@ -2,7 +2,7 @@
 
 # WorkspacesController
 class WorkspacesController < ApplicationController
-  before_action :set_workspace, only: %i[show edit update]
+  before_action :set_workspace, only: %i[show edit update settings]
 
   group :workspace
 
@@ -32,6 +32,11 @@ class WorkspacesController < ApplicationController
     add_breadcrumb(@workspace.name, personal_workspaces_path)
 
     render :show
+  end
+
+  def settings
+    add_breadcrumb(@workspace.name, @workspace)
+    add_breadcrumb('Admin')
   end
 
   private

@@ -20,4 +20,5 @@ class Workspace < ApplicationRecord
   belongs_to :owner, polymorphic: true
 
   has_many :checklists, class_name: 'Checklist', inverse_of: :container, dependent: :destroy
+  has_many :contexts, dependent: :destroy
 end

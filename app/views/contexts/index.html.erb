@@ -1,0 +1,21 @@
+<h1 class="sr-only"><%= @workspace.name %> - Contexts</h1>
+
+<% content_for :breadcrumb_controls do %>
+  <div class="flex">
+    <%= link_to "New Context", new_workspace_context_path(@workspace), class: "block rounded-md bg-yellow-500 px-3 py-2 text-center text-sm font-semibold text-white hover:bg-yellow-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-500 mr-2" %>
+  </div>
+<% end %>
+
+<%= render partial: 'layouts/shared/breadcrumbs' %>
+
+<div class="flex h-screen">
+  <%= render partial: 'workspaces/settings_sidebar', locals: { workspace: @workspace } %>
+  <div class="w-3/4 p-4">
+
+    <% if @workspace.contexts.empty? %>
+      <%= render partial: 'contexts/empty_page', locals: { container: @workspace } %>
+    <% else %>
+      <%= render partial: 'contexts/list', locals: { contexts: @workspace.contexts } %>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,39 @@
+<h1 class="sr-only"><%= @workspace.name %> - New Context</h1>
+
+<%= form_with model: @context.becomes(Context),  data: { turbo: false } do |form| %>
+  <% content_for :breadcrumb_controls do %>
+    <div class="flex">
+      <%= form.submit "Save", class: "rounded-md bg-yellow-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-yellow-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-600" %>
+    </div>
+  <% end %>
+
+  <%= render partial: 'layouts/shared/breadcrumbs' %>
+
+  <div class="flex h-screen">
+    <%= render partial: 'workspaces/settings_sidebar', locals: { workspace: @workspace } %>
+    <div class="w-3/4 p-4">
+
+      <p class="mt-1 text-sm leading-6 text-gray-600">Create a new context in the '<%= @checklist.container&.name %>' <%= @checklist.container.model_name.human.downcase %>.</p>
+
+        <div class="md:col-span-2 mt-2">
+          <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:max-w-xl sm:grid-cols-6">
+            <div class="col-span-full">
+              <%= form.label :title %>
+              <div class="mt-2">
+                <%= form.text_field :name %>
+              </div>
+            </div>
+
+            <div class="col-span-full">
+              <%= form.label :type %>
+              <div class="mt-2">
+                <%= form.select :type, options_for_checklist_type_select %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
