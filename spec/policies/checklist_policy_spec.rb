@@ -7,10 +7,9 @@ RSpec.describe ChecklistPolicy, type: :policy do
   subject { described_class }
 
   include_context 'with user contexts'
-  include_context 'with workspaces'
 
-  let(:accessible_checklist) { create(:checklist, container: owned_workspace, title: 'Accessible Checklist') }
-  let(:other_checklist) { create(:checklist, container: other_workspace, title: 'Other Checklist') }
+  let(:accessible_checklist) { create(:checklist, owner: user, title: 'Accessible Checklist') }
+  let(:other_checklist) { create(:checklist, owner: other_user, title: 'Other Checklist') }
 
   describe ChecklistPolicy::Scope do
     let(:scope) { described_class.new(user_context, Checklist).resolve }

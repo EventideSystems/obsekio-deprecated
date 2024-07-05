@@ -65,7 +65,6 @@ class ChecklistInstancesController < ApplicationController
   private
 
   def add_base_breadcrumbs
-    add_breadcrumb(@checklist.container.name, @checklist.container) if @checklist.container
     add_breadcrumb(@checklist.title, @checklist.becomes(Checklist))
     add_breadcrumb(@checklist.instance_model_name.titleize.pluralize, @checklist.becomes(Checklist))
   end

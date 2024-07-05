@@ -1,13 +1,9 @@
 <% content_for :header do %>
-  <%- if policy(Library::Checklist).create? %>
   <div class="xmt-4 xsm:ml-16 xsm:mt-0 xsm:flex-none">
-    <%= link_to 'Create Checklist', new_library_checklist_path, class: "block rounded-md bg-yellow-500 px-3 py-2 text-center text-sm font-semibold text-white hover:bg-yellow-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-500" %>
   </div>
-  <%- end %>
 <% end %>
 
 <h1 class="sr-only">Library Checklists</h1>
-<%= render partial: 'library/shared/header' %>
 <% if @checklists.empty? %>
   <%= render partial: 'empty_page' %>
 <% else %>

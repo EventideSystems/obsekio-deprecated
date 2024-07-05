@@ -12,7 +12,7 @@ class ChecklistInstancePolicy < ApplicationPolicy
     # TODO: Move this into the model as a scope
     def restricted_scope
       # Restrict the scope to ChecklistInstances that belong to those Checklists
-      scope.where(checklist_id: accessible_checklist_ids)
+      scope.joins(:checklist).where(checklist_id: accessible_checklist_ids)
     end
 
     private
@@ -30,16 +30,16 @@ class ChecklistInstancePolicy < ApplicationPolicy
   end
 
   def show?
-    return true if record.assignee == user_context.user
-
-    record.checklist&.container.is_a?(Workspace) &&
-      WorkspacePolicy.new(user_context, record.checklist&.container).show?
+    admin_or_owner?
   end
 
   def update_items?
-    return true if record.assignee == user_context.user
+    admin_or_owner?
+  end
 
-    record.checklist&.container.is_a?(Workspace) &&
-      WorkspacePolicy.new(user_context, record.checklist&.container).update?
+  private
+
+  def admin_or_owner?
+    user_context.admin? || record.checklist.owner == user_context.user
   end
 end

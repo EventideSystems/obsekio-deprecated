@@ -15,7 +15,7 @@ export default class extends Controller {
   }
 
   toggle(event) {
-
+    debugger
 
     let checked = event.target.checked
     let csrfToken = document.querySelector('meta[name="csrf-token"]').content
@@ -29,6 +29,7 @@ export default class extends Controller {
     let dataEntryComments = this.dataEntryCommentsValue
 
     if (dataEntryComments == 'required') {
+      debugger
       event.preventDefault();
 
       let cancelDialogButtons = this.commentsDialogCancelButtonTargets

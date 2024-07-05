@@ -4,12 +4,10 @@
 class UserContext
   attr_reader :user, :workspace, :checklist, :true_user
 
-  def initialize(user:, workspace: nil, checklist: nil, true_user: nil)
+  def initialize(user:, true_user: nil)
     @user = user
-    @workspace = workspace
-    @checklist = checklist
     @true_user = true_user
   end
 
-  delegate :id, :admin?, :workspaces, to: :user
+  delegate :id, :admin?, to: :user
 end

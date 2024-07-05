@@ -1,37 +1,37 @@
-  <nav class="bg-gray-800 dark:bg-black">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div class="flex h-16 items-center justify-between">
-        <div class="flex items-center">
-          <div class="max-sm:hidden flex-shrink-0">
-            <img class="h-8 w-8" src="https://tailwindui.com/img/logos/mark.svg?color=yellow&shade=500" alt="Obsekio">
-          </div>
-          <div class="md:block">
-            <% cache(if: false) do %>
-              <div class="md:ml-10 flex items-baseline space-x-4">
-                <%= render_navbar_item path: personal_workspaces_path, icon: :workspace, title: "Workspace", active_group: :workspace  %>
-                <%= render_navbar_item path: personal_libraries_path, icon: :library, title: "Library", active_group: :library %>
-                <%= render_navbar_item path: settings_account_path, icon: :settings, title: "Settings", active_group: :settings %>
-              </div>
-            <% end %>
-          </div>
+<nav class="bg-gray-800 dark:bg-black">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="flex h-16 items-center justify-between">
+      <div class="flex items-center">
+        <div class="max-sm:hidden flex-shrink-0">
+          <img class="h-8 w-8" src="https://tailwindui.com/img/logos/mark.svg?color=yellow&shade=500" alt="Obsekio">
         </div>
         <div class="md:block">
-          <div class="ml-4 flex items-center md:ml-6" data-controller='theme'>
-
-            <button type="button" title="Toggle light and dark mode" class="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-               data-dark-mode-target="toggle"
-              data-action="click->theme#toggle"
-            >
-              <%= render_icon :dark_mode, classes: 'hidden' %>
-              <%= render_icon :light_mode, classes: 'hidden' %>
-            </button>
-
-
-            <%= link_to "Sign out", destroy_user_session_path, data: { turbo_method: :delete }, class: "w-full rounded-md bg-yellow-300 m-4 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-yellow-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-600 text-center" %>
-
-          </div>
+          <% cache(if: false) do %>
+            <div class="md:ml-10 flex items-baseline space-x-4">
+              <%= render_navbar_item path: checklists_path, icon: :workspace, title: "Checklists", active_group: :workspace  %>
+              <%= render_navbar_item path: personal_libraries_path, icon: :library, title: "Library", active_group: :library %>
+              <%= render_navbar_item path: settings_account_path, icon: :settings, title: "Settings", active_group: :settings %>
+            </div>
+          <% end %>
         </div>
-
       </div>
+      <div class="md:block">
+        <div class="ml-4 flex items-center md:ml-6" data-controller='theme'>
+
+          <button type="button" title="Toggle light and dark mode" class="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+              data-dark-mode-target="toggle"
+            data-action="click->theme#toggle"
+          >
+            <%= render_icon :dark_mode, classes: 'hidden' %>
+            <%= render_icon :light_mode, classes: 'hidden' %>
+          </button>
+
+
+          <%= link_to "Sign out", destroy_user_session_path, data: { turbo_method: :delete }, class: "w-full rounded-md bg-yellow-300 m-4 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-yellow-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-600 text-center" %>
+
+        </div>
+      </div>
+
     </div>
-  </nav>
+  </div>
+</nav>

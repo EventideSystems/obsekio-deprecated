@@ -27,7 +27,7 @@
 require 'rails_helper'
 
 RSpec.describe ChecklistInstance, type: :model do
-  let(:assignee) { create(:user) }
+  let(:owner) { create(:user) }
   let(:content) do
     <<~CONTENT
       # Welcome to Obsekio!
@@ -44,7 +44,7 @@ RSpec.describe ChecklistInstance, type: :model do
   end
   let(:title) { 'Getting Started Checklist' }
 
-  let(:checklist) { create(:checklist, assignee:, content:, title:) }
+  let(:checklist) { create(:checklist, owner:, content:, title:) }
 
   describe 'prepare_items' do
     let(:checklist_instance) { build(:checklist_instance, checklist:) }

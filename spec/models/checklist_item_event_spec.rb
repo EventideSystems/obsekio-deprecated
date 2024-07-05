@@ -28,7 +28,7 @@
 require 'rails_helper'
 
 RSpec.describe ChecklistItemEvent, type: :model do
-  let(:assignee) { create(:user) }
+  let(:owner) { create(:user) }
   let(:content) do
     <<~CONTENT
       # Welcome to Obsekio!
@@ -45,7 +45,7 @@ RSpec.describe ChecklistItemEvent, type: :model do
   end
   let(:title) { 'Getting Started Checklist' }
 
-  let(:checklist) { create(:checklist, assignee:, content:, title:) }
+  let(:checklist) { create(:checklist, owner:, content:, title:) }
   let(:checklist_instance) { create(:checklist_instance, checklist:) }
 
   describe 'create event' do # rubocop:disable RSpec/MultipleMemoizedHelpers

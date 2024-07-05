@@ -25,8 +25,6 @@
 #  unlock_token           :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
-#  personal_library_id    :uuid
-#  personal_workspace_id  :uuid
 #
 # Indexes
 #

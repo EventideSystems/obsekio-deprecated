@@ -8,24 +8,10 @@ class ChecklistPolicy < ApplicationPolicy
       user_context.admin? ? scope.all : restricted_scope
     end
 
-    # List of checklists that are published and public, or were created by the user
-    # TODO: Move this into the model as a scope
     def restricted_scope
-      # Restrict the scope to Checklists that belong to those Workspaces and Libraries,
-      # or are assigned to the user
-      scope.where(container_type: 'Workspace', container_id: accessible_workspace_ids)
-           .or(scope.where(container_type: 'Library', container_id: accessible_library_ids))
+      # Restrict to Checklists that belong to the current user or are assigned to the user
+      scope.where(owner: user_context.user)
            .or(scope.where(assignee_type: 'User', assignee_id: user_context.id))
-    end
-
-    private
-
-    def accessible_workspace_ids
-      WorkspacePolicy::Scope.new(user_context, Workspace).resolve.pluck(:id)
-    end
-
-    def accessible_library_ids
-      LibraryPolicy::Scope.new(user_context, Library).resolve.pluck(:id)
     end
   end
 
@@ -48,7 +34,7 @@ class ChecklistPolicy < ApplicationPolicy
   end
 
   def show?
-    admin_or_created_by_user? || published_and_public?
+    admin_or_owner? || published_and_public?
   end
 
   def create?
@@ -56,15 +42,15 @@ class ChecklistPolicy < ApplicationPolicy
   end
 
   def update?
-    admin_or_created_by_user?
+    admin_or_owner?
   end
 
   def destroy?
-    admin_or_created_by_user?
+    admin_or_owner?
   end
 
   def personal?
-    admin_or_created_by_user?
+    admin_or_owner?
   end
 
   def details?
@@ -72,17 +58,17 @@ class ChecklistPolicy < ApplicationPolicy
   end
 
   def copy_to_workspace?
-    admin_or_created_by_user? || published_and_public?
+    admin_or_owner? || published_and_public?
   end
 
   def publish?
-    admin_or_created_by_user? # && !record.published?
+    admin_or_owner? # && !record.published?
   end
 
   private
 
-  def admin_or_created_by_user?
-    user_context.admin? || record.created_by == user_context.user
+  def admin_or_owner?
+    user_context.admin? || record.owner == user_context.user
   end
 
   def published_and_public?
