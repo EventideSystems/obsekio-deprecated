@@ -15,7 +15,7 @@ module ApplicationHelper
     render "layouts/shared/icons/#{icon}", classes:
   end
 
-  def render_sidebar_item(title:, path:, icon:, active_group:, classes: '', count: nil)
+  def render_sidebar_item(title:, path:, icon:, active_group:, classes: '', count: nil) # rubocop:disable Metrics/ParameterLists
     active = active_group == controller.active_group
 
     render 'layouts/shared/sidebar_item', title:, path:, icon:, active:, classes:, count:
