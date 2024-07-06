@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :contexts
   devise_for :users
 
   if Rails.env.development?
@@ -38,10 +37,6 @@ Rails.application.routes.draw do
   end
 
   resources :workspaces, only: %i[index show] do
-    resources :contexts do
-      resources :context_instances
-    end
-
     collection do
       get :personal
     end

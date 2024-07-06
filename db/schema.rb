@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_26_030405) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_22_071334) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
   enable_extension "pgcrypto"
@@ -72,25 +72,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_26_030405) do
     t.index ["status"], name: "index_checklists_on_status"
     t.index ["title"], name: "index_checklists_on_title"
     t.index ["type"], name: "index_checklists_on_type"
-  end
-
-  create_table "context_instances", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "context_id", null: false
-    t.jsonb "data", default: {}
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["context_id"], name: "index_context_instances_on_context_id"
-    t.index ["data"], name: "index_context_instances_on_data", using: :gin
-  end
-
-  create_table "contexts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "workspace_id", null: false
-    t.string "name", null: false
-    t.string "type", null: false
-    t.jsonb "metadata", default: {}
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["workspace_id"], name: "index_contexts_on_workspace_id"
   end
 
   create_table "libraries", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -166,8 +147,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_26_030405) do
   add_foreign_key "checklist_item_events", "users"
   add_foreign_key "checklist_item_events", "users", column: "true_user_id"
   add_foreign_key "checklists", "users", column: "created_by_id"
-  add_foreign_key "context_instances", "contexts"
-  add_foreign_key "contexts", "workspaces"
   add_foreign_key "library_checklists", "users", column: "created_by_id"
   create_function :logidze_capture_exception, sql_definition: <<-'SQL'
       CREATE OR REPLACE FUNCTION public.logidze_capture_exception(error_data jsonb)
