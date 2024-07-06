@@ -40,6 +40,10 @@ Rails.application.routes.draw do
     collection do
       get :personal
     end
+
+    member do
+      get :settings
+    end
   end
 
   namespace :workspace do

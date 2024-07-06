@@ -45,5 +45,15 @@ class ApplicationPolicy
     def resolve
       raise NotImplementedError, "You must define #resolve in #{self.class}"
     end
+
+    private
+
+    def accessible_workspace_ids
+      WorkspacePolicy::Scope.new(user_context, Workspace).resolve.pluck(:id)
+    end
+
+    def accessible_library_ids
+      LibraryPolicy::Scope.new(user_context, Library).resolve.pluck(:id)
+    end
   end
 end

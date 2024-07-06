@@ -9,7 +9,7 @@
 #  container_type                     :string
 #  content                            :text
 #  data_entry_checkbox_checked_color  :string           default("green"), not null
-#  data_entry_comments                :string           default("disabled"), not null
+#  data_entry_comments                :string           default(NULL), not null
 #  data_entry_input_type              :string           default("checkbox"), not null
 #  data_entry_radio_additional_states :jsonb
 #  data_entry_radio_primary_color     :string           default("green"), not null

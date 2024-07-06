@@ -31,4 +31,8 @@ class WorkspacePolicy < ApplicationPolicy
   def create_checklist?
     record.owner == user_context.user
   end
+
+  def settings?
+    show?
+  end
 end

@@ -17,16 +17,6 @@ class ChecklistPolicy < ApplicationPolicy
            .or(scope.where(container_type: 'Library', container_id: accessible_library_ids))
            .or(scope.where(assignee_type: 'User', assignee_id: user_context.id))
     end
-
-    private
-
-    def accessible_workspace_ids
-      WorkspacePolicy::Scope.new(user_context, Workspace).resolve.pluck(:id)
-    end
-
-    def accessible_library_ids
-      LibraryPolicy::Scope.new(user_context, Library).resolve.pluck(:id)
-    end
   end
 
   PERMITTED_ATTRIBUTES = %i[
