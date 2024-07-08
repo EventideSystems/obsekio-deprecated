@@ -1,7 +1,7 @@
 <div id="<%= dom_id checklist_instance %>">
   <% if action_name != "show" %>
-    <%= link_to "Show this checklist instance", checklist_instance, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    <%= link_to "Edit this checklist instance", edit_checklist_instance_path(checklist_instance), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
+    <%= link_to "Show this checklist instance", checklist_instance_path(@checklist.becomes(Checklist), checklist_instance), class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+    <%#= link_to "Edit this checklist instance", edit_checklist_instance_path(checklist_instance), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
     <hr class="mt-6">
   <% end %>
 </div>

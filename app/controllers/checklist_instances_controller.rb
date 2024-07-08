@@ -4,10 +4,9 @@
 class ChecklistInstancesController < ApplicationController
   before_action :set_checklist
   before_action :set_checklist_instance, only: %i[show edit update destroy]
-  after_action :set_group
 
   def index
-    @checklist_instances = policy_scope(ChecklistInstance)
+    @checklist_instances = policy_scope(ChecklistInstance).where(checklist: @checklist)
   end
 
   def show
@@ -103,14 +102,5 @@ class ChecklistInstancesController < ApplicationController
   # Only allow a list of trusted parameters through.
   def checklist_instance_params
     params.require(:checklist_instance).permit(:title)
-  end
-
-  def set_group
-    case @checklist_instance&.checklist&.container
-    when Library
-      group :library
-    when Workspace
-      group :workspace
-    end
   end
 end
