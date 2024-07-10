@@ -17,3 +17,6 @@ pin "prosemirror-transform" # @1.9.0
 pin "prosemirror-view" # @1.33.8
 pin "rope-sequence" # @1.3.4
 pin "w3c-keyname" # @2.2.8
+pin "tailwindcss-animate" # @1.0.7
+pin "tailwindcss/plugin", to: "tailwindcss--plugin.js" # @3.4.4
+pin "hotkeys-js" # @3.13.7

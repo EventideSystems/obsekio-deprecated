@@ -26,11 +26,11 @@ class ChecklistItemsController < ApplicationController
   end
 
   def build_text(index)
-    sanitize(checklist_instance.checklist.items[index].text.chomp)
+    sanitize_text(checklist_instance.checklist.items[index].text.chomp)
   end
 
   def build_comment
-    sanitize(params.fetch(:checklist_item).fetch(:comment))
+    sanitize_text(params.fetch(:checklist_item).fetch(:comment))
   end
 
   def build_state
@@ -38,12 +38,16 @@ class ChecklistItemsController < ApplicationController
     when 'checkbox'
       params.fetch(:checklist_item).fetch(:value) == 'on' ? 'checked' : 'unchecked'
     when 'radio'
-      sanitize(params[:checklist_item].fetch(:value))
+      sanitize_text(params[:checklist_item].fetch(:value))
     end
   end
 
   def load_checklist_instance
     @checklist_instance = ChecklistInstance.find(params[:checklist_instance_id])
     authorize @checklist_instance, :update_items?
+  end
+
+  def sanitize_text(text)
+    sanitize(text).gsub("'", "''")
   end
 end
