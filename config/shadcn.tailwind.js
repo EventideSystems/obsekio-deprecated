@@ -93,7 +93,7 @@ module.exports = {
     require("@tailwindcss/aspect-ratio"),
     require("@tailwindcss/typography"),
     require("@tailwindcss/container-queries"),
-    require('../vendor/javascript/tailwindcss--plugin.js')
-   // require("tailwindcss-animate"),
+    require('../vendor/javascript/tailwindcss--plugin.js'),
+    require('../vendor/javascript/tailwindcss-animate.js')
   ],
 };

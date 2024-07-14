@@ -4,7 +4,7 @@
 class WorkspacesController < ApplicationController
   before_action :set_workspace, only: %i[show edit update settings]
 
-  group :workspace
+  navbar_item :workspace
 
   def index
     @workspaces = policy_scope(Workspace)

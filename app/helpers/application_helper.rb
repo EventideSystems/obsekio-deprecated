@@ -21,8 +21,8 @@ module ApplicationHelper
     render 'layouts/shared/sidebar_item', title:, path:, icon:, active:, classes:, count:
   end
 
-  def render_navbar_item(title:, path:, icon:, active_group:, classes: '')
-    active = active_group == controller.active_group
+  def render_navbar_item(title:, path:, icon:, item:, classes: '')
+    active = item == controller.active_navbar_item
 
     render 'layouts/shared/navbar_item', title:, path:, icon:, active:, classes:
   end

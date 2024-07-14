@@ -6,6 +6,8 @@ class HomeController < ApplicationController
   skip_before_action :authenticate_user!, raise: false
   before_action :load_breadcrumbs
 
+  navbar_item :dashboard
+
   def index
     render template, layout:
   end

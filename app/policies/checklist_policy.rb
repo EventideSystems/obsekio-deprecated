@@ -3,7 +3,7 @@
 # Policy for Checklists
 class ChecklistPolicy < ApplicationPolicy
   # Non-admins are restricted to published checklists
-  class Scope < Scope
+  class Scope < ApplicationPolicy::Scope
     def resolve
       user_context.admin? ? scope.all : restricted_scope
     end
