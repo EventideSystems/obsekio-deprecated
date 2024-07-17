@@ -3,7 +3,7 @@
 # LibrariesController
 class LibrariesController < ApplicationController
   before_action :set_library, only: %i[show edit update]
-  group :library
+  sidebar_item :library
 
   def index
     @libraries = policy_scope(Workspace)

@@ -10,8 +10,15 @@
 
 <div class="flex px-4 py-8 sm:px-6 ">
   <div class="checklist-preview">
-    <div data-controller="checklist" data-checklist-target="previewPanel" data-checklist-instance-id-value="<%= checklist.single_instance.id %>">
+    <div
+      data-controller="checklist"
+      data-checklist-target="previewPanel"
+      data-checklist-instance-id-value="<%= checklist.single_instance.id %>"
+      data-checklist-data-entry-comments-value="<%= checklist.single_instance.data_entry_comments %>"
+    >
+    <div class="checklist-preview">
       <%= render_checklist(@checklist.single_instance) %>
     </div>
+    <%= render partial: 'checklist_instances/comments_modal', locals: { checklist_instance: @checklist.single_instance } %>
   </div>
 </div>

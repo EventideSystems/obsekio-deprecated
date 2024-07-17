@@ -2,6 +2,11 @@
 
 # Common helper methods for the application
 module ApplicationHelper
+  def current_account_name
+    'Your Account'
+    # current_user&.name
+  end
+
   # Render a Recaptcha v3 script tag, with a nonce, using the recaptcha_v3 helper from the recaptcha gem
   def recaptcha_with_nonce(action: nil)
     return if Recaptcha.configuration.site_key.blank?
@@ -15,17 +20,17 @@ module ApplicationHelper
     render "layouts/shared/icons/#{icon}", classes:
   end
 
-  def render_sidebar_item(title:, path:, icon:, active_group:, classes: '')
-    active = active_group == controller.active_group
+  def render_sidebar_item(title:, path:, icon:, active_group:, classes: '', count: nil) # rubocop:disable Metrics/ParameterLists
+    active = active_group == controller.active_sidebar_item
 
-    render 'layouts/shared/sidebar_item', title:, path:, icon:, active:, classes:
+    render 'layouts/shared/sidebar_item', title:, path:, icon:, active:, classes:, count:
   end
 
-  def render_navbar_item(title:, path:, icon:, active_group:, classes: '')
-    active = active_group == controller.active_group
+  # def render_sidebar_item(title:, path:, icon:, item:, classes: '')
+  #   active = item == controller.active_sidebar_item
 
-    render 'layouts/shared/navbar_item', title:, path:, icon:, active:, classes:
-  end
+  #   render 'layouts/shared/sidebar_item', title:, path:, icon:, active:, classes:
+  # end
 
   def link_to_tab_item(title, path, active_action_name)
     klass = controller.action_name == active_action_name.to_s ? 'text-yellow-400' : ''

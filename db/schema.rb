@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_22_071334) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_07_115318) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
   enable_extension "pgcrypto"
@@ -46,7 +46,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_22_071334) do
   create_table "checklists", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title"
     t.string "status"
-    t.uuid "created_by_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "assignee_type"
@@ -55,8 +54,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_22_071334) do
     t.jsonb "log_data"
     t.jsonb "metadata", default: {}
     t.string "type"
-    t.string "container_type"
-    t.uuid "container_id"
     t.string "instance_model_name", default: "Instance", null: false
     t.string "data_entry_input_type", default: "checkbox", null: false
     t.string "data_entry_checkbox_checked_color", default: "green", null: false
@@ -66,41 +63,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_22_071334) do
     t.string "data_entry_radio_secondary_color", default: "amber", null: false
     t.jsonb "data_entry_radio_additional_states", default: {}
     t.string "data_entry_comments", default: "disabled", null: false
+    t.string "owner_type"
+    t.uuid "owner_id"
     t.index ["assignee_type", "assignee_id"], name: "index_checklists_on_assignee"
-    t.index ["container_type", "container_id"], name: "index_checklists_on_container"
-    t.index ["created_by_id"], name: "index_checklists_on_created_by_id"
+    t.index ["owner_type", "owner_id"], name: "index_checklists_on_owner"
     t.index ["status"], name: "index_checklists_on_status"
     t.index ["title"], name: "index_checklists_on_title"
     t.index ["type"], name: "index_checklists_on_type"
-  end
-
-  create_table "libraries", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "name", null: false
-    t.string "owner_type"
-    t.uuid "owner_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.boolean "public", default: false
-    t.index ["owner_id", "owner_type"], name: "index_libraries_on_owner_id_and_owner_type"
-    t.index ["owner_type", "owner_id"], name: "index_libraries_on_owner"
-  end
-
-  create_table "library_checklists", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "title"
-    t.string "status", default: "draft"
-    t.uuid "created_by_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.boolean "public", default: false
-    t.text "content"
-    t.jsonb "metadata", default: {"@type"=>"CreativeWork", "author"=>{"name"=>"", "@type"=>"Person"}, "license"=>"", "@context"=>"https://schema.org", "description"=>""}
-    t.jsonb "log_data"
-    t.string "checklist_type", default: "Checklists::Single", null: false
-    t.index ["created_by_id"], name: "index_library_checklists_on_created_by_id"
-    t.index ["metadata"], name: "index_library_checklists_on_metadata", using: :gin
-    t.index ["public"], name: "index_library_checklists_on_public"
-    t.index ["status"], name: "index_library_checklists_on_status"
-    t.index ["title"], name: "index_library_checklists_on_title"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -124,30 +93,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_22_071334) do
     t.boolean "admin", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.uuid "personal_library_id"
-    t.uuid "personal_workspace_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
-  create_table "workspaces", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "name"
-    t.string "owner_type", null: false
-    t.uuid "owner_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["owner_id", "owner_type"], name: "index_workspaces_on_owner_id_and_owner_type"
-    t.index ["owner_type", "owner_id"], name: "index_workspaces_on_owner"
-  end
-
   add_foreign_key "checklist_instances", "checklists"
   add_foreign_key "checklist_item_events", "checklist_instances"
   add_foreign_key "checklist_item_events", "users"
   add_foreign_key "checklist_item_events", "users", column: "true_user_id"
-  add_foreign_key "checklists", "users", column: "created_by_id"
-  add_foreign_key "library_checklists", "users", column: "created_by_id"
   create_function :logidze_capture_exception, sql_definition: <<-'SQL'
       CREATE OR REPLACE FUNCTION public.logidze_capture_exception(error_data jsonb)
        RETURNS boolean
@@ -734,23 +689,5 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_22_071334) do
   SQL
   create_trigger :logidze_on_checklists, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_checklists BEFORE INSERT OR UPDATE ON public.checklists FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
-  SQL
-  create_trigger :logidze_on_library_checklists, sql_definition: <<-SQL
-      CREATE TRIGGER logidze_on_library_checklists BEFORE INSERT OR UPDATE ON public.library_checklists FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
-  SQL
-
-  create_view "library_public_checklists", sql_definition: <<-SQL
-      SELECT library_checklists.id,
-      library_checklists.title,
-      library_checklists.status,
-      library_checklists.created_by_id,
-      library_checklists.created_at,
-      library_checklists.updated_at,
-      library_checklists.public,
-      library_checklists.content,
-      library_checklists.metadata,
-      library_checklists.log_data
-     FROM library_checklists
-    WHERE (library_checklists.public = true);
   SQL
 end

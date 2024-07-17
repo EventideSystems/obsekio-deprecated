@@ -5,10 +5,9 @@ require_relative 'shared_contexts'
 
 RSpec.describe ChecklistInstancePolicy, type: :policy do
   include_context 'with user contexts'
-  include_context 'with workspaces'
 
-  let(:accessible_checklist) { create(:checklist, container: owned_workspace, title: 'Accessible Checklist') }
-  let(:other_checklist) { create(:checklist, container: other_workspace, title: 'Other Checklist') }
+  let(:accessible_checklist) { create(:checklist, owner: user, title: 'Accessible Checklist') }
+  let(:other_checklist) { create(:checklist, owner: other_user, title: 'Other Checklist') }
   let(:accessible_checklist_instance) { create(:checklist_instance, checklist: accessible_checklist) }
   let(:other_checklist_instance) { create(:checklist_instance, checklist: other_checklist) }
 

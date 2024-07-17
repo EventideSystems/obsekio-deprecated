@@ -3,7 +3,7 @@
 # Base controller
 class ApplicationController < ActionController::Base
   include Pundit::Authorization
-  include ControllerGroups
+  include ActiveSidebarItem
 
   layout :layout_by_resource
 
@@ -18,12 +18,12 @@ class ApplicationController < ActionController::Base
 
   impersonates :user
 
-  group :root
+  sidebar_item :home
 
   helper_method :breadcrumbs
 
   def pundit_user
-    UserContext.new(user: current_user, workspace: @checklist, checklist: @checklist, true_user:)
+    UserContext.new(user: current_user, true_user:)
   end
 
   alias user_context pundit_user

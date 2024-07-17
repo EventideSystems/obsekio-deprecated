@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full bg-gray-900">
+<html lang="en" class="dark h-full text-zinc-950 antialiased lg:bg-zinc-100 dark:bg-zinc-900 dark:text-white dark:lg:bg-zinc-950">
   <head>
     <title><%= breadcrumbs.map(&:name).reverse.append("Obsekio").join(" | ") %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -13,14 +13,18 @@
 
     <%= javascript_importmap_tags %>
   </head>
-
-  <body class="h-full">
+  <body>
     <%= render 'layouts/shared/flash_messages' %>
-    <%= render 'layouts/shared/navbar' %>
-    <main class='bg-white dark:bg-gray-900'>
-      <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-        <%= yield %>
+    <div class="relative isolate min-h-svh w-full bg-white max-lg:flex-col lg:bg-zinc-100 dark:bg-zinc-900 dark:lg:bg-zinc-950">
+      <%= render partial: 'layouts/shared/sidebar_mobile' %>
+      <%= render partial: 'layouts/shared/sidebar_desktop' %>
+      <div class="lg:pl-72">
+        <main class="py-10">
+          <div class="px-4 sm:px-6 lg:px-8">
+             <%= yield %>
+          </div>
+        </main>
       </div>
-    </main>
+    </div>
   </body>
 </html>

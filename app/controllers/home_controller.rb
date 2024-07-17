@@ -4,18 +4,12 @@
 # and the dashboard (when a user is signed in).
 class HomeController < ApplicationController
   skip_before_action :authenticate_user!, raise: false
-  before_action :load_workspace, only: :index
+  before_action :load_breadcrumbs
 
-  group :workspace
-
-  # def index = render(template, layout:)
+  sidebar_item :home
 
   def index
-    if user_signed_in?
-      redirect_to personal_workspaces_path
-    else
-      render 'landing_page', layout: 'landing_page'
-    end
+    render template, layout:
   end
 
   private
@@ -28,9 +22,7 @@ class HomeController < ApplicationController
     user_signed_in? ? 'application' : 'landing_page'
   end
 
-  def load_workspace
-    return unless user_signed_in?
-
-    @checklists = current_user.checklists
+  def load_breadcrumbs
+    add_breadcrumb('Dashboard') if user_signed_in?
   end
 end

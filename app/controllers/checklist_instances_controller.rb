@@ -4,10 +4,11 @@
 class ChecklistInstancesController < ApplicationController
   before_action :set_checklist
   before_action :set_checklist_instance, only: %i[show edit update destroy]
-  after_action :set_group
+
+  sidebar_item :workspace
 
   def index
-    @checklist_instances = policy_scope(ChecklistInstance)
+    @checklist_instances = policy_scope(ChecklistInstance).where(checklist: @checklist)
   end
 
   def show
@@ -65,7 +66,6 @@ class ChecklistInstancesController < ApplicationController
   private
 
   def add_base_breadcrumbs
-    add_breadcrumb(@checklist.container.name, @checklist.container) if @checklist.container
     add_breadcrumb(@checklist.title, @checklist.becomes(Checklist))
     add_breadcrumb(@checklist.instance_model_name.titleize.pluralize, @checklist.becomes(Checklist))
   end
@@ -104,14 +104,5 @@ class ChecklistInstancesController < ApplicationController
   # Only allow a list of trusted parameters through.
   def checklist_instance_params
     params.require(:checklist_instance).permit(:title)
-  end
-
-  def set_group
-    case @checklist_instance&.checklist&.container
-    when Library
-      group :library
-    when Workspace
-      group :workspace
-    end
   end
 end

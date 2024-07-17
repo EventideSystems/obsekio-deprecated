@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-gray-900">
+  <head>
+    <title><%= breadcrumbs.map(&:name).reverse.append("Obsekio").join(" | ") %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta charset="utf-8">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body class="h-full">
+    <%= render 'layouts/shared/flash_messages' %>
+    <%= render 'layouts/shared/navbar' %>
+    <main class='bg-white dark:bg-gray-900 min-h-screen'>
+      <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+        <%= yield %>
+      </div>
+    </main>
+  </body>
+</html>
+
