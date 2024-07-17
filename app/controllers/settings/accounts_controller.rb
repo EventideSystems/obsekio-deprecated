@@ -3,7 +3,7 @@
 module Settings
   # AccountController
   class AccountsController < ApplicationController
-    navbar_item :settings
+    sidebar_item :settings
 
     def show; end
     def update; end

@@ -3,7 +3,7 @@
 # Base controller
 class ApplicationController < ActionController::Base
   include Pundit::Authorization
-  include ActiveNavbarItem
+  include ActiveSidebarItem
 
   layout :layout_by_resource
 
@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
 
   impersonates :user
 
-  navbar_item :root
+  sidebar_item :home
 
   helper_method :breadcrumbs
 

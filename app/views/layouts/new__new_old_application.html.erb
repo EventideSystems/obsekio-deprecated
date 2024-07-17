@@ -13,9 +13,10 @@
 
     <%= javascript_importmap_tags %>
   </head>
-  <body>
+
+  <body class="h-full">
     <%= render 'layouts/shared/flash_messages' %>
-    <div class="relative isolate min-h-svh w-full bg-white max-lg:flex-col lg:bg-zinc-100 dark:bg-zinc-900 dark:lg:bg-zinc-950">
+    <div class="relative isolate flex min-h-svh w-full bg-white max-lg:flex-col lg:bg-zinc-100 dark:bg-zinc-900 dark:lg:bg-zinc-950">
       <%= render partial: 'layouts/shared/sidebar_mobile' %>
       <%= render partial: 'layouts/shared/sidebar_desktop' %>
       <div class="lg:pl-72">

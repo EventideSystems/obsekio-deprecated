@@ -8,6 +8,8 @@ class ChecklistsController < ApplicationController
 
   around_action :use_logidze_responsible, only: %i[create update]
 
+  sidebar_item :workspace
+
   def index = @checklists = policy_scope(Checklist)
 
   def show

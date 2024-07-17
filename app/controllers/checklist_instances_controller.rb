@@ -5,6 +5,8 @@ class ChecklistInstancesController < ApplicationController
   before_action :set_checklist
   before_action :set_checklist_instance, only: %i[show edit update destroy]
 
+  sidebar_item :workspace
+
   def index
     @checklist_instances = policy_scope(ChecklistInstance).where(checklist: @checklist)
   end
