@@ -2,11 +2,11 @@
 
 # LibrariesController
 class LibrariesController < ApplicationController
-  before_action :set_library, only: %i[show edit update]
+  # before_action :set_library, only: %i[show edit update]
   sidebar_item :library
 
   def index
-    @libraries = policy_scope(Workspace)
+    # @libraries = policy_scope(Workspace)
   end
 
   def show

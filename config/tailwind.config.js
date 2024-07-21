@@ -2,8 +2,7 @@ const defaultTheme = require('tailwindcss/defaultTheme')
 const shadcnConfig = require("./shadcn.tailwind.js");
 
 module.exports = {
- // darkMode: 'selector',
-  darkMode: true,
+  darkMode: 'class',
   content: [
     './public/*.html',
     './app/helpers/**/*.rb',

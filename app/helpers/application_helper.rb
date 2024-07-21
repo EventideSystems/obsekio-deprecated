@@ -26,12 +26,6 @@ module ApplicationHelper
     render 'layouts/shared/sidebar_item', title:, path:, icon:, active:, classes:, count:
   end
 
-  # def render_sidebar_item(title:, path:, icon:, item:, classes: '')
-  #   active = item == controller.active_sidebar_item
-
-  #   render 'layouts/shared/sidebar_item', title:, path:, icon:, active:, classes:
-  # end
-
   def link_to_tab_item(title, path, active_action_name)
     klass = controller.action_name == active_action_name.to_s ? 'text-yellow-400' : ''
 

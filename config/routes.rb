@@ -10,15 +10,6 @@ Rails.application.routes.draw do
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
 
-  # namespace :library do
-  #   resources :checklists do
-  #     member do
-  #       post :copy_to_workspace
-  #       post :publish
-  #     end
-  #   end
-  # end
-
   resources :checklists do
     resources :instances, controller: "checklist_instances"
     member do
@@ -30,31 +21,17 @@ Rails.application.routes.draw do
     resource :account, only: %i[show update]
   end
 
-  # resources :libraries, only: %i[index show] do
-  #   collection do
-  #     get :personal
-  #   end
-  # end
-
-  # resources :workspaces, only: %i[index show] do
-  #   collection do
-  #     get :personal
-  #   end
-
-  #   member do
-  #     get :settings
-  #   end
-  # end
-
-  resource :workspace, only: :show
-
-  # namespace :workspace do
-  #   resources :checklists
-  # end
-
   resources :checklist_instances do
     resources :checklist_items, only: %i[update]
   end
+
+  resources :contacts
+  resources :libraries
+  resources :reports
+  resources :tags
+  resources :teams
+
+  resource :workspace, only: :show
 
   root to: "home#index"
 end

@@ -1,40 +1,36 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = [ "lightMode", "darkMode", "toggle" ]
+  static targets = [ "toggle" ]
 
   connect() {
     if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      this.darkModeTarget.classList.remove('hidden');
+      this.toggleTarget.innerHTML = 'Dark mode &checkmark;'
+      localStorage.setItem('color-theme', 'dark');
       document.documentElement.classList.add('dark');
+      document.documentElement.classList.remove('light');
     } else {
-      this.lightModeTarget.classList.remove('hidden');
+      this.toggleTarget.innerHTML = 'Dark mode';
+      localStorage.setItem('color-theme', 'light');
+      document.documentElement.classList.add('light');
       document.documentElement.classList.remove('dark');
     }
   }
 
-  toggle() {
-    this.lightModeTarget.classList.toggle('hidden');
-    this.darkModeTarget.classList.toggle('hidden');
+  toggle(event) {
+    // debugger
+    // event.preventDefault()
 
-    if (localStorage.getItem('color-theme')) {
-        if (localStorage.getItem('color-theme') === 'light') {
-            document.documentElement.classList.add('dark');
-            localStorage.setItem('color-theme', 'dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-            localStorage.setItem('color-theme', 'light');
-        }
+    this.toggleTarget.innerHTML = this.toggleTarget.innerHTML === 'Dark mode' ? 'Dark mode &checkmark;' : 'Dark mode';
 
-    // if NOT set via local storage previously
+    if (this.toggleTarget.innerHTML === 'Dark mode') {
+      localStorage.setItem('color-theme', 'light');
+      document.documentElement.classList.add('light');
+      document.documentElement.classList.remove('dark');
     } else {
-        if (document.documentElement.classList.contains('dark')) {
-            document.documentElement.classList.remove('dark');
-            localStorage.setItem('color-theme', 'light');
-        } else {
-            document.documentElement.classList.add('dark');
-            localStorage.setItem('color-theme', 'dark');
-        }
+      localStorage.setItem('color-theme', 'dark');
+      document.documentElement.classList.add('dark');
+      document.documentElement.classList.remove('light');
     }
   }
 }
