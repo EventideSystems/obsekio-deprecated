@@ -104,4 +104,4 @@ group :test do
   gem 'selenium-webdriver'
 end
 
-gem "shadcn-ui", "~> 0.0.13"
+gem 'shadcn-ui', '~> 0.0.13'
