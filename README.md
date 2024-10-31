@@ -1,9 +1,9 @@
 # Obsekio
 
 
-**NOTE: OBSEKIO IS A WORK IN PROGRESS**
+**NOTE: WORK ON OBSEKIO HAS MOVED TO THE "TOOL FOR SYSTEMIC CHANGE" PROJECT**
 
-THE APPLICATION IS NOT YET READY FOR PRODUCTION USE.
+See: https://github.com/EventideSystems/tool_for_systemic_change 
 
 ---
 
