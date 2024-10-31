@@ -1,4 +1,4 @@
-# Obsekio
+# Obsekio (deprecated)
 
 
 **NOTE: WORK ON OBSEKIO HAS MOVED TO THE "TOOL FOR SYSTEMIC CHANGE" PROJECT**
